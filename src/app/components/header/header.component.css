@@ -1,0 +1,19 @@
+/* Header Styling */
+:host {
+    background-color: #133563;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+h1 {
+	font-size: 1.8em;
+	margin-top: 0; /* Remove default top margin */
+	margin-bottom: 10px;
+	font-weight: 600;
+}

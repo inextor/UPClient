@@ -5,7 +5,7 @@ export class GetEmpty {
     return {
       id: 0,
       created: '',
-      name: '',
+      name: 'xxxx',
       color: '',
       updated: '',
       preferences_id: 1

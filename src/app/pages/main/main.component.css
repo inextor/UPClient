@@ -17,25 +17,7 @@
 	border-radius: 8px; /* Slightly rounded corners for the container */
 }
 
-/* Header Styling */
-.page-header h1 {
-	font-size: 1.8em;
-	margin-top: 0; /* Remove default top margin */
-	margin-bottom: 10px;
-	font-weight: 600;
-}
 
-.sub-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap; /* Allow wrapping on smaller screens */
-	font-size: 0.9em;
-	color: #666;
-	margin-bottom: 25px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #eee; /* Separator line */
-}
 
 .results-count {
 	margin-right: 15px; /* Space between count and sort */
