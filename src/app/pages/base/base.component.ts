@@ -4,7 +4,8 @@ import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { RestService } from '../../services/rest.service';
 
-@Component({
+@Component
+({
 	selector: 'app-base',
 	standalone: true,
 	imports: [CommonModule],
@@ -15,6 +16,7 @@ export class BaseComponent
 {
 	rest: RestService;
 	router: Router;
+
 	constructor(public injector: Injector)
 	{
 		this.rest = this.injector.get(RestService);
@@ -37,6 +39,7 @@ export class BaseComponent
 		{
 				return error;
 		}
+		
 		if (error.error)
 		{
 				return error.error;

@@ -5,18 +5,16 @@ import { GetEmpty } from '../models/GetEmpty';
 import { Ecommerce } from '../models/RestModels';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class RestService {
-getLoginLogo() {
+	getLoginLogo() {}
 
-}
+	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 
-  public ecommerce:Ecommerce = GetEmpty.ecommerce();
+	constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  get(url: string): Observable<any> {
-    return this.http.get(url);
-  }
+	get(url: string): Observable<any> {
+		return this.http.get(url);
+	}
 }
