@@ -14,8 +14,9 @@ interface CLogin {
 export class LoginComponent extends BaseComponent
 {
 	is_loading: boolean = true;
-    username: string  = '';
-    password: string  = '';
+		username: string	= '';
+		password: string	= '';
+	error_message: string = '';
 
 	doLogin(evt: Event)
 	{
@@ -38,22 +39,16 @@ export class LoginComponent extends BaseComponent
 		})
 		.then((response) => response.json())
 		.then((response) =>
-        {
-			this.is_loading = false;
-			if (this.return_url)
-			{
+		{
+				this.is_loading = false;
 				this.router.navigate(['/main']);
-			}
-            else
-			{
-				this.router.navigate(['/list-requisition']);
-				//this.showSuccess('Sesion iniciada con exito');
-			}
-        })
-        .catch((error) =>
-        {
-			this.is_loading = false;
-			this.showError(error);
-        });
-    }
+				localStorage.setItem('token', response.token);
+				localStorage.setItem('username', response.username);
+		})
+		.catch((error) =>
+		{
+				this.is_loading = false;
+				this.showError(error);
+		});
+	}
 }
