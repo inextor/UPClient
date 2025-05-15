@@ -1,0 +1,167 @@
+/* Write the host css */
+
+:host {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	margin: 0;
+	padding: 20px;
+	background-color: #f8f8f8; /* Light background */
+	color: #333;
+}
+
+/* Page Container */
+.product-page-container {
+	max-width: 1200px;
+	margin: 20px auto; /* Center the container and add top/bottom margin */
+	background-color: #fff; /* White background for content area */
+	padding: 20px 30px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional subtle shadow */
+	border-radius: 8px; /* Slightly rounded corners for the container */
+}
+
+/* Header Styling */
+.page-header h1 {
+	font-size: 1.8em;
+	margin-top: 0; /* Remove default top margin */
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+
+.sub-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap; /* Allow wrapping on smaller screens */
+	font-size: 0.9em;
+	color: #666;
+	margin-bottom: 25px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #eee; /* Separator line */
+}
+
+.results-count {
+	margin-right: 15px; /* Space between count and sort */
+	margin-bottom: 5px; /* Space below if wraps */
+}
+
+.sort-options {
+	margin-bottom: 5px; /* Space below if wraps */
+}
+
+.sort-options label {
+	margin-right: 5px;
+}
+
+.sort-options select {
+	padding: 5px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	cursor: pointer; /* Indicate it's interactive */
+}
+
+/* Product Grid Layout */
+.product-grid {
+	display: grid;
+	/* Create 3 columns, each taking equal space (1 fraction) */
+	grid-template-columns: repeat(3, 1fr);
+	/* Gap between grid items */
+	gap: 25px;
+}
+
+/* Product Card Styling */
+.product-card {
+	border: 1px solid #eee; /* Default light border */
+	padding: 15px;
+	text-align: center;
+	background-color: #fff;
+	border-radius: 6px; /* Rounded corners for cards */
+	transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Smooth transition for hover */
+	display: flex; /* Use flexbox for vertical alignment */
+	flex-direction: column; /* Stack elements vertically */
+	justify-content: space-between; /* Push price towards bottom */
+}
+
+.product-card:hover {
+	box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Add shadow on hover */
+	border-color: #ddd; /* Slightly darken border on hover */
+}
+
+/* Highlight style for the first card (or any card with this class) */
+.product-card.highlight {
+	border: 1px solid #bbb; /* Slightly darker border for highlight */
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Optional subtle shadow for highlight */
+}
+
+.product-image-container {
+	margin-bottom: 15px;
+	flex-grow: 1; /* Allow image container to grow */
+	display: flex; /* Center image */
+	align-items: center; /* Center image vertically */
+	justify-content: center; /* Center image horizontally */
+	min-height: 150px; /* Ensure a minimum height for alignment */
+}
+
+.product-image {
+	max-width: 100%; /* Make image responsive */
+	max-height: 200px; /* Limit image height */
+	height: auto;
+	object-fit: contain; /* Ensure image fits without distortion */
+}
+
+.product-info {
+	flex-shrink: 0; /* Prevent info from shrinking */
+}
+
+.product-title {
+	font-size: 1em;
+	font-weight: 600;
+	margin-top: 0; /* Reset margin */
+	margin-bottom: 5px;
+	color: #333;
+	line-height: 1.3; /* Adjust line height for readability */
+}
+
+.product-meta {
+	font-size: 0.8em;
+	color: #777;
+	margin-bottom: 10px;
+	line-height: 1.3;
+}
+
+.product-price {
+	font-size: 1em;
+	font-weight: bold;
+	color: #000;
+	margin-top: auto; /* Push price to bottom within info */
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+	.product-grid {
+		grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+	}
+}
+
+@media (max-width: 600px) {
+	.product-page-container {
+		padding: 15px; /* Reduce padding on small screens */
+	}
+	.product-grid {
+		grid-template-columns: 1fr; /* 1 column on very small screens */
+		gap: 20px; /* Adjust gap */
+	}
+	.sub-header {
+		flex-direction: column; /* Stack results and sort on small screens */
+		align-items: flex-start;
+	}
+	.sort-options {
+		margin-top: 10px;
+		width: 100%; /* Make sort full width */
+	}
+	.sort-options select {
+		width: 100%; /* Make select full width */
+	}
+	.page-header h1 {
+		font-size: 1.5em; /* Adjust heading size */
+	}
+}
