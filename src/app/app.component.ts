@@ -22,14 +22,6 @@ export class AppComponent implements OnInit
 	ngOnInit(): void
 	{
 		// Navigation logic based on 'bearer' token
-		if (!localStorage.getItem('bearer'))
-		{
-			this.router.navigate(['/login']);
-		}
-		else
-		{
-			this.router.navigate(['/main']);
-		}
 
 		// Ecommerce data fetching and storage logic
 		const localEcommerce = localStorage.getItem('ecommerce');
