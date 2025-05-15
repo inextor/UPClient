@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Injector } from '@angular/core';
+import { Router } from '@angular/router';
 import { RestService } from '../../services/rest.service';
 
 @Component({
