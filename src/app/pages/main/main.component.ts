@@ -4,30 +4,31 @@ import { BaseComponent } from '../base/base.component';
 
 import { RestService } from '../../services/rest.service';
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css'
+	selector: 'app-main',
+	standalone: true,
+	imports: [CommonModule],
+	templateUrl: './main.component.html',
+	styleUrl: './main.component.css'
 })
 export class MainComponent extends BaseComponent
 {
-	constructor(public rest: RestService)
+	item_info_list:any[] = [];
+
+	ngOnInit(): void
 	{
-		super();
-		item_info_list:any[] = [];
 
-		ngOnInit(): void
+		fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php?limit=20')
+		.then((response)=>
 		{
-
-			fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php?limit=20')
-			.then((response)=>
-			{
-				return response.json();
-			})
-			.then((response)=>
-			{
-				this.item_info_list = response.data;
-			});
-		}
-  }
+			return response.json();
+		})
+		.then((response)=>
+		{
+			this.item_info_list = response.data;
+		})
+		.catch((error)=>
+		{
+			console.log(error);
+		});
+	}
+}
