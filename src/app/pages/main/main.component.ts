@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RestService } from 'src/app/services/rest.service';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -13,7 +12,6 @@ import { BaseComponent } from '../base/base.component';
 export class MainComponent extends BaseComponent
 {
 	item_info_list:any[] = [];
-	constructor(public rest: RestService) {}
 
 		ngOnInit(): void
 		{
