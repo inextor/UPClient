@@ -11,6 +11,7 @@ export class RestService
 {
 	getLoginLogo() {}
 
+	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 
 	constructor()
