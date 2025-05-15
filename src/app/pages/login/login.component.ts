@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseComponent } from '../base/base.component';
+import { FormsModule } from '@angular/forms';
 interface CLogin {
 	username: string;
 	password: string;
 }
 @Component({
 	selector: 'app-login',
-	imports: [CommonModule],
-	templateUrl: './login.component.html',
+	templateUrl: './login.component.html',	
+  imports: [CommonModule, FormsModule],
 	styleUrl: './login.component.css'
 })
 export class LoginComponent extends BaseComponent

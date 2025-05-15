@@ -8,6 +8,9 @@ import { Ecommerce } from '../models/RestModels';
   providedIn: 'root'
 })
 export class RestService {
+getLoginLogo() {
+
+}
 
   public ecommerce:Ecommerce = GetEmpty.ecommerce();
 
