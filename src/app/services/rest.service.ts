@@ -9,7 +9,7 @@ import { Ecommerce } from '../models/RestModels';
 })
 export class RestService {
 
-  public ecommerce:Ecommerce = GetEmpty.emptyEcommerce();
+  public ecommerce:Ecommerce = GetEmpty.ecommerce();
 
   constructor(private http: HttpClient) { }
 
