@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 interface CLogin {
 	username: string;
 	password: string;
 }
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -39,5 +40,4 @@ export class LoginComponent {
 			}
 		});
 	}
-
 }
