@@ -1,7 +1,7 @@
 import { Ecommerce } from './RestModels';
 
 export class GetEmpty {
-  static emptyEcommerce(): Ecommerce {
+  static ecommerce(): Ecommerce {
     return {
       id: 0,
       created: '',
