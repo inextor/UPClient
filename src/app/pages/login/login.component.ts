@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BaseComponent } from '../base/base.component';
 interface CLogin {
 	username: string;
 	password: string;
@@ -10,7 +11,9 @@ interface CLogin {
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent extends BaseComponent
+{
+  is_loading: boolean = true;
 	doLogin(evt: Event)
 	{
 		evt.preventDefault();
@@ -26,17 +29,17 @@ export class LoginComponent {
 				this.is_loading = false;
 				if (this.return_url)
 				{
-					this.router.navigate([this.return_url]);
+					this.router.navigate(['/main']);
 				} else
 				{
 					this.router.navigate(['/list-requisition']);
 				}
-				this.showSuccess('Sesion iniciada con exito');
+				//this.showSuccess('Sesion iniciada con exito');
 			},
 			error: (error) =>
 			{
-				this.showError(error);
-				this.is_loading = false;
+				//this.showError(error);
+				//this.is_loading = false;
 			}
 		});
 	}
