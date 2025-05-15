@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class RestService {
 
+  public business: string = '';
+
   constructor(private http: HttpClient) { }
 
   get(url: string): Observable<any> {
