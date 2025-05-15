@@ -4,30 +4,42 @@ import { Injector } from '@angular/core';
 import { RestService } from '../../services/rest.service';
 
 @Component({
-  selector: 'app-base',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <p>
-      base works!
-    </p>
-  `,
-  styleUrls: ['./base.component.css']
+	selector: 'app-base',
+	standalone: true,
+	imports: [CommonModule],
+	template: '',
+	styleUrls: ['./base.component.css']
 })
 export class BaseComponent
 {
-    rest: RestService;
-    constructor(public injector: Injector) {
-      this.rest = this.injector.get(RestService);
-    }
+		rest: RestService;
+		constructor(public injector: Injector) {
+			this.rest = this.injector.get(RestService);
+		}
 
-    showError(error: any)
-    {
-        console.log(error);
-    }
+		showError(error: any)
+		{
+				console.log(error);
+		}
 
-    showSuccess(message: string)
-    {
-        console.log(message);
-    }
+		showSuccess(message: string)
+		{
+				console.log(message);
+		}
+
+		getErrorMessage(error:any):string
+		{
+			if( typeof error === 'string')
+			{
+					return error;
+			}
+			if (error.error)
+			{
+					return error.error;
+			}
+			else
+			{
+					return error;
+			}
+		}
 }
