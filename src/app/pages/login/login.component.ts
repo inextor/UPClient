@@ -14,6 +14,9 @@ interface CLogin {
 export class LoginComponent extends BaseComponent
 {
 	is_loading: boolean = true;
+    username: string  = '';
+    password: string  = '';
+
 	doLogin(evt: Event)
 	{
 		evt.preventDefault();
