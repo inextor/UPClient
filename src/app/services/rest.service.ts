@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GetEmpty } from '../models/GetEmpty';
+import { Ecommerce } from '../models/RestModels';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
 
-  public business: string = '';
+  public ecommerce:Ecommerce = GetEmpty.emptyEcommerce();
 
   constructor(private http: HttpClient) { }
 
