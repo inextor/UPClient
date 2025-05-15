@@ -16,4 +16,46 @@ export class RestService
 	constructor()
 	{
 	}
+
+	addToCart(item_id: number, qty: number): void
+	{
+		const cart: { item_id: number; qty: number }[] = JSON.parse(
+			localStorage.getItem('cart') || '[]',
+		);
+		const existingItemIndex = cart.findIndex(
+			(item) => item.item_id === item_id,
+		);
+
+		if (existingItemIndex > -1)
+		{
+			cart[existingItemIndex].qty += qty;
+		} else
+		{
+			cart.push({ item_id, qty });
+		}
+
+		localStorage.setItem('cart', JSON.stringify(cart));
+	}
+
+	removeFromCart(item_id: number): void
+	{
+		let cart: { item_id: number; qty: number }[] = JSON.parse(
+			localStorage.getItem('cart') || '[]',
+		);
+		const initialLength = cart.length;
+
+		cart = cart.filter((item) => item.item_id !== item_id);
+
+		// Only update local storage if an item was actually removed
+		if (cart.length < initialLength)
+		{
+			localStorage.setItem('cart', JSON.stringify(cart));
+		}
+	}
+
+	// Example get method (assuming you will add HttpClient later)
+	get(url: string): Observable<any> {
+		// Placeholder for actual HttpClient call
+		return new Observable();
+	}
 }
