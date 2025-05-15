@@ -16,6 +16,7 @@ import { RestService } from '../../services/rest.service';
 })
 export class BaseComponent
 {
+    rest: RestService;
     constructor(public injector: Injector) {
       this.rest = this.injector.get(RestService);
     }
