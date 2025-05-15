@@ -21,12 +21,12 @@ export class BaseComponent
 	}
 
 	showError(error: any)
-{
+    {
 		console.log(error);
 	}
 
 	showSuccess(message: string)
-{
+    {
 		console.log(message);
 	}
 
