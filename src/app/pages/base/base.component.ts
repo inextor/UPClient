@@ -12,34 +12,37 @@ import { RestService } from '../../services/rest.service';
 })
 export class BaseComponent
 {
-		rest: RestService;
-		constructor(public injector: Injector) {
-			this.rest = this.injector.get(RestService);
-		}
+	rest: RestService;
+	router: Router;
+	constructor(public injector: Injector)
+	{
+		this.rest = this.injector.get(RestService);
+		this.router = this.injector.get(Router);
+	}
 
-		showError(error: any)
-		{
-				console.log(error);
-		}
+	showError(error: any)
+{
+		console.log(error);
+	}
 
-		showSuccess(message: string)
-		{
-				console.log(message);
-		}
+	showSuccess(message: string)
+{
+		console.log(message);
+	}
 
-		getErrorMessage(error:any):string
+	getErrorMessage(error:any):string
+	{
+		if( typeof error === 'string')
 		{
-			if( typeof error === 'string')
-			{
-					return error;
-			}
-			if (error.error)
-			{
-					return error.error;
-			}
-			else
-			{
-					return error;
-			}
+				return error;
 		}
+		if (error.error)
+		{
+				return error.error;
+		}
+		else
+		{
+				return error;
+		}
+	}
 }
