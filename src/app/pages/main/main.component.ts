@@ -15,7 +15,7 @@ export class MainComponent extends BaseComponent
 	constructor(public rest: RestService)
 	{
 		super();
-	item_info_list:any[] = [];
+		item_info_list:any[] = [];
 
 		ngOnInit(): void
 		{
