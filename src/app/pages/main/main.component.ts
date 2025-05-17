@@ -31,7 +31,8 @@ export class MainComponent extends BaseComponent
 				console.log(error);
 			});
 	}
-	public addToCart(item: any): void
+
+	public addToCart(item_id: any): void
 	{
 		this.rest.addToCart(item_id, 1);
 	}
