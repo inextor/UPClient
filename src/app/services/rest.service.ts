@@ -8,16 +8,16 @@ import { CartItemInfo } from '../models/RestModels';
 ({ providedIn: 'root' })
 export class RestService
 {
-	getLoginLogo() { }
-
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 
 	public cartItemCount: number = 0;
-	constructor() {
+	constructor() 
+	{
 	}
 
-	addToCart(item_id: number, qty: number): void {
+	addToCart(item_id: number, qty: number): void 
+	{
 		const cart: { item_id: number; qty: number }[] = JSON.parse(
 			localStorage.getItem('cart') || '[]',
 		);
@@ -32,7 +32,8 @@ export class RestService
 		localStorage.setItem('cart', JSON.stringify(cart));
 	}
 
-	removeFromCart(item_id: number): CartItemInfo[] {
+	removeFromCart(item_id: number): CartItemInfo[] 
+	{
 		let cart: { item_id: number; qty: number }[] = JSON.parse(localStorage.getItem('cart') || '[]')
 		const initialLength = cart.length;
 
@@ -42,11 +43,12 @@ export class RestService
 		{
 			localStorage.setItem('cart', JSON.stringify(cart));
 			return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
-		} else {
+		} 
+		else 
+		{
 			return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
 		}
 	}
-
 
 	public getCartItems():CartItemInfo[]
 	{
@@ -85,11 +87,14 @@ export class RestService
 		return params;
 	}
 
-	getItems(params:URLSearchParams)
+	getItems(p:URLSearchParams | Object)
 	{
+  
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p); 
+ 
 		const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';
-		fetch(baseUrl + '?' + params.toString())
-		.then((response) =>
+		fetch(baseUrl + '?' + p.toString())
+		.then((response) =>j
 		{
 			return response.json();
 		})

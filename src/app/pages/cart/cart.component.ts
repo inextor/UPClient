@@ -30,7 +30,18 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
     this.fetchCartItems();
   }
 
-  public fetchCartItems() {
+  public fetchCartItems() 
+  {
+    let item_ids = this.rest.getCartItems().reduce((p,c)=>{
+      p.push( c.item_id );
+    },[]);
+    
+
+    let params = this.rest.getUrlParams({
+      'id,' :  item_ids.join(',')
+    })
+
+
     // Assign a sample array of fictitious cart items
     this.cart_items = [
       { name: 'Fictitious Product 1', quantity: 2, price: 10.50 },
