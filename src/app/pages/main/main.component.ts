@@ -13,28 +13,24 @@ import { HeaderComponent } from "../../components/header/header.component";
 })
 export class MainComponent extends BaseComponent
 {
-	item_info_list:any[] = [];
-
-
+	item_info_list: any[] = [];
 
 	ngOnInit(): void
 	{
-
 		fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php?limit=20')
-		.then((response)=>
-		{
-			return response.json();
-		})
-		.then((response)=>
-		{
-			this.item_info_list = response.data;
-		})
-		.catch((error)=>
-		{
-			console.log(error);
-		});
+			.then((response) =>
+			{
+				return response.json();
+			})
+			.then((response) =>
+			{
+				this.item_info_list = response.data;
+			})
+			.catch((error) =>
+			{
+				console.log(error);
+			});
 	}
-
 	addToCart(item_id: number): void
 	{
 		this.rest.addToCart(item_id, 1);

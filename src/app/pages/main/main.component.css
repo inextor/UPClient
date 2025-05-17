@@ -6,7 +6,7 @@
 	background-color: #f8f8f8; /* Light background */
 	color: #333;
 }
-
+ 
 /* Page Container */
 .product-page-container {
 	max-width: 1200px;
@@ -17,7 +17,7 @@
 	border-radius: 8px; /* Slightly rounded corners for the container */
 }
 
-
+/* Sub Header and Sorting */
 
 .results-count {
 	margin-right: 15px; /* Space between count and sort */
@@ -40,12 +40,10 @@
 	cursor: pointer; /* Indicate it's interactive */
 }
 
-/* Product Grid Layout */
+/* Product Grid */
 .product-grid {
 	display: grid;
-	/* Create 3 columns, each taking equal space (1 fraction) */
-	grid-template-columns: repeat(3, 1fr);
-	/* Gap between grid items */
+	grid-template-columns: repeat(3, 1fr); /* 3 columns */
 	gap: 25px;
 }
 
@@ -61,14 +59,12 @@
 	flex-direction: column; /* Stack elements vertically */
 	justify-content: space-between; /* Push price towards bottom */
 }
-
 .product-card:hover {
 	box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Add shadow on hover */
 	border-color: #ddd; /* Slightly darken border on hover */
 }
-
 /* Highlight style for the first card (or any card with this class) */
-.product-card.highlight {
+ .product-card.highlight {
 	border: 1px solid #bbb; /* Slightly darker border for highlight */
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Optional subtle shadow for highlight */
 }
@@ -93,7 +89,7 @@
 	flex-shrink: 0; /* Prevent info from shrinking */
 }
 
-.product-title {
+ .product-title {
 	font-size: 1em;
 	font-weight: 600;
 	margin-top: 0; /* Reset margin */
@@ -102,14 +98,13 @@
 	line-height: 1.3; /* Adjust line height for readability */
 }
 
-.product-meta {
+ .product-meta {
 	font-size: 0.8em;
 	color: #777;
 	margin-bottom: 10px;
 	line-height: 1.3;
 }
-
-.product-price {
+ .product-price {
 	font-size: 1em;
 	font-weight: bold;
 	color: #000;

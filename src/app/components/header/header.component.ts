@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent extends BaseComponent implements OnInit {
+export class HeaderComponent extends BaseComponent
+ implements OnInit {
   ngOnInit(): void {
     console.log('rest.bearer:', this.rest.bearer);
   }
