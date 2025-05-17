@@ -94,7 +94,7 @@ export class RestService
 
 		const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';
 		return fetch(baseUrl + '?' + p.toString())
-		.then((response) =>j
+		.then((response) =>
 		{
 			return response.json();
 		})
