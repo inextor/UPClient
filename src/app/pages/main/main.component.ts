@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { BaseComponent } from '../base/base.component';
 
 import { RestService } from '../../services/rest.service';
+import { HeaderComponent } from "../../components/header/header.component";
 @Component({
 	selector: 'app-main',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, HeaderComponent],
 	templateUrl: './main.component.html',
 	styleUrl: './main.component.css'
 })
