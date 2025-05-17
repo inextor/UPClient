@@ -48,7 +48,7 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 	this.rest.getItems(params)
 	.then((response) =>
 	{
-		this.cart_items = response.map((item_info) =>
+		this.cart_items = response.map((item_info:any) =>
 		{
 			let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
 			return {...cart_item, ...item_info};
