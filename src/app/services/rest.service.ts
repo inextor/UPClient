@@ -61,17 +61,17 @@ export class RestService
 		}
 	}
 
-	getUrlParams(Object:any):URLSearchParams
+	getUrlParams(obj:any):URLSearchParams
 	{
-		if (Object === null || Object === undefined) {
-			Object = {};
+		if (obj === null || obj === undefined) {
+			obj = {};
 		}
 		const params = new URLSearchParams();
-		for (const key in Object)
+		for (const key in obj)
 		{
-			if (Object.prototype.hasOwnProperty.call(Object, key))
+			if (obj.hasOwnProperty(key))
 			{
-				params.set(key, String(Object[key]));
+				params.set(key, String(obj[key]));
 			}
 		}
 		return params;
