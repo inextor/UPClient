@@ -1,5 +1,5 @@
 <div style="background-color: #133563; color: white; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100;">
-
+	<app-header></app-header>
 </div>
 <div class="product-page-container" style="padding: 0 20px">
 
@@ -33,7 +33,7 @@
 						</text>
 					</svg>
 				</div>
-				
+
 				<h2 class="product-title">{{item_info.item.name}}</h2>
 				<p class="product-meta">{{item_info?.category?.name}}</p>
 				<p class="product-price" *ngIf="item_info.prices.length">${{item_info.prices[0].price}}</p>
