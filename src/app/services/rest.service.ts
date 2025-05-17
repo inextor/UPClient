@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetEmpty } from '../models/GetEmpty';
 import { Ecommerce } from '../models/RestModels';
+import { CartItemInfo } from '../models/RestModels';
 
 @Injectable
   ({
@@ -16,7 +17,7 @@ export class RestService {
   public cartItemCount: number = 0;
   constructor() {
   }
-
+ 
   addToCart(item_id: number, qty: number): void {
     const cart: { item_id: number; qty: number }[] = JSON.parse(
       localStorage.getItem('cart') || '[]',
@@ -32,20 +33,29 @@ export class RestService {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  removeFromCart(item_id: number): void {
+  removeFromCart(item_id: number): CartItemInfo[] {
     let cart: { item_id: number; qty: number }[] = JSON.parse(localStorage.getItem('cart') || '[]');
     const initialLength = cart.length;
 
 		cart = cart.filter((item) => item.item_id !== item_id);
 
-		// Only update local storage if an item was actually removed
 		if (cart.length < initialLength)
 		{
 			localStorage.setItem('cart', JSON.stringify(cart));
+ return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
+		} else {
+ return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
 		}
   }
 
-  public getCartItems(): { item_id: number; qty: number }[] {
+  clearCart(): CartItemInfo[] {
+ localStorage.removeItem('cart');
+ return [];
+		}
+  }
+
+  public getCartItems():CartItemInfo[] 
+  {
     try {
       const cartData = localStorage.getItem('cart');
       return cartData ? JSON.parse(cartData) : [];
@@ -54,6 +64,26 @@ export class RestService {
       return [];
     }
   }
+
+  getItems()
+  {
+
+    fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php')
+    .then((response) =>
+    {
+      return response.json();
+    })
+    .then((response) =>
+    {
+      this.item_info_list = response.data;
+    })
+    .catch((error) =>
+    {
+      console.log(error);
+    });
+  }
+
+  
 
   // Example get method (assuming you will add HttpClient later)
   get(url: string): Observable<any> {

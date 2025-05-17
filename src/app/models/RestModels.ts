@@ -8,3 +8,11 @@ export interface Ecommerce {
   logo_image_id?: number;
   preferences_id: number;
 }
+
+
+export interface CartItemInfo
+{
+  item_id: number;
+  qty: number;
+  item_info: any;
+}
