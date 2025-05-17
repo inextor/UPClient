@@ -1,10 +1,27 @@
-<div class="cart-container">
+show<div class="cart-container">
     <h2>Shopping Cart</h2>
 
     <ul>
+
+    </ul>
+
+    <table *ngIf="cart_items.length > 0">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
         <li *ngFor="let item of cart_items">
             {{ item.name }} - Quantity: {{ item.quantity }} - Item Total: {{ item.quantity * item.price }}
         </li>
+
+        </tbody>
+    </table>
     </ul>
 
     <p *ngIf="cart_items.length > 0">

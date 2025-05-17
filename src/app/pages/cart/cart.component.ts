@@ -9,7 +9,11 @@ import { Component, OnInit } from '@angular/core'; // Make sure OnInit is import
 })
 export class CartComponent implements OnInit { // Implement OnInit
 
-  public cart_items: any[] = []; // Add this line
+  public cart_items: any[] = [ // Add this line
+ { name: 'Product A', quantity: 2, price: 10 },
+ { name: 'Product B', quantity: 1, price: 25 },
+ { name: 'Product C', quantity: 3, price: 5 }
+ ];
 
   constructor() { }
 
