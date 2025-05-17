@@ -14,6 +14,8 @@ export class MainComponent extends BaseComponent
 {
 	item_info_list:any[] = [];
 
+
+
 	ngOnInit(): void
 	{
 
@@ -30,5 +32,10 @@ export class MainComponent extends BaseComponent
 		{
 			console.log(error);
 		});
+	}
+
+	addToCart(item_id: number): void
+	{
+		this.restService.addToCart(item_id, 1);
 	}
 }
