@@ -3,7 +3,7 @@
     <h1 style="margin: 0 0 0 20px; font-weight: bold; padding: 10px;">{{rest.ecommerce.name}}</h1>
 </div>
 <div>
-    <a style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;" *ngIf="!rest.bearer">Login</a>
+    <a routerLink="/login" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;" *ngIf="!rest.bearer">Login</a>
     <div *ngIf="rest.bearer" style="display: flex; align-items: center;">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
             <path d="M0 0h24v24H0V0z" fill="none"/>
