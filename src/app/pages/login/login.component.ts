@@ -24,6 +24,7 @@ export class LoginComponent extends BaseComponent
 		evt.preventDefault();
 		evt.stopPropagation();
 
+		// Add login logic here
 		this.is_loading = true;
 
 
