@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core'; // Make sure OnInit is import
 import { RestService } from '../../services/rest.service'; // Import RestService
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { BaseComponent } from '../base/base.component';
+import { HeaderComponent } from '../../components/header/header.component'; // Import HeaderComponent
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule], // Add CommonModule here if you use directives like *ngFor
+  imports: [CommonModule, HeaderComponent], // Add CommonModule here if you use directives like *ngFor
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
