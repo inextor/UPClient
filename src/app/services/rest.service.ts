@@ -95,7 +95,7 @@ export class RestService
 
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
 
-		const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';git 
+		const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';
 		return fetch(baseUrl + '?' + p.toString())
 		.then((response) =>
 		{
