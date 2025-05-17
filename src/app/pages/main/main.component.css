@@ -49,6 +49,7 @@
 
 /* Product Card Styling */
 .product-card {
+	width: 320px;
 	border: 1px solid #eee; /* Default light border */
 	padding: 15px;
 	text-align: center;
