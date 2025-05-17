@@ -14,6 +14,7 @@ export class RestService
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 
+	public cartItemCount: number = 0;
 	constructor()
 	{
 	}
