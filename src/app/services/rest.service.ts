@@ -5,10 +5,9 @@ import { Ecommerce } from '../models/RestModels';
 import { CartItemInfo } from '../models/RestModels';
 
 @Injectable
-  ({
-    providedIn: 'root',
-  })
-export class RestService {
+({ providedIn: 'root' })
+export class RestService
+{
   getLoginLogo() { }
 
   public bearer: string = '';
@@ -34,25 +33,20 @@ export class RestService {
   }
 
   removeFromCart(item_id: number): CartItemInfo[] {
-    let cart: { item_id: number; qty: number }[] = JSON.parse(localStorage.getItem('cart') || '[]');
+    let cart: { item_id: number; qty: number }[] = JSON.parse(localStorage.getItem('cart') || '[]')
     const initialLength = cart.length;
 
-		cart = cart.filter((item) => item.item_id !== item_id);
+    cart = cart.filter((item) => item.item_id !== item_id);
 
-		if (cart.length < initialLength)
-		{
-			localStorage.setItem('cart', JSON.stringify(cart));
- return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
-		} else {
- return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
-		}
+    if (cart.length < initialLength)
+    {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
+    } else {
+      return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
+    }
   }
 
-  clearCart(): CartItemInfo[] {
- localStorage.removeItem('cart');
- return [];
-		}
-  }
 
   public getCartItems():CartItemInfo[] 
   {
@@ -65,10 +59,33 @@ export class RestService {
     }
   }
 
-  getItems()
+  getUrlParams(Object):URLSearchParams
+  {
+    const params = new URLSearchParams();
+    for (const key in Object) {
+      if (Object.prototype.hasOwnProperty.call(Object, key)) {
+        params.set(key, String(Object[key]));
+      }
+    }
+    return params;
+  }
+
+  getUrlParamsFromWindowLocation(overrideParams:Record<string:(string|number)> ={}):URLSearchParams
+  {
+    const params = new URLSearchParams(window.location.search);
+    for (const key in overrideParams) {
+      if (Object.prototype.hasOwnProperty.call(overrideParams, key)) {
+        params.set(key, String(overrideParams[key]));
+      }
+    }
+    return params;
+  }
+
+  getItems(params:URLSearchParams)
   {
 
-    fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php')
+    const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';
+    fetch(baseUrl + '?' + params.toString())
     .then((response) =>
     {
       return response.json();
@@ -83,7 +100,7 @@ export class RestService {
     });
   }
 
-  
+
 
   // Example get method (assuming you will add HttpClient later)
   get(url: string): Observable<any> {

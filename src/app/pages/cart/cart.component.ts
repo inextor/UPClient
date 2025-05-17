@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'; // Make sure OnInit is imported
 import { RestService } from '../../services/rest.service'; // Import RestService
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-cart',
@@ -9,15 +10,16 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent implements OnInit { // Implement OnInit
+export class CartComponent extends BaseComponent implements OnInit { // Implement OnInit
 
-  public cart_items: any[] = [ // Add this line
- ];
+  public cart_items: any[] = [ ];
 
-  constructor(public rest: RestService) { } // Inject RestService
 
-  public get grandTotal(): number {
-    return this.cart_items.reduce((total, item) => {
+
+  public get grandTotal(): number 
+  {
+    return this.cart_items.reduce((total, item) => 
+    {
       const quantity = item.quantity || 0;
       const price = item.price || 0;
       return total + (quantity * price);
@@ -38,7 +40,8 @@ export class CartComponent implements OnInit { // Implement OnInit
   }
   // Add other methods as needed (e.g., to update quantity, remove item)
 
-  public placeOrder() {
+  public placeOrder()
+  {
     console.log('Placing order...');
   }
 }
