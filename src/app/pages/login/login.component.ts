@@ -40,7 +40,7 @@ export class LoginComponent extends BaseComponent
 				password: this.password
 			})
 		})
-		.then((response) =>
+		.then((response:any) =>
 		{
 				this.is_loading = false;
 				this.router.navigate(['/main']);
