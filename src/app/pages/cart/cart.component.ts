@@ -16,9 +16,9 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 
 
 
-  public get grandTotal(): number 
+  public get grandTotal(): number
   {
-    return this.cart_items.reduce((total, item) => 
+    return this.cart_items.reduce((total, item) =>
     {
       const quantity = item.quantity || 0;
       const price = item.price || 0;
@@ -30,16 +30,30 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
     this.fetchCartItems();
   }
 
-  public fetchCartItems() 
+  public fetchCartItems()
   {
-    let item_ids = this.rest.getCartItems().reduce((p,c)=>{
-      p.push( c.item_id );
-    },[]);
-    
 
-    let params = this.rest.getUrlParams({
-      'id,' :  item_ids.join(',')
-    })
+	let reduce_f = (p:any,c:any)=>
+	{
+		p.push(c);
+		return p;
+	}
+
+	let cart_items = this.rest.getCartItems();
+    let item_ids = cart_items.reduce(reduce_f,[]).join(',');
+
+    let params = this.rest.getUrlParams({ 'id,': item_ids })
+
+	this.rest.getItems(params)
+	.then((response) =>
+	{
+		this.cart_items = response.map((item_info) =>
+		{
+			let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
+			return {...cart_item, ...item_info};
+		});
+	})
+
 
 
     // Assign a sample array of fictitious cart items
