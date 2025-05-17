@@ -1,5 +1,13 @@
 <div class="cart-container">
     <h2>Shopping Cart</h2>
-    <p>Your cart items will be displayed here.</p>
-    <!-- Cart items will be added here -->
+
+    <ul>
+        <li *ngFor="let item of cart_items">
+            {{ item.name }} - Quantity: {{ item.quantity }} - Item Total: {{ item.quantity * item.price }}
+        </li>
+    </ul>
+
+    <p *ngIf="cart_items.length > 0">
+        Grand Total: {{ grandTotal }}
+    </p>
 </div>

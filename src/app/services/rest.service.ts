@@ -45,6 +45,16 @@ export class RestService {
 		}
   }
 
+  public getCartItems(): { item_id: number; qty: number }[] {
+    try {
+      const cartData = localStorage.getItem('cart');
+      return cartData ? JSON.parse(cartData) : [];
+    } catch (e) {
+      console.error('Error parsing cart data from localStorage:', e);
+      return [];
+    }
+  }
+
   // Example get method (assuming you will add HttpClient later)
   get(url: string): Observable<any> {
     // Placeholder for actual HttpClient call
