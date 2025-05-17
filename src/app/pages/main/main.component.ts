@@ -36,6 +36,6 @@ export class MainComponent extends BaseComponent
 
 	addToCart(item_id: number): void
 	{
-		this.restService.addToCart(item_id, 1);
+		this.rest.addToCart(item_id, 1);
 	}
 }

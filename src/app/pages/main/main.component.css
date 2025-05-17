@@ -146,3 +146,25 @@
 		font-size: 1.5em; /* Adjust heading size */
 	}
 }
+
+/* Add to Cart Button */
+.add-to-cart-button {
+	background-color: #007bff; /* Primary blue color */
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 15px; /* Space above the button */
+	border-radius: 5px; /* Rounded corners */
+	cursor: pointer; /* Indicate it's clickable */
+	transition: background-color 0.3s ease; /* Smooth hover effect */
+	display: flex; /* Use flexbox to align content */
+	align-items: center; /* Vertically center items */
+	justify-content: center; /* Horizontally center items */
+}
+.add-to-cart-button:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+}
