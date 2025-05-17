@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core'; // Make sure OnInit is imported
+import { RestService } from '../../services/rest.service'; // Import RestService
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [], // Add CommonModule here if you use directives like *ngFor
+  imports: [CommonModule], // Add CommonModule here if you use directives like *ngFor
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit { // Implement OnInit
 
   public cart_items: any[] = [ // Add this line
- { name: 'Product A', quantity: 2, price: 10 },
- { name: 'Product B', quantity: 1, price: 25 },
- { name: 'Product C', quantity: 3, price: 5 }
  ];
 
-  constructor() { }
+  constructor(public rest: RestService) { } // Inject RestService
 
   public get grandTotal(): number {
     return this.cart_items.reduce((total, item) => {
@@ -25,17 +24,21 @@ export class CartComponent implements OnInit { // Implement OnInit
     }, 0);
   }
 
-
- 
   ngOnInit(): void { // Implement ngOnInit
     this.fetchCartItems();
   }
 
   public fetchCartItems() {
-    // Fetch cart data and populate cart_items
-    // This is where you'll add your logic to get cart data
-    // Example: this.cartItems = yourCartService.getCartItems();
+    // Assign a sample array of fictitious cart items
+    this.cart_items = [
+      { name: 'Fictitious Product 1', quantity: 2, price: 10.50 },
+      { name: 'Fictitious Product 2', quantity: 1, price: 30.00 },
+      { name: 'Fictitious Product 3', quantity: 3, price: 5.75 }
+    ];
   }
-
   // Add other methods as needed (e.g., to update quantity, remove item)
+
+  public placeOrder() {
+    console.log('Placing order...');
+  }
 }

@@ -4,6 +4,7 @@
 </div>
 <div>
   <span *ngIf="!rest.bearer">
+ <a [routerLink]="['/cart']">Cart</a>
     <a [routerLink]="['/login']" class="login-button">Iniciar Sesión</a>
   </span>
   <div *ngIf="rest.bearer" style="display: flex; align-items: center;">

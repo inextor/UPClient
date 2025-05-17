@@ -7,34 +7,97 @@
     margin-bottom: 20px;
 }
 
-.cart-container table {
-    width: 100%;
-    border-collapse: collapse; /* Collapse borders to avoid double lines */
+.cart-item {
+    border: 1px solid #ddd;
     margin-bottom: 20px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between flex items */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
-.cart-container th,
-.cart-container td {
-    border: 1px solid #ddd; /* Add a light grey border */
-    padding: 10px;
-    text-align: left; /* Align text to the left */
+.cart-item-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.cart-container th {
-    background-color: #f2f2f2; /* Add a light grey background to headers */
-    font-weight: bold;
+.item-checkbox input {
+    margin-right: 10px;
 }
 
-.cart-container tr:nth-child(even) {
-    background-color: #f9f9f9; /* Add a subtle background to even rows */
+.item-image img {
+    width: 100px; /* Adjust as needed */
+    height: auto;
 }
 
-.cart-container .product-total {
-    font-weight: bold; /* Make the item total bold */
+.item-details {
+    flex-grow: 1; /* Allow details to take up available space */
 }
 
-.cart-container p {
+.item-details h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.item-details p {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-selector input {
+    width: 40px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.item-price {
+    width: 100%;
+    max-width: 100px; /* Adjust as needed */
+    text-align: right;
+}
+
+.item-actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.subtotal {
     text-align: right; /* Align the grand total to the right */
     font-size: 1.2em;
     font-weight: bold;
+    margin-top: 20px;
 }
+
+/* Basic responsive adjustment */
+@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cart-item-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .item-price {
+        width: auto;
+        text-align: left;
+    }
+    .item-actions {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+}
+
