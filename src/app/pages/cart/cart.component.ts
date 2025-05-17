@@ -33,17 +33,19 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 
   public fetchCartItems()
   {
+    let cart_items = this.rest.getCartItems();
 
-	let reduce_f = (p:any,c:any)=>
-	{
-		p.push(c);
-		return p;
-	}
+    // 1. After `let cart_items = this.rest.getCartItems();`, add a check
+    if (cart_items.length === 0) {
+      this.cart_items = [];
+      return;
+    }
 
-	let cart_items = this.rest.getCartItems();
-    let item_ids = cart_items.reduce(reduce_f,[]).join(',');
+    // 2. Change `let item_ids = cart_items.reduce(reduce_f,[]).join(',');` to `let item_ids = cart_items.map(item => item.item_id).join(',');`
+    let item_ids = cart_items.map(item => item.item_id).join(',');
 
-    let params = this.rest.getUrlParams({ 'id,': item_ids })
+    // 3. Change `let params = this.rest.getUrlParams({ 'id,': item_ids })` to `let params = this.rest.getUrlParams({ 'id': item_ids })`
+    let params = this.rest.getUrlParams({ 'id': item_ids })
 
 	this.rest.getItems(params)
 	.then((response) =>
@@ -63,14 +65,6 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 		});
 	})
 
-
-
-    // Assign a sample array of fictitious cart items
-    this.cart_items = [
-      { name: 'Fictitious Product 1', quantity: 2, price: 10.50 },
-      { name: 'Fictitious Product 2', quantity: 1, price: 30.00 },
-      { name: 'Fictitious Product 3', quantity: 3, price: 5.75 }
-    ];
   }
   // Add other methods as needed (e.g., to update quantity, remove item)
 
