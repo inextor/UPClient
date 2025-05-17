@@ -3,5 +3,12 @@
     <h1 style="margin: 0 0 0 20px; font-weight: bold; padding: 10px;">{{rest.ecommerce.name}}</h1>
 </div>
 <div>
-    <a style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" *ngIf="!rest.bearer">Login</a>
+    <a style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;" *ngIf="!rest.bearer">Login</a>
+    <div *ngIf="rest.bearer" style="display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.09 20.45 5.5 22 7.21 22H20v-2H7.21c-.71 0-1.1-.45-1.45-1.01l-.99-1.8-.01-.01L10 14l5.55-.01z"/>
+        </svg>
+        <span style="color: white; margin-left: 5px; font-weight: bold;">{{cartItemCount}}</span>
+    </div>
 </div>
