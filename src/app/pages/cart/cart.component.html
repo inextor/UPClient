@@ -18,7 +18,8 @@
 					<input type="number" value="{{ item.quantity }}">
 					<button>+</button>
 				</div>
-				<li>Item Name: {{ item.name }}, Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}</li>
+				<li>Item Name: {{ item.name }}, Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}</li>				
+				<div class="item-total">{{ item.prices[0].price * item.quantity }}</div>
 			</div>
 		</div>
 
