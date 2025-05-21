@@ -28,7 +28,7 @@ export class LoginComponent extends BaseComponent
 		this.is_loading = true
 
 
-		fetch('https://uniformesprofesionales.integranet.xyz/api/login.php',
+		fetch(this.rest.base_url+'/login.php',
 		{
 			method: 'POST',
 			headers: {
@@ -40,8 +40,16 @@ export class LoginComponent extends BaseComponent
 				password: this.password
 			})
 		})
+		.then((response) =>
+		{
+			if( response.status == 200 )
+				return response.json()
+			throw 'El usuario o la contraseña son incorrectos'
+		})
 		.then((response:any) =>
 		{
+				console.log( response );
+
 				this.is_loading = false;
 				this.router.navigate(['/main']);
 				localStorage.setItem('token', response.token);

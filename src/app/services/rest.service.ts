@@ -10,11 +10,9 @@ export class RestService
 {
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
+	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api/';
 
 	public cartItemCount: number = 0;
-	constructor()
-	{
-	}
 
 	addToCart(item_id: number, qty: number): void
 	{
@@ -92,14 +90,18 @@ export class RestService
 
 	getItems(p:URLSearchParams | Object)
 	{
-
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
 
-		const baseUrl = 'https://uniformesprofesionales.integranet.xyz/api/item_info.php';
+		const baseUrl = this.base_url+'/item_info.php';
 		return fetch(baseUrl + '?' + p.toString())
 		.then((response) =>
 		{
-			return response.json();
+			if( response.status >= 200 && response.status < 300 )
+			{
+				return response.json();
+			}
+
+			throw 'Ocurrio un error al obtener los items'
 		})
 		.then((response) =>
 		{

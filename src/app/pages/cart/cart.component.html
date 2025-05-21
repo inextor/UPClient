@@ -1,49 +1,48 @@
 <app-header></app-header>
 
 <div class="cart-container">
-    <h2>Shopping Cart</h2>
+	<h2>Shopping Cart</h2>
 
-    <div *ngIf="cart_items.length > 0">
-        <div class="cart-items">
-            <div class="cart-item" *ngFor="let item of cart_items">
-                <div class="item-checkbox">
-                    <input type="checkbox">
-                </div>
-                <div class="item-image">
-                    <!-- Placeholder for product image -->
-                    <img src="" alt="Product Image">
-                </div>
-                <div class="item-details">
-                    <h3>{{ item.name }}</h3>
-                    <!-- Placeholder for item details like color, size, availability -->
-                    <p>Details: Color, Size, etc.</p>
-                    <p>Availability: In Stock</p>
-                </div>
-                <div class="item-quantity">
-                    <button>-</button>
-                    <input type="number" value="{{ item.quantity }}">
-                    <button>+</button>
-                </div>
-                <div class="item-price">
-                    <p>{{ item.price }}</p>
-                </div>
-                <div class="item-actions">
-                    <button>Eliminar</button>
-                </div>
-            </div>
-        </div>
+	<div *ngIf="cart_items.length > 0">
+		<div class="cart-items">
+			<div class="cart-item" *ngFor="let item of cart_items">
+				<div class="item-checkbox">
+					<input type="checkbox">
+				</div>
+				<div class="item-image">
+					<!-- Placeholder for product image -->
+					<img src="" alt="Product Image">
+				</div>
+				<div class="item-details">
+					<h3>{{ item.name }}</h3>
+					<!-- Placeholder for item details like color, size, availability -->
+					<p>Details: Color, Size, etc.</p>
+					<p>Availability: In Stock</p>
+				</div>
+				<div class="item-quantity">
+					<button>-</button>
+					<input type="number" value="{{ item.quantity }}">
+					<button>+</button>
+				</div>
+				<div class="item-price">
+					<p>{{ item.price }}</p>
+				</div>
+				<div class="item-actions">
+					<button>Eliminar</button>
+				</div>
+			</div>
+		</div>
 
-        <div class="cart-summary">
-            <p class="subtotal">
-                Subtotal ({{ cart_items.length }} productos): {{ grandTotal }}
-            </p>
-            <button class="order-button" (click)="placeOrder()">Realizar pedido</button>
-            <!-- Add buttons for checkout or other actions here -->
-        </div>
-    </div>
-    
-    <div *ngIf="cart_items.length === 0">
-        <p>Tu carrito de compras está vacío.</p>
-    </div>
+		<div class="cart-summary">
+			<p class="subtotal">
+				Subtotal ({{ cart_items.length }} productos): {{ grandTotal }}
+			</p>
+			<button class="order-button" (click)="placeOrder()">Realizar pedido</button>
+			<!-- Add buttons for checkout or other actions here -->
+		</div>
+	</div>
 
+	<div *ngIf="cart_items.length === 0">
+		<p>Tu carrito de compras está vacío.</p>
+	</div>
 </div>
