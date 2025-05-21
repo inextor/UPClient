@@ -6,9 +6,6 @@
 	<div *ngIf="cart_items.length > 0">
 		<div class="cart-items">
 			<div class="cart-item" *ngFor="let item of cart_items">
-				<div class="item-checkbox">
-					<input type="checkbox">
-				</div>
 				<div class="item-image">
 					<!-- Placeholder for product image -->
 					<img src="" alt="Product Image">
@@ -16,19 +13,21 @@
 				<div class="item-quantity">
 					<!-- gemini decrement this qty here add styles -->
 					<button (click)="decrementQuantity(item)">-</button>
-					<input type="number" [(ngModel)]="item.quantity">
+					{{ item.qty | number }}
 					<!-- gemini increment this qty here add styles -->
-
 					<button (click)="incrementQuantity(item)">+</button>
-				</div>				
-				<li>Item Name: {{ item.name }}, Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}</li>				
-				<div class="item-total">{{ item.prices[0].price * item.quantity }}</div>
+				</div>
+				<li>
+					Item Name: {{ item.name }},
+					Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}
+				</li>
+				<div class="item-total">{{ item.prices[0].price * item.qty}}</div>
 			</div>
 		</div>
 
 		<div class="cart-summary">
 			<p class="subtotal">
-				Subtotal ({{ cart_items.length }} productos): {{ grandTotal }}
+				Subtotal ({{ total_qty }} productos): {{ total | currency }}
 			</p>
 			<button class="order-button" (click)="placeOrder()">Realizar pedido</button>
 			<!-- Add buttons for checkout or other actions here -->
