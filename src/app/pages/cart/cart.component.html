@@ -14,10 +14,13 @@
 					<img src="" alt="Product Image">
 				</div>
 				<div class="item-quantity">
-					<button>-</button>
-					<input type="number" value="{{ item.quantity }}">
-					<button>+</button>
-				</div>
+					<!-- gemini decrement this qty here add styles -->
+					<button (click)="decrementQuantity(item)">-</button>
+					<input type="number" [(ngModel)]="item.quantity">
+					<!-- gemini increment this qty here add styles -->
+
+					<button (click)="incrementQuantity(item)">+</button>
+				</div>				
 				<li>Item Name: {{ item.name }}, Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}</li>				
 				<div class="item-total">{{ item.prices[0].price * item.quantity }}</div>
 			</div>

@@ -7,11 +7,15 @@ import { HeaderComponent } from '../../components/header/header.component'; // I
 @Component({
 	selector: 'app-cart',
 	standalone: true,
-	imports: [CommonModule, HeaderComponent], // Add CommonModule here if you use directives like *ngFor
+	imports: [CommonModule, HeaderComponent, FormsModule], // Add CommonModule here if you use directives like *ngFor
 	templateUrl: './cart.component.html',
 	styleUrl: './cart.component.css',
+
 })
-export class CartComponent extends BaseComponent implements OnInit { // Implement OnInit
+export class CartComponent extends BaseComponent implements OnInit {
+decrementQuantity(_t11: any) {
+throw new Error('Method not implemented.');
+} // Implement OnInit
 
 	public cart_items: any[] = [ ];
 
@@ -20,8 +24,8 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 		return this.cart_items.reduce((total, item) =>
 		{
 			const quantity = item.quantity || 0;
-			const price = item.price || 0;
-			return total + (quantity * price);
+			const price = (item.prices && item.prices.length > 0) ? item.prices[0].price : 0;
+			return total + (quantity * price) ;
 		}, 0);
 	}
 
@@ -64,8 +68,22 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 			console.log(this.cart_items);
 		})
 	}
-	// Add other methods as needed (e.g., to update quantity, remove item)
 
+	updateQuantity(item: any, change: number): void {
+		const index = this.cart_items.findIndex(cartItem => cartItem.item_id === item.item_id);
+		if (index !== -1) {
+			const newQuantity = this.cart_items[index].quantity + change;
+			if (newQuantity > 0) {
+				this.cart_items[index].quantity = newQuantity;
+			} else {
+				// Optional: remove item if quantity becomes 0
+				this.cart_items.splice(index, 1);
+			}
+			// Re-calculate grand total if needed, or if it's a getter it will update automatically
+			// this.grandTotal = this.calculateGrandTotal();
+		}
+	}
+	
 	public placeOrder()
 	{
 		console.log('Placing order...');
