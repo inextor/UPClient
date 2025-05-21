@@ -1,40 +1,41 @@
 <app-header></app-header>
 
 <div class="cart-container">
-	<h2>Shopping Cart</h2>
+  <h2 class="cart-title">Carrito</h2>
 
-	<div *ngIf="cart_items.length > 0">
-		<div class="cart-items">
-			<div class="cart-item" *ngFor="let item of cart_items">
-				<div class="item-image">
-					<!-- Placeholder for product image -->
-					<img src="" alt="Product Image">
-				</div>
-				<div class="item-quantity">
-					<!-- gemini decrement this qty here add styles -->
-					<button (click)="decrementQuantity(item)">-</button>
-					{{ item.qty | number }}
-					<!-- gemini increment this qty here add styles -->
-					<button (click)="incrementQuantity(item)">+</button>
-				</div>
-				<li>
-					Item Name: {{ item.name }},
-					Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}
-				</li>
-				<div class="item-total">{{ item.prices[0].price * item.qty}}</div>
-			</div>
-		</div>
+  <div *ngIf="cart_items.length > 0">
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cart_items">
+        <div class="item-image">
+          <img [src]="item.imageUrl || 'assets/placeholder-product.jpg'" alt="Product Image">
+        </div>
 
-		<div class="cart-summary">
-			<p class="subtotal">
-				Subtotal ({{ total_qty }} productos): {{ total | currency }}
-			</p>
-			<button class="order-button" (click)="placeOrder()">Realizar pedido</button>
-			<!-- Add buttons for checkout or other actions here -->
-		</div>
-	</div>
+        <div class="item-details">
+          <h3 class="item-name">{{ item.name }}</h3>
+          <p class="item-category">{{ item.category?.name || 'N/A' }}</p>
+          <p class="item-price">{{ item.prices[0].price | currency }}</p>
+        </div>
 
-	<div *ngIf="cart_items.length === 0">
-		<p>Tu carrito de compras está vacío.</p>
-	</div>
+        <div class="item-quantity">
+          <button class="quantity-btn" (click)="decrementQuantity(item)">−</button>
+          <span class="quantity-value">{{ item.qty | number }}</span>
+          <button class="quantity-btn" (click)="incrementQuantity(item)">+</button>
+        </div>
+
+        <div class="item-total">{{ item.prices[0].price * item.qty | currency }}</div>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <p class="subtotal">
+        Subtotal ({{ total_qty }} items): <strong>{{ total | currency }}</strong>
+      </p>
+      <button class="order-button" (click)="placeOrder()">Checkout</button>
+    </div>
+  </div>
+
+  <div *ngIf="cart_items.length === 0" class="empty-cart">
+    <p>🛒 Your shopping cart is empty.</p>
+    <a routerLink="/products" class="continue-shopping">Continue Shopping</a>
+  </div>
 </div>

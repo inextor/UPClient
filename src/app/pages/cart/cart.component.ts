@@ -3,29 +3,31 @@ import { RestService } from '../../services/rest.service'; // Import RestService
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { BaseComponent } from '../base/base.component';
 import { HeaderComponent } from '../../components/header/header.component'; // Import HeaderComponent
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'app-cart',
 	standalone: true,
-	imports: [CommonModule, HeaderComponent, FormsModule], // Add CommonModule here if you use directives like *ngFor
+	imports: [CommonModule, HeaderComponent,FormsModule ], // Add CommonModule here if you use directives like *ngFor
 	templateUrl: './cart.component.html',
 	styleUrl: './cart.component.css',
-
 })
-export class CartComponent extends BaseComponent implements OnInit {
-decrementQuantity(_t11: any) {
-throw new Error('Method not implemented.');
-} // Implement OnInit
+export class CartComponent extends BaseComponent implements OnInit
+{
+
+
 
 	public cart_items: any[] = [ ];
+    total: number = 0;
+    total_qty:number = 0;
 
 	public get grandTotal(): number
 	{
 		return this.cart_items.reduce((total, item) =>
 		{
 			const quantity = item.quantity || 0;
-			const price = (item.prices && item.prices.length > 0) ? item.prices[0].price : 0;
-			return total + (quantity * price) ;
+			const price = item.price || 0;
+			return total + (quantity * price);
 		}, 0);
 	}
 
@@ -59,33 +61,50 @@ throw new Error('Method not implemented.');
 				return;
 			}
 
-
 			this.cart_items = response.map((item_info:any) =>
 			{
 				let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
 				return {...cart_item, ...item_info};
 			});
+			this.updateTotal();
 			console.log(this.cart_items);
 		})
 	}
+	// Add other methods as needed (e.g., to update quantity, remove item)
+	updateTotal()
+	{
+		this.total = this.cart_items.reduce((total, item) =>
+		{
+			const quantity = item.qty || 0;
+			const price = item.prices[0].price || 0;
+			return total + (quantity * price);
+		}, 0);
 
-	updateQuantity(item: any, change: number): void {
-		const index = this.cart_items.findIndex(cartItem => cartItem.item_id === item.item_id);
-		if (index !== -1) {
-			const newQuantity = this.cart_items[index].quantity + change;
-			if (newQuantity > 0) {
-				this.cart_items[index].quantity = newQuantity;
-			} else {
-				// Optional: remove item if quantity becomes 0
-				this.cart_items.splice(index, 1);
-			}
-			// Re-calculate grand total if needed, or if it's a getter it will update automatically
-			// this.grandTotal = this.calculateGrandTotal();
-		}
+		this.total_qty = this.cart_items.reduce((total, item) =>
+		{
+			const quantity = item.qty || 0;
+			return total + quantity;
+		}, 0);
 	}
-	
+
 	public placeOrder()
 	{
 		console.log('Placing order...');
+	}
+
+	decrementQuantity(x: any)
+	{
+		x.qty--;
+		if( x.qty < 0 )
+		{
+			let index = this.cart_items.findIndex(item=>item == x);
+			this.cart_items.splice(index,1);
+		}
+		this.updateTotal();
+	}
+	incrementQuantity(x:any)
+	{
+		x.qty++;
+		this.updateTotal();
 	}
 }
