@@ -13,20 +13,12 @@
 					<!-- Placeholder for product image -->
 					<img src="" alt="Product Image">
 				</div>
-				<div class="item-details">
-					<h3>{{ item.name }}</h3>
-					<!-- Placeholder for item details like color, size, availability -->
-					<p>Details: Color, Size, etc.</p>
-					<p>Availability: In Stock</p>
-				</div>
 				<div class="item-quantity">
 					<button>-</button>
 					<input type="number" value="{{ item.quantity }}">
 					<button>+</button>
 				</div>
-				<div class="item-price">
-					<p>{{ item.price }}</p>
-				</div>
+				<li>Item Name: {{ item.name }}, Category Name: {{ item.category.name }}, Price: {{ item.prices[0].price }}</li>
 				<div class="item-actions">
 					<button>Eliminar</button>
 				</div>
