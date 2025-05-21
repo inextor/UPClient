@@ -18,10 +18,7 @@
 					<input type="number" value="{{ item.quantity }}">
 					<button>+</button>
 				</div>
-				<li>Item Name: {{ item.name }}, Category Name: {{ item.category.name }}, Price: {{ item.prices[0].price }}</li>
-				<div class="item-actions">
-					<button>Eliminar</button>
-				</div>
+				<li>Item Name: {{ item.name }}, Category Name: {{ item.category ? item.category.name : 'N/A' }}, Price: {{ item.prices[0].price }}</li>
 			</div>
 		</div>
 
