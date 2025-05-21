@@ -61,8 +61,8 @@ export class CartComponent extends BaseComponent implements OnInit { // Implemen
 				let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
 				return {...cart_item, ...item_info};
 			});
+			console.log(this.cart_items);
 		})
-
 	}
 	// Add other methods as needed (e.g., to update quantity, remove item)
 
