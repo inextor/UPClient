@@ -15,12 +15,13 @@ import { RestService } from '../../services/rest.service';
 export class BaseComponent
 {
 	public rest: RestService;
- router: Router;
+	public is_loading: boolean = false;
+	router: Router;
 
 	constructor(public injector: Injector)
 	{
- this.rest = this.injector.get(RestService);
- this.router = this.injector.get(Router);
+		this.rest = this.injector.get(RestService);
+		this.router = this.injector.get(Router);
 	}
 
 	showError(error: any) {
