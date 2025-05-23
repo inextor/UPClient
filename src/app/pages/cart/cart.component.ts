@@ -15,8 +15,6 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent extends BaseComponent implements OnInit
 {
 
-
-
 	public cart_items: any[] = [ ];
     total: number = 0;
     total_qty:number = 0;
@@ -95,7 +93,7 @@ export class CartComponent extends BaseComponent implements OnInit
 	decrementQuantity(x: any)
 	{
 		x.qty--;
-		if( x.qty < 0 )
+		if( x.qty <= 0 )
 		{
 			let index = this.cart_items.findIndex(item=>item == x);
 			this.cart_items.splice(index,1);
@@ -106,5 +104,21 @@ export class CartComponent extends BaseComponent implements OnInit
 	{
 		x.qty++;
 		this.updateTotal();
+	}
+
+	confirmCheckout()
+	{
+		let x = document.querySelector('.confirm-dialog') as any;
+
+		if( x )
+		{
+			x.open = true;
+		}
+	}
+
+
+	closeConfirmDialog()
+	{
+		document.querySelector('.confirm-dialog').open = false;
 	}
 }
