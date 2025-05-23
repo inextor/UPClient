@@ -176,6 +176,16 @@
   }
 }
 
-.confirm-dialog::backdrop {
-  filter: blur(5px);
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  filter: blur(8px); /* Initial blur */
+  z-index: 100; /* Lower than dialog, higher than other content */
+  display: none; /* Initially hidden */
 }
+
+
