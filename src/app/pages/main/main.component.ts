@@ -14,8 +14,8 @@ import { HeaderComponent } from "../../components/header/header.component";
 export class MainComponent extends BaseComponent
 {
 	item_info_list: any[] = [];
-    total: number = 1;
     current_page:number = 1;
+    total_pages: number = 1;
 
 	ngOnInit(): void
 	{
@@ -33,13 +33,11 @@ export class MainComponent extends BaseComponent
 			fetch(url)
 			.then((response:any) =>
 			{
-				this.total = response.total/100+(response.total%100?1:0);
-				this.current_page =
 				return response.json();
 			})
 			.then((response) =>
 			{
-				this.total_pages = (response.total/100)+(response.total%100?1:0);
+				this.total_pages = response.total/100+(response.total%100?1:0);
 				this.item_info_list = response.data;
 			})
 			.catch((error) =>
