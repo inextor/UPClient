@@ -20,14 +20,15 @@ export class MainComponent extends BaseComponent
 	ngOnInit(): void
 	{
 		this.route.queryParamMap.subscribe((params) =>
-		{			
+		{
+			let page_size = 10;
 			if( params.has('page') )
 			{
 
 				this.current_page =	parseInt(params.get('page') as string);
 			}
 
-			let url = this.rest.base_url+'/item_info.php?limit='+page_size+'&page='+page;
+			let url = this.rest.base_url+'/item_info.php?limit='+page_size+'&page='+this.current_page;
 
 			fetch(url)
 			.then((response:any) =>
