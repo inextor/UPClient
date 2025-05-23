@@ -56,7 +56,42 @@ export class MainComponent extends BaseComponent
 	}
 
 	getPageNumbers(): number[] {
-		return Array.from({ length: this.total_pages }, (_, i) => i + 1);
+		const pageNumbers: number[] = [];
+		const totalPages = this.total_pages;
+		const currentPage = this.current_page;
+		const maxPagesToShow = 5; // You can adjust this number
+
+		if (totalPages <= maxPagesToShow) {
+			// Show all pages if total pages are within the limit
+			for (let i = 1; i <= totalPages; i++) {
+				pageNumbers.push(i);
+			}
+		} else {
+			// Always show the first page
+			pageNumbers.push(1);
+
+			// Show pages around the current page
+			const start = Math.max(2, currentPage - Math.floor((maxPagesToShow - 3) / 2));
+			const end = Math.min(totalPages - 1, currentPage + Math.ceil((maxPagesToShow - 3) / 2));
+
+			if (start > 2) {
+				pageNumbers.push(-1); // Placeholder for ellipsis
+			}
+
+			for (let i = start; i <= end; i++) {
+				pageNumbers.push(i);
+			}
+
+			// Always show the last page
+			if (end < totalPages - 1) {
+				pageNumbers.push(-1); // Placeholder for ellipsis
+			}
+			if (end < totalPages) {
+				pageNumbers.push(totalPages);
+			}
+		}
+
+		return pageNumbers;
 	  }
 
 
