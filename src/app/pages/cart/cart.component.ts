@@ -119,6 +119,11 @@ export class CartComponent extends BaseComponent implements OnInit
 
 	closeConfirmDialog()
 	{
-		document.querySelector('.confirm-dialog').open = false;
+		let x = document.querySelector('.confirm-dialog') as any;
+
+		if( x )
+		{
+			x.open = false;
+		}
 	}
 }
