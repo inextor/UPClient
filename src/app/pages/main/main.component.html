@@ -46,7 +46,7 @@
 
 	<div class="pagination">
 		<button [disabled]="current_page === 1" (click)="previousPage()">Previous</button>
-		<ng-container *ngFor="let page of total_pages">
+		<ng-container *ngFor="let page of page_numbers">
 			<button
 				[class.active]="page === current_page"
 				(click)="goToPage(page)">
