@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // Make sure OnInit is imported
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'; // Make sure OnInit is imported
 import { RestService } from '../../services/rest.service'; // Import RestService
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { BaseComponent } from '../base/base.component';
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent extends BaseComponent implements OnInit
 {
+	@ViewChild('confirmDialog') confirmDialog!: ElementRef<HTMLDialogElement>;
 
 	public cart_items: any[] = [ ];
     total: number = 0;
@@ -108,22 +109,15 @@ export class CartComponent extends BaseComponent implements OnInit
 
 	confirmCheckout()
 	{
-		let x = document.querySelector('.confirm-dialog') as any;
-
-		if( x )
-		{
-			x.open = true;
+		if (this.confirmDialog) {
+			this.confirmDialog.nativeElement.showModal();
 		}
 	}
 
-
 	closeConfirmDialog()
 	{
-		let x = document.querySelector('.confirm-dialog') as any;
-
-		if( x )
-		{
-			x.open = false;
+		if (this.confirmDialog) {
+			this.confirmDialog.nativeElement.close();
 		}
 	}
 }

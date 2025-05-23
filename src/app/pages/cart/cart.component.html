@@ -38,8 +38,7 @@
     <p>🛒 Your shopping cart is empty.</p>
     <a routerLink="/products" class="continue-shopping">Continue Shopping</a>
   </div>
-</div>
-<dialog class="confirm-dialog">
+</div><dialog #confirmDialog class="confirm-dialog">
 	<h2 class="confirm-dialog-title">Confirmar pedido</h2>
 	<p class="confirm-dialog-message">¿Estás seguro de que deseas finalizar tu pedido?</p>
 	<button class="confirm-dialog-button" (click)="confirmCheckout()">Confirmar pedido</button>
