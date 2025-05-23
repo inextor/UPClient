@@ -10,7 +10,7 @@ export class RestService
 {
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
-	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api/';
+	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api';
 
 	public cartItemCount: number = 0;
 

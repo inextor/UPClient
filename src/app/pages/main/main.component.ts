@@ -22,13 +22,14 @@ export class MainComponent extends BaseComponent
 		this.route.queryParamMap.subscribe((params) =>
 		{
 			let page = 1;
+			let page_size = 10;
 
 			if( params.has('page') )
 			{
 				this.current_page =	parseInt(params.get('page') as string);
 			}
 
-			let url = this.rest.base_url+'/api/item_info.php?limit=20&limit=100&page='+page;
+			let url = this.rest.base_url+'/item_info.php?limit='+page_size+'&page='+page;
 
 			fetch(url)
 			.then((response:any) =>
