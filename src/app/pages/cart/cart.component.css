@@ -175,3 +175,7 @@
     justify-self: center;
   }
 }
+
+.confirm-dialog::backdrop {
+  filter: blur(5px);
+}
