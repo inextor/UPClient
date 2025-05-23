@@ -30,7 +30,7 @@
       <p class="subtotal">
         Subtotal ({{ total_qty }} items): <strong>{{ total | currency }}</strong>
       </p>
-      <button class="order-button" (click)="placeOrder()">Checkout</button>
+      <button class="order-button" (click)="confirmCheckout()">Checkout</button>
     </div>
   </div>
 
@@ -39,3 +39,9 @@
     <a routerLink="/products" class="continue-shopping">Continue Shopping</a>
   </div>
 </div>
+<dialog class="confirm-dialog">
+	<h2 class="confirm-dialog-title">Confirmar pedido</h2>
+	<p class="confirm-dialog-message">¿Estás seguro de que deseas finalizar tu pedido?</p>
+	<button class="confirm-dialog-button" (click)="confirmCheckout()">Confirmar pedido</button>
+	<button class="confirm-dialog-button" (click)="closeConfirmDialog()">Cancelar</button>
+</dialog>
