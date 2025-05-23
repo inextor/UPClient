@@ -14,8 +14,8 @@ import { HeaderComponent } from "../../components/header/header.component";
 export class MainComponent extends BaseComponent
 {
 	item_info_list: any[] = [];
-    current_page:number = 1;
-    total_pages: number = 1;
+	total_pages: number = 1;
+	current_page: number = 1;
 
 	ngOnInit(): void
 	{
@@ -26,24 +26,41 @@ export class MainComponent extends BaseComponent
 			if( params.has('page') )
 			{
 				this.current_page =	parseInt(params.get('page') as string);
+			} else {
+				this.current_page = 1;
 			}
+			this.fetchProducts(this.current_page);
+		});
+	}
 
-			let url = this.rest.base_url+'/api/item_info.php?limit=20&limit=100&page='+page;
+	fetchProducts(page: number): void {
+		let url = this.rest.base_url + '/api/item_info.php?limit=100&page=' + page;
 
-			fetch(url)
-			.then((response:any) =>
-			{
-				return response.json();
-			})
-			.then((response) =>
-			{
-				this.total_pages = response.total/100+(response.total%100?1:0);
+		fetch(url)
+			.then((response: any) => response.json())
+			.then((response) => {
+				this.total_pages = Math.ceil(response.total / 100);
 				this.item_info_list = response.data;
 			})
 			.catch((error) =>
 			{
 				console.log(error);
 			});
+	}
+
+	goToPage(page: number): void {
+		if (page >= 1 && page <= this.total_pages && page !== this.current_page) {
+			this.current_page = page;
+			this.fetchProducts(this.current_page);
+		}
+	}
+
+	previousPage(): void {
+		this.goToPage(this.current_page - 1);
+	}
+
+	nextPage(): void {
+		this.goToPage(this.current_page + 1);
 		});
 
 

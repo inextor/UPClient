@@ -43,4 +43,19 @@
 			</article>
 		</ng-container>
 	</main>
+
+	<div class="pagination">
+		<button [disabled]="current_page === 1" (click)="previousPage()">Previous</button>
+		<ng-container *ngFor="let page of total_pages | ngForRepeat">
+			<button
+				[class.active]="page === current_page"
+				(click)="goToPage(page)">
+				{{ page }}
+			</button>
+		</ng-container>
+		<button [disabled]="current_page === total_pages" (click)="nextPage()">Next</button>
+	</div>
+
 </div>
+
+
