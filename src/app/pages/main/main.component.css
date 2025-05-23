@@ -205,7 +205,6 @@
  .pagination span.ellipsis {
 	padding: 8px 5px; /* Padding to align with buttons */
 	color: #777; /* Muted color */
-}
 	justify-content: center; /* Horizontally center items */
 }
 .add-to-cart-button:hover {
