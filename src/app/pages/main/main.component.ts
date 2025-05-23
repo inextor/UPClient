@@ -16,6 +16,7 @@ export class MainComponent extends BaseComponent
 	item_info_list: any[] = [];
     current_page:number = 1;
     total_pages: number = 1;
+    page_numbers: number[] = [];
 
 	ngOnInit(): void
 	{
@@ -54,6 +55,11 @@ export class MainComponent extends BaseComponent
 		this.rest.addToCart(item_id, 1);
 	}
 
+	getPageNumbers(): number[] {
+		return Array.from({ length: this.total_pages }, (_, i) => i + 1);
+	  }
+
+
 	goToPage(page: number) {
 		if (page >= 1 && page <= this.total_pages) {
 		  this.current_page = page;
@@ -83,6 +89,7 @@ export class MainComponent extends BaseComponent
 		  })
 		  .then((response) => {
 			this.total_pages = response.total / 100 + (response.total % 100 ? 1 : 0);
+			this.page_numbers = this.getPageNumbers();
 			this.item_info_list = response.data;
 		  })
 		  .catch((error) => {
