@@ -39,6 +39,7 @@ export class MainComponent extends BaseComponent
 			})
 			.then((response) =>
 			{
+				this.total_pages = (response.total/100)+(response.total%100?1:0);
 				this.item_info_list = response.data;
 			})
 			.catch((error) =>
