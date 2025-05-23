@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent extends BaseComponent implements OnInit
 {
 	@ViewChild('confirmDialog') confirmDialog!: ElementRef<HTMLDialogElement>;
-	@ViewChild('dialogOverlay') dialogOverlay!: ElementRef<HTMLDivElement>;
 
 	public cart_items: any[] = [ ];
     total: number = 0;
@@ -110,17 +109,15 @@ export class CartComponent extends BaseComponent implements OnInit
 
 	confirmCheckout()
 	{
-		if (this.confirmDialog && this.dialogOverlay) {
-			this.dialogOverlay.nativeElement.style.display = 'block';
+		if (this.confirmDialog ) {
 			this.confirmDialog.nativeElement.showModal();
 		}
 	}
 
 	closeConfirmDialog()
 	{
-		if (this.confirmDialog && this.dialogOverlay) {
+		if (this.confirmDialog ) {
 			this.confirmDialog.nativeElement.close();
-			this.dialogOverlay.nativeElement.style.display = 'none';
 		}
 	}
 }

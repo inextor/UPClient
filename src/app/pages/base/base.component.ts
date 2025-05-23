@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services/rest.service';
 
 @Component
@@ -17,11 +17,13 @@ export class BaseComponent
 	public rest: RestService;
 	public is_loading: boolean = false;
 	router: Router;
+    route: ActivatedRoute;
 
 	constructor(public injector: Injector)
 	{
 		this.rest = this.injector.get(RestService);
 		this.router = this.injector.get(Router);
+		this.route = injector.get(ActivatedRoute);
 	}
 
 	showError(error: any) {
