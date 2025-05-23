@@ -14,12 +14,27 @@ import { HeaderComponent } from "../../components/header/header.component";
 export class MainComponent extends BaseComponent
 {
 	item_info_list: any[] = [];
+    total: number = 1;
+    current_page:number = 1;
 
 	ngOnInit(): void
 	{
-		fetch('https://uniformesprofesionales.integranet.xyz/api/item_info.php?limit=20')
-			.then((response) =>
+		this.route.queryParamMap.subscribe((params) =>
+		{
+			let page = 1;
+
+			if( params.has('page') )
 			{
+				this.current_page =	parseInt(params.get('page') as string);
+			}
+
+			let url = this.rest.base_url+'/api/item_info.php?limit=20&limit=100&page='+page;
+
+			fetch(url)
+			.then((response:any) =>
+			{
+				this.total = response.total/100+(response.total%100?1:0);
+				this.current_page =
 				return response.json();
 			})
 			.then((response) =>
@@ -30,6 +45,9 @@ export class MainComponent extends BaseComponent
 			{
 				console.log(error);
 			});
+		});
+
+
 	}
 
 	public addToCart(item_id: any): void
