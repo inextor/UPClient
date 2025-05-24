@@ -40,8 +40,11 @@
   </div>
 </div>
 <dialog #confirmDialog class="confirm-dialog">
-	<h2 class="confirm-dialog-title">Confirmar pedido</h2>
-	<p class="confirm-dialog-message">¿Estás seguro de que deseas finalizar tu pedido?</p>
-	<button class="confirm-dialog-button" (click)="confirmCheckout()">Confirmar pedido</button>
-	<button class="confirm-dialog-button" (click)="closeConfirmDialog()">Cancelar</button>
+  <h2 class="confirm-dialog-title">Confirmar pedido</h2>
+  <p class="confirm-dialog-message">¿Estás seguro de que deseas finalizar tu pedido?</p>
+  <div class="button-container">
+    <button class="confirm-dialog-button" (click)="createOrder()">Confirmar pedido</button>
+    <button class="confirm-dialog-button" (click)="closeConfirmDialog()">Cancelar</button>
+  </div>
 </dialog>
+

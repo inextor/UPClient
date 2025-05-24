@@ -11,8 +11,29 @@ export class RestService
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api';
-
 	public cartItemCount: number = 0;
+	ecommerce_user: any = {};
+	user: any = {};
+
+	constructor()
+	{
+
+		if( localStorage.getItem('bearer') )
+		{
+			this.bearer = localStorage.getItem('bearer') as string;
+			this.user = JSON.parse( localStorage.getItem('user') as string );
+			this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
+			this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
+		}
+
+		let domain = window.location.hostname;
+
+		if( domain.includes('localhost') || domain.includes('127.0.0.1') )
+		{
+			this.base_url = 'http://'+domain+'/PointOfSale';
+		}
+
+	}
 
 	addToCart(item_id: number, qty: number): void
 	{
@@ -107,5 +128,21 @@ export class RestService
 		{
 			return response.data;
 		})
+	}
+
+
+	getUUID():string
+	{
+		if( window.crypto )
+		{
+			let x = window?.crypto as any;
+			return x.randomUUID() as string;
+		}
+
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c)
+		{
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
 	}
 }

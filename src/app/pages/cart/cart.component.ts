@@ -17,8 +17,9 @@ export class CartComponent extends BaseComponent implements OnInit
 	@ViewChild('confirmDialog') confirmDialog!: ElementRef<HTMLDialogElement>;
 
 	public cart_items: any[] = [ ];
-    total: number = 0;
-    total_qty:number = 0;
+	total: number = 0;
+	total_qty:number = 0;
+	sync_uuid: string = '' ;
 
 	public get grandTotal(): number
 	{
@@ -31,7 +32,12 @@ export class CartComponent extends BaseComponent implements OnInit
 	}
 
 	ngOnInit(): void { // Implement ngOnInit
-		this.fetchCartItems();
+
+		this.route.paramMap.subscribe((params) =>
+		{
+			this.sync_uuid = this.rest.getUUID();
+			this.fetchCartItems();
+		});
 	}
 
 	public fetchCartItems()
@@ -119,5 +125,43 @@ export class CartComponent extends BaseComponent implements OnInit
 		if (this.confirmDialog ) {
 			this.confirmDialog.nativeElement.close();
 		}
+	}
+
+	createOrder()
+	{
+		let order_info = {
+			'order': {
+				commerce_user_id: this.rest.ecommerce_user.id
+			},
+			'items': this.cart_items.map(item => ({
+					order_item:{
+						'item_id': item.item_id,
+						'qty': item.qty,
+					}
+				})),
+		};
+
+		fetch(this.rest.base_url+'/order_info.php',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Authorization': 'Bearer '+this.rest.bearer
+			},
+			credentials: 'include',
+			body: JSON.stringify(order_info)
+		})
+		.then((response) =>
+		{
+			if( response.status == 200 )
+				return response.json()
+			throw 'Ocurrio un error al crear el pedido'
+		})
+		.catch((error) =>
+		{
+			this.is_loading = false
+			this.showError(error)
+		})
 	}
 }
