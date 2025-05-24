@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent extends BaseComponent implements OnInit
 {
 	@ViewChild('confirmDialog') confirmDialog!: ElementRef<HTMLDialogElement>;
+	@ViewChild('confirmDialog2') confirmDialog2!: ElementRef<HTMLDialogElement>;
 
 	public cart_items: any[] = [ ];
 	total: number = 0;
@@ -129,17 +130,27 @@ export class CartComponent extends BaseComponent implements OnInit
 
 	createOrder()
 	{
+
+		let ecommerce = this.rest.ecommerce;
+		console.log('create order', ecommerce);
+
+		let x = 0;
+
 		let order_info = {
 			'order': {
-				commerce_user_id: this.rest.ecommerce_user.id
+				commerce_user_id: this.rest.ecommerce_user.id,
+				store_id: ecommerce.store_id,
 			},
 			'items': this.cart_items.map(item => ({
 					order_item:{
 						'item_id': item.item_id,
 						'qty': item.qty,
+						'item_group': ++x,
 					}
 				})),
 		};
+
+
 
 		fetch(this.rest.base_url+'/order_info.php',
 		{
@@ -158,10 +169,39 @@ export class CartComponent extends BaseComponent implements OnInit
 				return response.json()
 			throw 'Ocurrio un error al crear el pedido'
 		})
+		.then((response) =>
+		{
+			this.closeConfirmDialog();
+
+			if (this.confirmDialog )
+			{
+				this.confirmDialog.nativeElement.close();
+			}
+
+			console.log('show modal', this.confirmDialog2);
+			if( this.confirmDialog2 )
+			{
+				console.log('show modal');
+				this.confirmDialog2.nativeElement.showModal();
+			}
+		})
 		.catch((error) =>
 		{
 			this.is_loading = false
 			this.showError(error)
+			this.closeConfirmDialog();
+
+			if (this.confirmDialog )
+			{
+				this.confirmDialog.nativeElement.close();
+			}
 		})
+	}
+
+	closeConfirmDialog2()
+	{
+		if (this.confirmDialog2 ) {
+			this.confirmDialog2.nativeElement.close();
+		}
 	}
 }

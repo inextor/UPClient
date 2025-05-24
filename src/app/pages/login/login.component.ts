@@ -52,10 +52,11 @@ export class LoginComponent extends BaseComponent
 				this.is_loading = false;
 				this.router.navigate(['/main']);
 
-				localStorage.setItem('token', response.token);
+				localStorage.setItem('bearer', response.session.id );
 				localStorage.setItem('username', response.user.username );
 				localStorage.setItem('user', JSON.stringify(response.user) );
 				localStorage.setItem('ecommerce_user', JSON.stringify( response.ecommerce_user ));
+				localStorage.setItem('ecommerce', JSON.stringify( response.ecommerce ));
 		})
 		.catch((error) =>
 		{

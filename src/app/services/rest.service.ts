@@ -8,6 +8,7 @@ import { CartItemInfo } from '../models/RestModels';
 ({ providedIn: 'root' })
 export class RestService
 {
+
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api';
@@ -18,9 +19,12 @@ export class RestService
 	constructor()
 	{
 
+		console.log('init rest service');
 		if( localStorage.getItem('bearer') )
 		{
+			console.log('localStorage.getItem(bearer)');
 			this.bearer = localStorage.getItem('bearer') as string;
+			console.log(this.bearer);
 			this.user = JSON.parse( localStorage.getItem('user') as string );
 			this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
 			this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
@@ -144,5 +148,14 @@ export class RestService
 			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
 		});
+	}
+	closeSession()
+	{
+		localStorage.removeItem('bearer');
+		localStorage.removeItem('user');
+		localStorage.removeItem('ecommerce_user');
+		this.bearer = '';
+		this.user = {};
+		this.ecommerce_user = {};
 	}
 }
