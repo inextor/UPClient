@@ -20,6 +20,11 @@ export class MainComponent extends BaseComponent
 
 	ngOnInit(): void
 	{
+		if (!this.rest.bearer) {
+			this.router.navigate(['/login']);
+			return;
+		}
+
 		this.route.queryParamMap.subscribe((params) =>
 		{
 			let page_size = 10;

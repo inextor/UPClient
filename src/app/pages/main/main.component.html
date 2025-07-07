@@ -2,9 +2,9 @@
 <div class="product-page-container" style="padding: 0 20px">
 
  <header class="page-header">
-		<h1>All Products</h1>
+		<h1>Todos los Productos</h1>
 		<div class="sub-header">
-			<span class="results-count">Showing {{item_info_list.length}} results</span>
+			<span class="results-count">Mostrando {{item_info_list.length}} resultados</span>
 			<!--div class="sort-options">
 				<label for="sort-by">Ordenar por</label>
 				<select id="sort-by" name="sort-by">
@@ -38,14 +38,14 @@
  <button class="add-to-cart-button"
 						type="button" (click)="addToCart(item_info.item.id)">
  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/></svg>
-					Add to Cart
+					Añadir al carrito
 				</button>
 			</article>
 		</ng-container>
 	</main>
 
 	<div class="pagination">
-		<button [disabled]="current_page === 1" (click)="previousPage()">Previous</button>
+		<button [disabled]="current_page === 1" (click)="previousPage()">Anterior</button>
 		<ng-container *ngFor="let page of page_numbers">
 			<ng-container *ngIf="page !== -1; else ellipsis">
 				<button
@@ -57,7 +57,7 @@
 			<ng-template #ellipsis>...</ng-template>
 
 		</ng-container>
-		<button [disabled]="current_page === total_pages" (click)="nextPage()">Next</button>
+		<button [disabled]="current_page === total_pages" (click)="nextPage()">Siguiente</button>
 	</div>
 
 </div>
