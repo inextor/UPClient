@@ -44,6 +44,13 @@
   font-weight: 700;
 }
 
+.brand-section:visited,
+.brand-section:hover,
+.brand-section:active {
+  color: #1a1a1a; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
+}
+
 .nav-section {
   display: flex;
   align-items: center;
@@ -60,9 +67,19 @@
   transition: all 0.2s ease;
 }
 
+.nav-link:visited {
+  color: #4a5568; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
+}
+
 .nav-link:hover {
   color: #2d3748;
   background-color: #f7fafc;
+}
+
+.nav-link:active {
+  color: #4a5568; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
 }
 
 .login-button {
@@ -86,8 +103,18 @@
   transition: background-color 0.2s ease;
 }
 
+.cart-indicator:visited {
+  color: #4a5568; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
+}
+
 .cart-indicator:hover {
   background-color: #f7fafc;
+}
+
+.cart-indicator:active {
+  color: #4a5568; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
 }
 
 .cart-icon {
@@ -156,6 +183,18 @@
     padding: 15px;
     border-bottom: 1px solid #444;
     cursor: pointer;
+}
+
+.menu-item a {
+  color: white; /* Color del texto del menú */
+  text-decoration: none; /* Eliminar el subrayado */
+}
+
+.menu-item a:visited,
+.menu-item a:hover,
+.menu-item a:active {
+  color: white; /* Mantener el color original */
+  text-decoration: none; /* Eliminar el subrayado */
 }
 
 .menu-item:hover {
