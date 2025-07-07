@@ -38,7 +38,7 @@ export class RestService
 				this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
 				this.logo_url = this.ecommerce.logo_image_id ?
 					this.base_url + '/image.php?id=' + this.ecommerce.logo_image_id
-					: '/assets/img/logo.png';
+					: '/assets/logo.svg';
 			}
 			catch(e)
 			{
