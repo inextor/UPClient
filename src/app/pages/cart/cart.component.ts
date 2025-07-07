@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'; // Make sure OnInit is imported
 import { RestService } from '../../services/rest.service'; // Import RestService
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common'; // Import CommonModule
 import { BaseComponent } from '../base/base.component';
 import { HeaderComponent } from '../../components/header/header.component'; // Import HeaderComponent
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
 	selector: 'app-cart',
 	standalone: true,
-	imports: [ HeaderComponent,FormsModule ], // Add CommonModule here if you use directives like *ngFor
+	imports: [ HeaderComponent,FormsModule, CurrencyPipe, DecimalPipe ], // Add CommonModule here if you use directives like *ngFor
 	templateUrl: './cart.component.html',
 	styleUrl: './cart.component.css',
 })

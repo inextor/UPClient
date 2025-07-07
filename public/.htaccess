@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /store/
+
+# Reglas para el enrutamiento de Angular
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.html [L]

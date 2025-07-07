@@ -2,11 +2,11 @@
 
 REMOTE_USER_HOST="enlinea.cloud"
 REMOTE_PATH="/var/www/html/uniformesprofesionales.mx/store/"
-LOCAL_BUILD_PATH="dist/myapp/" # Asegúrate de que esta ruta sea correcta según tu angular.json
+LOCAL_BUILD_PATH="dist/myapp/browser/" # Asegúrate de que esta ruta sea correcta según tu angular.json
 
-read -p "Estás a punto de desplegar en ${REMOTE_USER_HOST}:${REMOTE_PATH}. ¿Estás seguro? (s/N) " -n 1 -r
+read -p "¿Desea hacer el deploy a uniformesprofesionales.mx/store? (yes/NO) " -r
 echo
-if [[ $REPLY =~ ^[Ss]$ ]]
+if [[ "$REPLY" =~ ^(yes|YES)$ ]]
 then
     echo "Verificando directorio remoto..."
     # Verifica si el directorio remoto existe
@@ -14,7 +14,7 @@ then
     if [ $? -eq 0 ]; then
         echo "Directorio remoto existe. Iniciando rsync..."
         # Realiza el rsync
-        rsync -avz --delete "$LOCAL_BUILD_PATH" "$REMOTE_USER_HOST":"$REMOTE_PATH"
+        rsync -avz "$LOCAL_BUILD_PATH" "$REMOTE_USER_HOST":"$REMOTE_PATH"
         echo "Despliegue completado."
     else
         echo "Error: El directorio remoto ${REMOTE_PATH} no existe o no tienes permisos."

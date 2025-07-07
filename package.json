@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0 --configuration=development --base-href /store/",
+    "build": "ng build --configuration=production --base-href /store/ && ./deploy.sh",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "deploy:prod": "ng build --configuration=production && ./deploy.sh"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
