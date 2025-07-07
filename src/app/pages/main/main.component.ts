@@ -19,9 +19,16 @@ export class MainComponent extends BaseComponent
 
 	ngOnInit(): void
 	{
-		if (!this.rest.bearer) {
+		document.title = 'uniformesprofesionales.mx';
+
+		if (!this.rest.bearer)
+		{
 			this.router.navigate(['/login']);
 			return;
+		}
+		else
+		{
+			document.title = this.rest.ecommerce.name;
 		}
 
 		this.route.queryParamMap.subscribe((params) =>
@@ -32,26 +39,8 @@ export class MainComponent extends BaseComponent
 
 				this.current_page =	parseInt(params.get('page') as string);
 			}
-
-			let url = this.rest.base_url+'/item_info.php?limit='+page_size+'&page='+this.current_page;
-
-			fetch(url)
-			.then((response:any) =>
-			{
-				return response.json();
-			})
-			.then((response) =>
-			{
-				this.total_pages = response.total/100+(response.total%100?1:0);
-				this.item_info_list = response.data;
-			})
-			.catch((error) =>
-			{
-				console.log(error);
-			});
+			this.fetchProducts();
 		});
-
-
 	}
 
 	public addToCart(item_id: any): void
@@ -120,13 +109,10 @@ export class MainComponent extends BaseComponent
 
 	  fetchProducts() {
 		let page_size = 10;
-		let url = this.rest.base_url + '/item_info.php?limit=' + page_size + '&page=' + this.current_page;
+		let params = this.rest.getUrlParams({ limit: page_size, page: this.current_page });
 
-		fetch(url)
+		this.rest.getItems(params)
 		  .then((response: any) => {
-			return response.json();
-		  })
-		  .then((response) => {
 			this.total_pages = response.total / 100 + (response.total % 100 ? 1 : 0);
 			this.page_numbers = this.getPageNumbers();
 			this.item_info_list = response.data;
