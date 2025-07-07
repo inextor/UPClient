@@ -132,7 +132,9 @@ export class RestService
 	getItems(p:URLSearchParams | Object)
 	{
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
-		params.set('ecommerce_id', ''+this.ecommerce.id);
+		if (environment.apply_ecommerce_filter) {
+			params.set('ecommerce_id', ''+this.ecommerce.id);
+		}
 
 		const baseUrl = this.base_url+'/item_info.php';
 		return fetch(baseUrl + '?' + p.toString())

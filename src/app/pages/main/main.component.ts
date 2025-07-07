@@ -13,9 +13,9 @@ import { HeaderComponent } from "../../components/header/header.component";
 export class MainComponent extends BaseComponent
 {
 	item_info_list: any[] = [];
-    current_page:number = 1;
-    total_pages: number = 1;
-    page_numbers: number[] = [];
+	current_page:number = 1;
+	total_pages: number = 1;
+	page_numbers: number[] = [];
 
 	ngOnInit(): void
 	{
@@ -48,7 +48,8 @@ export class MainComponent extends BaseComponent
 		this.rest.addToCart(item_id, 1);
 	}
 
-	getPageNumbers(): number[] {
+	getPageNumbers(): number[]
+	{
 		const pageNumbers: number[] = [];
 		const totalPages = this.total_pages;
 		const currentPage = this.current_page;
@@ -85,40 +86,50 @@ export class MainComponent extends BaseComponent
 		}
 
 		return pageNumbers;
-	  }
-
-
-	goToPage(page: number) {
-		if (page >= 1 && page <= this.total_pages) {
-		  this.current_page = page;
-		  this.fetchProducts(); // Call the function to fetch products for the new page
 		}
-	  }
 
-	  previousPage() {
-		if (this.current_page > 1) {
-		  this.goToPage(this.current_page - 1);
+
+	goToPage(page: number)
+	{
+		if (page >= 1 && page <= this.total_pages)
+		{
+			this.current_page = page;
+			this.fetchProducts(); // Call the function to fetch products for the new page
 		}
-	  }
+	}
 
-	  nextPage() {
-		if (this.current_page < this.total_pages) {
-		  this.goToPage(this.current_page + 1);
+	previousPage()
+	{
+		if (this.current_page > 1)
+		{
+
+				this.goToPage(this.current_page - 1);
 		}
-	  }
+	}
 
-	  fetchProducts() {
+	nextPage()
+	{
+		if (this.current_page < this.total_pages)
+		{
+			this.goToPage(this.current_page + 1);
+		}
+	}
+
+	fetchProducts()
+	{
 		let page_size = 10;
 		let params = this.rest.getUrlParams({ limit: page_size, page: this.current_page });
 
 		this.rest.getItems(params)
-		  .then((response: any) => {
+		.then((response: any) =>
+		{
 			this.total_pages = response.total / 100 + (response.total % 100 ? 1 : 0);
 			this.page_numbers = this.getPageNumbers();
 			this.item_info_list = response.data;
-		  })
-		  .catch((error) => {
+		})
+		.catch((error) =>
+		{
 			console.log(error);
-		  });
-	  }
+		});
+	}
 }
