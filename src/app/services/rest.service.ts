@@ -22,6 +22,7 @@ export class RestService
 	{
 		console.log('init rest service');
 		this.loadUserData();
+		console.log(this.base_url);
 	}
 
 	loadUserData(): void

@@ -1,9 +1,9 @@
 <header class="header-container">
   <div class="header-content">
-    <div class="brand-section">
+    <a class="brand-section" [routerLink]="['/main']">
       <img class="logo" [src]="rest.logo_url" alt="Logo">
       <h1 class="store-name">{{ rest.ecommerce.name }}</h1>
-    </div>
+    </a>
 
     <nav class="nav-section">
       <ng-container *ngIf="!rest.bearer">
@@ -27,8 +27,8 @@
 <div id="overlay" [ngClass]="{'active': is_active}"></div>
 <div id="side-menu" [ngClass]="{'active': is_active}">
       <div class="menu-content">
-          <div class="menu-item">Inicio</div>
-          <div class="menu-item">Carrito</div>
+          <div class="menu-item"><a [routerLink]="['/main']">Inicio</a></div>
+          <div class="menu-item"><a [routerLink]="['/cart']">Carrito</a></div>
           <div class="menu-item" *ngIf="rest.bearer" (click)="closeSession()" >Cerrar Sesión</div>
       </div>
 </div>
