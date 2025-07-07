@@ -24,9 +24,12 @@ export class RestService
 		this.loadUserData();
 	}
 
-	loadUserData(): void {
-		if( localStorage.getItem('bearer') ) {
-			try {
+	loadUserData(): void
+	{
+		if( localStorage.getItem('bearer') )
+		{
+			try
+			{
 				console.log('localStorage.getItem(bearer)');
 				this.bearer = localStorage.getItem('bearer') as string;
 				console.log(this.bearer);
@@ -36,7 +39,9 @@ export class RestService
 				this.logo_url = this.ecommerce.logo_image_id ?
 					this.base_url + '/image.php?id=' + this.ecommerce.logo_image_id
 					: '/assets/img/logo.png';
-			} catch(e) {
+			}
+			catch(e)
+			{
 				localStorage.clear();
 				this.user = {};
 				this.ecommerce_user = {};
@@ -47,14 +52,18 @@ export class RestService
 
 	addToCart(item_id: number, qty: number): void
 	{
-		const cart: { item_id: number; qty: number }[] = JSON.parse(
+		const cart: { item_id: number; qty: number }[] = JSON.parse
+		(
 			localStorage.getItem('cart') || '[]',
 		);
 		const existingItemIndex = cart.findIndex((item) => item.item_id === item_id);
 
-		if (existingItemIndex > -1) {
+		if (existingItemIndex > -1)
+		{
 			cart[existingItemIndex].qty += qty;
-		} else {
+		}
+		else
+		{
 			cart.push({ item_id, qty });
 		}
 
