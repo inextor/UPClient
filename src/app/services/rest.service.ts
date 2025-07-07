@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { GetEmpty } from '../models/GetEmpty';
 import { Ecommerce } from '../models/RestModels';
 import { CartItemInfo } from '../models/RestModels';
+import { environment } from '../../environments/environment';
 
 @Injectable
 ({ providedIn: 'root' })
@@ -11,32 +12,36 @@ export class RestService
 
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
-	public base_url: string = 'https://uniformesprofesionales.integranet.xyz/api';
+	public base_url: string = environment.base_path;
 	public cartItemCount: number = 0;
+	public logo_url: string = '';
 	ecommerce_user: any = {};
 	user: any = {};
 
 	constructor()
 	{
-
 		console.log('init rest service');
 		if( localStorage.getItem('bearer') )
 		{
-			console.log('localStorage.getItem(bearer)');
-			this.bearer = localStorage.getItem('bearer') as string;
-			console.log(this.bearer);
-			this.user = JSON.parse( localStorage.getItem('user') as string );
-			this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
-			this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
+			try{
+				console.log('localStorage.getItem(bearer)');
+				this.bearer = localStorage.getItem('bearer') as string;
+				console.log(this.bearer);
+				this.user = JSON.parse( localStorage.getItem('user') as string );
+				this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
+				this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
+				this.logo_url = this.ecommerce.logo_image_id ?
+					this.base_url + '/image.php?id=' + this.ecommerce.logo_image_id
+					: '/assets/img/logo.png';
+			}
+			catch(e)
+			{
+				localStorage.clear();
+				this.user = {};
+				this.ecommerce_user = {}
+				this.ecommerce = GetEmpty.ecommerce();
+			}
 		}
-
-		let domain = window.location.hostname;
-
-		if( domain.includes('localhost') || domain.includes('127.0.0.1') )
-		{
-			this.base_url = 'http://'+domain+'/PointOfSale';
-		}
-
 	}
 
 	addToCart(item_id: number, qty: number): void
