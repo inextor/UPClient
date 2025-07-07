@@ -26,8 +26,8 @@
     </nav>
   </div>
 </header>
-<div id="overlay" [ngClass]="{'active': is_active}"></div>
-<div id="side-menu" [ngClass]="{'active': is_active}">
+<div id="overlay" [ngClass]="{'active': is_active}" (click)="is_active = false"></div>
+<div id="side-menu" [ngClass]="{'active': is_active}" (click)="$event.stopPropagation()">
       <div class="menu-content">
           <div class="menu-item"><a [routerLink]="['/main']">Inicio</a></div>
           <div class="menu-item"><a [routerLink]="['/cart']">Carrito</a></div>
