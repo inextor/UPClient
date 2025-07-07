@@ -3,9 +3,11 @@
 <div class="cart-container">
   <h2 class="cart-title">Carrito</h2>
 
-  <div *ngIf="cart_items.length > 0">
+  @if (cart_items.length > 0) {
+    <div>
     <div class="cart-items">
-      <div class="cart-item" *ngFor="let item of cart_items">
+        @for (item of cart_items; track item) {
+          <div class="cart-item">
         <div class="item-image">
           <img [src]="item.imageUrl || 'assets/placeholder-product.jpg'" alt="Product Image">
         </div>
@@ -24,6 +26,7 @@
 
         <div class="item-total">{{ item.prices[0].price * item.qty | currency }}</div>
       </div>
+        }
     </div>
 
     <div class="cart-summary">
@@ -33,11 +36,14 @@
       <button class="order-button" (click)="confirmCheckout()">Checkout</button>
     </div>
   </div>
+  }
 
-  <div *ngIf="cart_items.length === 0" class="empty-cart">
+  @if (cart_items.length === 0) {
+    <div class="empty-cart">
     <p>🛒 Your shopping cart is empty.</p>
     <a routerLink="/products" class="continue-shopping">Continue Shopping</a>
   </div>
+  }
 </div>
 <dialog #confirmDialog class="confirm-dialog">
   <h2 class="confirm-dialog-title">Confirmar pedido</h2>

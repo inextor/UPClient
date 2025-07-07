@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BaseComponent } from '../base/base.component';
 import { FormsModule } from '@angular/forms';
 interface CLogin {
@@ -9,7 +8,7 @@ interface CLogin {
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	imports: [CommonModule, FormsModule],
+	imports: [FormsModule],
 	styleUrl: './login.component.css'
 })
 export class LoginComponent extends BaseComponent

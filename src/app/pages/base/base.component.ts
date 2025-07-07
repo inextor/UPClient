@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../../services/rest.service';
@@ -8,7 +7,7 @@ import { RestService } from '../../services/rest.service';
 ({
 	selector: 'app-base',
  standalone: true,
- imports: [CommonModule],
+ imports: [],
 	template: '',
  styleUrls: ['./base.component.css']
 })

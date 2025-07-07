@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
 	selector: 'app-cart',
 	standalone: true,
-	imports: [CommonModule, HeaderComponent,FormsModule ], // Add CommonModule here if you use directives like *ngFor
+	imports: [ HeaderComponent,FormsModule ], // Add CommonModule here if you use directives like *ngFor
 	templateUrl: './cart.component.html',
 	styleUrl: './cart.component.css',
 })
