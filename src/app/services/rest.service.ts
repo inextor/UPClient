@@ -21,9 +21,12 @@ export class RestService
 	constructor()
 	{
 		console.log('init rest service');
-		if( localStorage.getItem('bearer') )
-		{
-			try{
+		this.loadUserData();
+	}
+
+	loadUserData(): void {
+		if( localStorage.getItem('bearer') ) {
+			try {
 				console.log('localStorage.getItem(bearer)');
 				this.bearer = localStorage.getItem('bearer') as string;
 				console.log(this.bearer);
@@ -33,12 +36,10 @@ export class RestService
 				this.logo_url = this.ecommerce.logo_image_id ?
 					this.base_url + '/image.php?id=' + this.ecommerce.logo_image_id
 					: '/assets/img/logo.png';
-			}
-			catch(e)
-			{
+			} catch(e) {
 				localStorage.clear();
 				this.user = {};
-				this.ecommerce_user = {}
+				this.ecommerce_user = {};
 				this.ecommerce = GetEmpty.ecommerce();
 			}
 		}

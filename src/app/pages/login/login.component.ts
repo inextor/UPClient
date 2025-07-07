@@ -57,6 +57,7 @@ export class LoginComponent extends BaseComponent
 				localStorage.setItem('user', JSON.stringify(response.user) );
 				localStorage.setItem('ecommerce_user', JSON.stringify( response.ecommerce_user ));
 				localStorage.setItem('ecommerce', JSON.stringify( response.ecommerce ));
+				this.rest.loadUserData();
 		})
 		.catch((error) =>
 		{
