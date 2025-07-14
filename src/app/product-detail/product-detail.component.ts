@@ -15,9 +15,15 @@ export class ProductDetailComponent implements OnInit {
   item_id: number | null = null;
   product: any = null;
 
+  main_color: string = '#ffffff';
+  font_color: string = '#000000';
+
   constructor(private route: ActivatedRoute, private rest: RestService) { }
 
   ngOnInit(): void {
+    this.main_color = this.rest.ecommerce.color || '#ffffff';
+    this.font_color = this.rest.ecommerce.font_color || '#000000';
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('item_id');
       if (id) {
@@ -35,7 +41,7 @@ export class ProductDetailComponent implements OnInit {
           if (response.data && response.data.length > 0) {
             this.product = response.data[0];
             if (this.product.item.image_id) {
-              this.product.imageUrl = this.rest.base_url + '/image.php?id=' + this.product.item.image_id;
+              this.product.image_url = this.rest.base_url + '/image.php?id=' + this.product.item.image_id;
             }
             console.log('Product details:', this.product);
           } else {

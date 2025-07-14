@@ -26,9 +26,9 @@
 					{
 						<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 							<!-- Background -->
-							<rect width="100" height="100" fill="#f3f4f6"/>
+							<rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
 							<!-- Icon (Box) -->
-							<g stroke="#9ca3af" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
 								<!-- Main box shape -->
 								<path d="M25 45 L25 75 L75 75 L75 45 L50 30 L25 45 Z"/>
 								<!-- Top flap -->
@@ -39,7 +39,7 @@
 						</svg>
 					}
 				</div>
-				<a [routerLink]="['/product', item_info.item.id]"><h2 class="product-title">{{item_info.item.name}}</h2></a>
+				<a [routerLink]="['/product-detail', item_info.item.id]"><h2 class="product-title">{{item_info.item.name}}</h2></a>
 				<p class="product-meta">{{item_info?.category?.name}}</p>
 				<!--
 				@if (item_info.prices.length)

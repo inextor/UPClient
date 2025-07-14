@@ -19,6 +19,9 @@ export class MainComponent extends BaseComponent
 	total_pages: number = 1;
 	page_numbers: number[] = [];
 
+  main_color: string = '#ffffff';
+  font_color: string = '#000000';
+
 	ngOnInit(): void
 	{
 		document.title = 'uniformesprofesionales.mx';
@@ -33,7 +36,9 @@ export class MainComponent extends BaseComponent
 			document.title = this.rest.ecommerce.name;
 
 			document.body.style.setProperty('--main-color', this.rest.ecommerce.color || '#ffffff');
+			this.main_color = this.rest.ecommerce.color || '#ffffff';
 			document.body.style.setProperty('--font-color', this.rest.ecommerce.font_color || '#000000');
+			this.font_color = this.rest.ecommerce.font_color || '#000000';
 		}
 
 		this.route.queryParamMap.subscribe((params) =>

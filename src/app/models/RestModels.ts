@@ -3,7 +3,7 @@ export interface Ecommerce {
   created: string;
   name: string;
   color: string;
-  font_color?: string;
+  font_color: string;
   store_id?: number;
   updated: string;
   logo_image_id?: number;
