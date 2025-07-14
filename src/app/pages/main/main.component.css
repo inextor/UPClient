@@ -86,6 +86,14 @@
 	object-fit: contain; /* Ensure image fits without distortion */
 }
 
+.product-image .svg-background {
+  fill: var(--main-color);
+}
+
+.product-image .svg-icon {
+  stroke: var(--font-color);
+}
+
 .product-info {
 	flex-shrink: 0; /* Prevent info from shrinking */
 }

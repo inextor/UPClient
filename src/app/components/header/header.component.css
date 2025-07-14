@@ -60,7 +60,7 @@
 }
 
 .nav-link {
-  color: #4a5568;
+  color: var(--font-color);
   text-decoration: none;
   font-weight: 500;
   padding: 0.5rem 1rem;
@@ -70,7 +70,7 @@
 }
 
 .nav-link:visited {
-  color: #4a5568; /* Mantener el color original */
+  color: var(--font-color); /* Mantener el color original */
   text-decoration: none; /* Eliminar el subrayado */
 }
 
@@ -106,7 +106,7 @@
 }
 
 .cart-indicator:visited {
-  color: #4a5568; /* Mantener el color original */
+  color: var(--font-color); /* Mantener el color original */
   text-decoration: none; /* Eliminar el subrayado */
 }
 
@@ -115,18 +115,18 @@
 }
 
 .cart-indicator:active {
-  color: #4a5568; /* Mantener el color original */
+  color: var(--font-color); /* Mantener el color original */
   text-decoration: none; /* Eliminar el subrayado */
 }
 
 .cart-icon {
   width: 24px;
   height: 24px;
-  fill: #4a5568;
+  fill: var(--font-color);
 }
 
 .cart-count {
-  color: #4a5568;
+  color: var(--font-color);
   font-weight: 600;
   font-size: 1rem;
 }
@@ -188,14 +188,14 @@
 }
 
 .menu-item a {
-  color: white; /* Color del texto del menú */
+  color: var(--font-color); /* Color del texto del menú */
   text-decoration: none; /* Eliminar el subrayado */
 }
 
 .menu-item a:visited,
 .menu-item a:hover,
 .menu-item a:active {
-  color: white; /* Mantener el color original */
+  color: var(--font-color); /* Mantener el color original */
   text-decoration: none; /* Eliminar el subrayado */
 }
 
