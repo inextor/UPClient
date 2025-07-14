@@ -9,7 +9,7 @@
         @for (item of cart_items; track item) {
           <div class="cart-item">
         <div class="item-image">
-          <img [src]="item.imageUrl || 'assets/placeholder-product.jpg'" alt="Product Image">
+          <img [src]="item.imageUrl || 'assets/placeholder-product.svg'" alt="Product Image">
         </div>
 
         <div class="item-details">
@@ -31,17 +31,17 @@
 
     <div class="cart-summary">
       <p class="subtotal">
-        Subtotal ({{ total_qty }} items): <strong>{{ total | currency }}</strong>
+        Subtotal ({{ total_qty }} artículos): <strong>{{ total | currency }}</strong>
       </p>
-      <button class="order-button" (click)="confirmCheckout()">Checkout</button>
+      <button class="order-button" (click)="confirmCheckout()">Finalizar Compra</button>
     </div>
   </div>
   }
 
   @if (cart_items.length === 0) {
     <div class="empty-cart">
-    <p>🛒 Your shopping cart is empty.</p>
-    <a routerLink="/products" class="continue-shopping">Continue Shopping</a>
+    <p>🛒 Tu carrito de compras está vacío.</p>
+    <a routerLink="/main" class="continue-shopping">Seguir comprando</a>
   </div>
   }
 </div>

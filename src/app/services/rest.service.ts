@@ -5,6 +5,12 @@ import { Ecommerce } from '../models/RestModels';
 import { CartItemInfo } from '../models/RestModels';
 import { environment } from '../../environments/environment';
 
+interface RestResponse<T>
+{
+	data: T[];
+	total: number;
+}
+
 @Injectable
 ({ providedIn: 'root' })
 export class RestService
@@ -13,7 +19,7 @@ export class RestService
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 	public base_url: string = environment.base_path;
-	public cartItemCount: number = 0;
+	public cart_item_count: number = 0;
 	public logo_url: string = '';
 	ecommerce_user: any = {};
 	user: any = {};
@@ -68,7 +74,20 @@ export class RestService
 			cart.push({ item_id, qty });
 		}
 
+		this.updateCartItemCount(cart as CartItemInfo[]);
 		localStorage.setItem('cart', JSON.stringify(cart));
+	}
+
+	public updateCartItemCount(items: CartItemInfo[] | undefined = undefined)
+	{
+
+		items = items??this.getCartItems();
+
+		this.cart_item_count = items.reduce((total, item) =>
+		{
+			const quantity = item.qty || 0;
+			return total + quantity;
+		}, 0);
 	}
 
 	removeFromCart(item_id: number): CartItemInfo[]
@@ -77,6 +96,8 @@ export class RestService
 		const initialLength = cart.length;
 
 		cart = cart.filter((item) => item.item_id !== item_id);
+
+		this.updateCartItemCount(cart as CartItemInfo[]);
 
 		if (cart.length < initialLength)
 		{
@@ -87,6 +108,7 @@ export class RestService
 		{
 			return cart as CartItemInfo[]; // Assuming the structure matches CartItemInfo
 		}
+
 	}
 
 	public getCartItems():CartItemInfo[]
@@ -129,7 +151,7 @@ export class RestService
 		return params;
 	}
 
-	getItems(p:URLSearchParams | Object)
+	getItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
 		if (environment.apply_ecommerce_filter) {
@@ -137,7 +159,9 @@ export class RestService
 		}
 
 		const baseUrl = this.base_url+'/item_info.php';
-		return fetch(baseUrl + '?' + p.toString())
+		let url = baseUrl + '?' + params.toString();
+
+		return fetch( url )
 		.then((response) =>
 		{
 			if( response.status >= 200 && response.status < 300 )
@@ -149,7 +173,7 @@ export class RestService
 		})
 		.then((response) =>
 		{
-			return response.data;
+			return response;
 		})
 	}
 

@@ -3,10 +3,12 @@ import { BaseComponent } from '../base/base.component';
 
 import { RestService } from '../../services/rest.service';
 import { HeaderComponent } from "../../components/header/header.component";
+import { RouterLink } from '@angular/router';
+
 @Component({
 	selector: 'app-main',
 	standalone: true,
-	imports: [HeaderComponent],
+	imports: [HeaderComponent, RouterLink],
 	templateUrl: './main.component.html',
 	styleUrl: './main.component.css'
 })
@@ -29,6 +31,9 @@ export class MainComponent extends BaseComponent
 		else
 		{
 			document.title = this.rest.ecommerce.name;
+
+			document.body.style.setProperty('--main-color', this.rest.ecommerce.color || '#ffffff');
+			document.body.style.setProperty('--font-color', this.rest.ecommerce.font_color || '#000000');
 		}
 
 		this.route.queryParamMap.subscribe((params) =>
@@ -40,6 +45,7 @@ export class MainComponent extends BaseComponent
 				this.current_page =	parseInt(params.get('page') as string);
 			}
 			this.fetchProducts();
+			this.rest.updateCartItemCount();
 		});
 	}
 

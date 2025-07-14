@@ -1,4 +1,4 @@
 export const environment = {
     base_path: "http://127.0.0.191/PointOfSale",
-    apply_ecommerce_filter: true
+    apply_ecommerce_filter: false
 };

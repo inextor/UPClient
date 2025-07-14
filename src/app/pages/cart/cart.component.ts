@@ -61,13 +61,13 @@ export class CartComponent extends BaseComponent implements OnInit
 		.then((response) =>
 		{
 			//If not met on fines return an empty array
-			if( response.length == 0 )
+			if( response.data.length == 0 )
 			{
 				this.cart_items = [];
 				return;
 			}
 
-			this.cart_items = response.map((item_info:any) =>
+			this.cart_items = response.data.map((item_info:any) =>
 			{
 				let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
 				return {...cart_item, ...item_info};

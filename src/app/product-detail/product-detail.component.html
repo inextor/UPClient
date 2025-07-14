@@ -1,0 +1,23 @@
+<app-header></app-header>
+<div class="product-detail-container">
+  @if (product) {
+    <div class="product-card">
+      <div class="product-image">
+        <img [src]="product.imageUrl || 'assets/placeholder-product.svg'" alt="Product Image">
+      </div>
+      <div class="product-info">
+        <h1 class="product-name">{{ product.item.name }}</h1>
+        <p class="product-category">{{ product.category?.name || 'N/A' }}</p>
+        <p class="product-description">{{ product.item.description || 'No description available.' }}</p>
+        @if (product.prices && product.prices.length > 0) {
+          <p class="product-price">{{ product.prices[0].price | currency }}</p>
+        }
+        <button class="add-to-cart-button" (click)="addToCart(product.item.id)">
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
+  } @else {
+    <p>Cargando detalles del producto...</p>
+  }
+</div>
