@@ -19,8 +19,8 @@ export class MainComponent extends BaseComponent
 	total_pages: number = 1;
 	page_numbers: number[] = [];
 
-  main_color: string = '#ffffff';
-  font_color: string = '#000000';
+	main_color: string = '#ffffff';
+	font_color: string = '#000000';
 
 	ngOnInit(): void
 	{
@@ -136,7 +136,17 @@ export class MainComponent extends BaseComponent
 		{
 			this.total_pages = response.total / 100 + (response.total % 100 ? 1 : 0);
 			this.page_numbers = this.getPageNumbers();
-			this.item_info_list = response.data;
+
+			response.data.forEach((item_info:any) => {
+
+			});
+
+			this.item_info_list = response.data
+			.map((item_info:any)=>
+			{
+				let image_url = item_info.item.image_id ? this.rest.base_url + '/image.php?id=' + item_info.item.image_id : null;
+				return {...item_info, image_url};
+			});
 		})
 		.catch((error) =>
 		{

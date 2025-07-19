@@ -2,24 +2,24 @@
 <div class="product-detail-container">
   @if (product) {
     <div class="product-card">
-      <div class="product-image">
-        @if (product.image_url) {
-          <img [src]="product.image_url" alt="Product Image">
-        } @else {
-          <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background -->
-            <rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
-            <!-- Icon (Box) -->
-            <g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
-              <!-- Main box shape -->
-              <path d="M25 45 L25 75 L75 75 L75 45 L50 30 L25 45 Z"/>
-              <!-- Top flap -->
-              <path d="M25 45 L50 60 L75 45"/>
-              <!-- Vertical line on front -->
-              <line x1="50" y1="75" x2="50" y2="60"/>
-            </g>
-          </svg>
-        }
+      <div class="product-image-carousel">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            @for(image of images; track image.id; let isFirst = $first){
+              <div class="carousel-item" [class.active]="isFirst">
+                <img [src]="image.url" class="d-block w-100" alt="Product Image">
+              </div>
+            }
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
       <div class="product-info">
         <h1 class="product-name">{{ product.item.name }}</h1>

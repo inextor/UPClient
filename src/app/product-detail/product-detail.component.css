@@ -1,3 +1,8 @@
+.product-image-carousel {
+    flex: 1;
+    max-width: 400px;
+}
+
 .product-detail-container {
     max-width: 900px;
     margin: 20px auto;
