@@ -70,7 +70,8 @@ export class CartComponent extends BaseComponent implements OnInit
 			this.cart_items = response.data.map((item_info:any) =>
 			{
 				let cart_item = cart_items.find((item) => item.item_id === item_info.item.id);
-				return {...cart_item, ...item_info};
+				let image_url = item_info.item.image_id ? this.rest.base_url + '/image.php?id=' + item_info.item.image_id : null;
+				return {...cart_item, ...item_info, image_url};
 			});
 			this.updateTotal();
 			console.log(this.cart_items);
