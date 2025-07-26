@@ -13,46 +13,50 @@
 			</div-->
 		</div>
 	</header>
-	<main class="product-grid">
+	<main class="row">
 		@for (item_info of item_info_list; track item_info)
 		{
-			<article class="product-card">
-				<div class="product_image">
-					@if (item_info.image_url)
-					{
-						<img [src]="item_info.image_url" alt="Product Image" class="product_image">
-					}
-					@else
-					{
-						<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-							<!-- Background -->
-							<rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
-							<!-- Icon (Box) -->
-							<g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
-								<!-- Main box shape -->
-								<path d="M25 45 L25 75 L75 75 L75 45 L50 30 L25 45 Z"/>
-								<!-- Top flap -->
-								<path d="M25 45 L50 60 L75 45"/>
-								<!-- Vertical line on front -->
-								<line x1="50" y1="75" x2="50" y2="60"/>
-							</g>
-						</svg>
-					}
-				</div>
-				<a [routerLink]="['/product-detail', item_info.item.id]"><h2 class="product-title">{{item_info.item.name}}</h2></a>
-				<p class="product-meta">{{item_info?.category?.name}}</p>
-				<!--
-				@if (item_info.prices.length)
-				{
-					<p class="product-price">${{item_info.prices[0].price}}</p>
-				}
-				<button class="add-to-cart-button"
-					type="button" (click)="addToCart(item_info.item.id)">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/></svg>
-					Añadir al carrito
-				</button>
-				-->
-			</article>
+			<div class="col-12 col-sm-6 col-md-3 p-3">
+				<a [routerLink]="['/product-detail', item_info.item.id]">
+					<article class="product-card h-100">
+						<div class="product_image">
+							@if (item_info.image_url)
+							{
+								<img [src]="item_info.image_url" alt="Product Image" class="product_image">
+							}
+							@else
+							{
+								<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+									<!-- Background -->
+									<rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
+									<!-- Icon (Box) -->
+									<g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
+										<!-- Main box shape -->
+										<path d="M25 45 L25 75 L75 75 L75 45 L50 30 L25 45 Z"/>
+										<!-- Top flap -->
+										<path d="M25 45 L50 60 L75 45"/>
+										<!-- Vertical line on front -->
+										<line x1="50" y1="75" x2="50" y2="60"/>
+									</g>
+								</svg>
+							}
+						</div>
+						<h2 class="product-title text-center">{{item_info.item.name}}</h2>
+						<p class="product-meta text-center">{{item_info?.category?.name}}</p>
+						<!--
+						@if (item_info.prices.length)
+						{
+							<p class="product-price">${{item_info.prices[0].price}}</p>
+						}
+						<button class="add-to-cart-button"
+							type="button" (click)="addToCart(item_info.item.id)">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/></svg>
+							Añadir al carrito
+						</button>
+						-->
+					</article>
+				</a>
+			</div>
 		}
 	</main>
 

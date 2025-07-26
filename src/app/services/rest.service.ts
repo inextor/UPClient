@@ -151,6 +151,26 @@ export class RestService
 		return params;
 	}
 
+	async post(path: string, data: any): Promise<any> {
+		const url = this.base_url + path;
+		const headers = {
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + this.bearer
+		};
+
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: headers,
+			body: JSON.stringify(data)
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return response.json();
+	}
+
 	getItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);

@@ -1,0 +1,27 @@
+<app-header></app-header>
+<div class="container mt-5">
+  <h2>Item List</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Price</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item_info of item_info_list; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item_info.item.name }}</td>
+        <td>{{ item_info.category?.name }}</td>
+        <td>{{ item_info.prices[0]?.price | currency }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm">Edit</button>
+          <button class="btn btn-danger btn-sm ms-2">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
