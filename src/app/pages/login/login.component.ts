@@ -25,6 +25,7 @@ export class LoginComponent extends BaseComponent
 		// Add login logic here
 		this.is_loading = true
 
+		this.rest.clearCart();
 
 		fetch(this.rest.base_url+'/login.php',
 		{

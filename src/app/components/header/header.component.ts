@@ -23,6 +23,7 @@ export class HeaderComponent extends BaseComponent implements OnInit
 	}
 	closeSession() {
 		this.rest.closeSession();
+		this.rest.clearCart();
 		this.router.navigate(['/login']);
 	}
 }
