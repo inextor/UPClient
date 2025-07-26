@@ -122,6 +122,11 @@ export class RestService
 		}
 	}
 
+	clearCart(): void {
+		localStorage.removeItem('cart');
+		this.updateCartItemCount([]);
+	}
+
 	getUrlParams(obj:any):URLSearchParams
 	{
 		if (obj === null || obj === undefined) {
