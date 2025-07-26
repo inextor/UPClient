@@ -24,9 +24,11 @@ export class ProductDetailComponent implements OnInit {
 		this.main_color = this.rest.ecommerce.color || '#ffffff';
 		this.font_color = this.rest.ecommerce.font_color || '#000000';
 
-		this.route.paramMap.subscribe(params => {
+		this.route.paramMap.subscribe(params => 
+		{
 			const id = params.get('item_id');
-			if (id) {
+			if (id) 
+			{
 				this.item_id = +id;
 				this.fetchProductDetails();
 				this.fetchProductImages();
@@ -58,9 +60,7 @@ export class ProductDetailComponent implements OnInit {
 
 	fetchProductImages(): void {
 		if (this.item_id) {
-			// Assuming you have a method in your rest.service to fetch images
-			// You might need to create it if it doesn't exist.
-			// For now, let's construct the URL directly.
+
 			const params = this.rest.getUrlParams({ 'item_id': this.item_id });
 			fetch(`${this.rest.base_url}/item_image.php?${params.toString()}`)
 				.then(response => response.json())
