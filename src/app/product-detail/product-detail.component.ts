@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestService } from '../services/rest.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../components/header/header.component';
+import { Product } from '../models/RestModels';
 
 @Component({
 	selector: 'app-product-detail',
@@ -13,8 +14,8 @@ import { HeaderComponent } from '../components/header/header.component';
 })
 export class ProductDetailComponent implements OnInit {
 	item_id: number | null = null;
-	product: any = null;
-	images: any[] = [];
+	product: Product | null = null;
+	mainImage: string | undefined;
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
 
@@ -31,7 +32,6 @@ export class ProductDetailComponent implements OnInit {
 			{
 				this.item_id = +id;
 				this.fetchProductDetails();
-				this.fetchProductImages();
 			}
 		});
 	}
@@ -44,9 +44,19 @@ export class ProductDetailComponent implements OnInit {
 				.then((response: any) => {
 					if (response.data && response.data.length > 0) {
 						this.product = response.data[0];
-						if (this.product.item.image_id) {
+
+						if (this.product && this.product.item.image_id) 
+						{
 							this.product.image_url = this.rest.base_url + '/image.php?id=' + this.product.item.image_id;
+							this.mainImage = this.product.image_url;
+
+							if( this.product.item.image_id )
+							{
+								this.product.images = [ { id: this.product.item.image_id, url: this.product.image_url } ];
+							}
 						}
+
+						this.fetchProductImages();
 						console.log('Product details:', this.product);
 					} else {
 						console.log('Product not found');
@@ -65,15 +75,22 @@ export class ProductDetailComponent implements OnInit {
 			fetch(`${this.rest.base_url}/item_image.php?${params.toString()}`)
 				.then(response => response.json())
 				.then(data => {
-					this.images = data.data.map((image: any) => {
-						return {
-							id: image.id,
-							url: `${this.rest.base_url}/image.php?id=${image.id}`
-						};
-					});
+					if( this.product )
+					{
+						this.product.images = data.data.map((image: any) => {
+							return {
+								id: image.id,
+								url: `${this.rest.base_url}/image.php?id=${image.image_id}`
+							};
+						});
+					}
 				})
 				.catch(error => console.error('Error fetching product images:', error));
 		}
+	}
+
+	setMainImage(image: string): void {
+		this.mainImage = image;
 	}
 
 	addToCart(item_id: number): void {
