@@ -21,6 +21,7 @@ export class CartComponent extends BaseComponent implements OnInit
 	total: number = 0;
 	total_qty:number = 0;
 	sync_uuid: string = '' ;
+	order_id: number | null = null;
 
 	public get grandTotal(): number
 	{
@@ -29,7 +30,7 @@ export class CartComponent extends BaseComponent implements OnInit
 			const quantity = item.quantity || 0;
 			const price = item.price || 0;
 			return total + (quantity * price);
-		}, 0);
+	}, 0);
 	}
 
 	ngOnInit(): void { // Implement ngOnInit
@@ -172,6 +173,7 @@ export class CartComponent extends BaseComponent implements OnInit
 		})
 		.then((response) =>
 		{
+			this.order_id = response.order_id;
 			this.closeConfirmDialog();
 
 			if (this.confirmDialog )
@@ -203,6 +205,9 @@ export class CartComponent extends BaseComponent implements OnInit
 	{
 		if (this.confirmDialog2 ) {
 			this.confirmDialog2.nativeElement.close();
+			this.rest.clearCart();
+			this.router.navigate(['/main']);
 		}
 	}
 }
+
