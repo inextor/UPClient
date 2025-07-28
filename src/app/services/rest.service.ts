@@ -244,6 +244,23 @@ export class RestService
 			});
 	}
 
+	deleteEcommerceItemRole(id:any):Promise<any>
+	{
+		const url = this.base_url+'/ecommerce_item_role.php?id='+id;
+		return fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Authorization': 'Bearer ' + this.bearer
+			}
+		})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		});
+	}
+
 
 	getUUID():string
 	{
