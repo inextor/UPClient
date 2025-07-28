@@ -129,7 +129,7 @@ export class MainComponent extends BaseComponent
 	fetchProducts()
 	{
 		let page_size = 10;
-		let params = this.rest.getUrlParams({ limit: page_size, page: this.current_page });
+		let params = this.rest.getUrlParams({ limit: page_size, page: this.current_page-1 });
 
 		this.rest.getItems(params)
 		.then((response: any) =>

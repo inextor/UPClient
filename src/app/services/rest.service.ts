@@ -176,6 +176,18 @@ export class RestService
 		return response.json();
 	}
 
+	getRoles(p:URLSearchParams | Object): Promise<RestResponse<any>> {
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const url = this.base_url + '/role.php?' + params.toString();
+		return fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			});
+	}
+
 	getItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
@@ -200,6 +212,36 @@ export class RestService
 		{
 			return response;
 		})
+	}
+
+	getEcommerceItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
+	{
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const baseUrl = this.base_url+'/ecommerce_item.php';
+		let url = baseUrl + '?' + params.toString();
+
+		return fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			});
+	}
+
+	getEcommerceItemRoles(p:URLSearchParams | Object):Promise<RestResponse<any>>
+	{
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const baseUrl = this.base_url+'/ecommerce_item_role.php';
+		let url = baseUrl + '?' + params.toString();
+
+		return fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			});
 	}
 
 

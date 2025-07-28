@@ -12,16 +12,43 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item_info of item_info_list; let i = index">
+      <tr *ngFor="let item_info of c_item_info_list; let i = index">
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ item_info.item.name }}</td>
         <td>{{ item_info.category?.name }}</td>
-        <td>{{ item_info.prices[0]?.price | currency }}</td>
+        <td>Price Here</td>
         <td>
-          <button class="btn btn-primary btn-sm">Edit</button>
+          <button class="btn btn-info btn-sm">View</button>
+          <button class="btn btn-primary btn-sm ms-2" (click)="openRoleModal(item_info)">Roles</button>
           <button class="btn btn-danger btn-sm ms-2">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- Role Modal -->
+<div class="modal" tabindex="-1" [ngStyle]="{'display': selected_item ? 'block' : 'none'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Roles for {{ selected_item?.item.name }}</h5>
+        <button type="button" class="btn-close" (click)="closeRoleModal()"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Assigned Roles</h6>
+        <ul>
+          <li *ngFor="let role of selected_item?.roles">{{ role.name }}</li>
+        </ul>
+        <hr>
+        <h6>Add Role</h6>
+        <div class="input-group">
+          <select class="form-select" [(ngModel)]="selected_role_id">
+            <option *ngFor="let role of all_roles" [value]="role.id">{{ role.name }}</option>
+          </select>
+          <button class="btn btn-outline-secondary" type="button" (click)="addRoleToItem()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
