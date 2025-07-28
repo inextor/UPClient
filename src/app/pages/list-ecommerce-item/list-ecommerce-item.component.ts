@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
+import { BaseComponent } from '../base/base.component';
+
+interface EcommerItemRoleInfo{
+	role: any;
+	ecommerce_item_role: any;
+}
 
 @Component({
 	selector: 'app-list-ecommerce-item',
@@ -11,14 +17,15 @@ import { RestService } from '../../services/rest.service';
 	templateUrl: './list-ecommerce-item.component.html',
 	styleUrls: ['./list-ecommerce-item.component.css']
 })
-export class ListEcommerceItemComponent implements OnInit {
+export class ListEcommerceItemComponent extends BaseComponent implements OnInit {
+
 	c_item_info_list: any[] = [];
 	selected_item: any = null;
 	all_roles: any[] = [];
 	selected_role_id: number | null = null;
 	selected_item_roles: any[] = [];
+    ecommerce_item_role_info_list: EcommerItemRoleInfo[] = [];
 
-	constructor(private rest: RestService) { }
 
 	ngOnInit(): void {
 		this.fetchItems();
@@ -67,7 +74,20 @@ export class ListEcommerceItemComponent implements OnInit {
 		this.rest.getEcommerceItemRoles({ ecommerce_item_id: item.ecommerce_item.id })
 			.then(response =>
 			{
-				this.selected_item_roles = response.data;
+				let role_ids = response.data.map(ecommerce_item_role => ecommerce_item_role.role_id);
+				return Promise.all([this.rest.getRoles({'ids':role_ids.join(',')}), Promise.resolve(response.data)]);
+			})
+			.then(([roles_response, ecommerce_item_roles]) =>
+			{
+
+				let ecommerItemRolesInfo: EcommerItemRoleInfo[] = ecommerce_item_roles.map(ecommerce_item_role =>
+				{
+					return {
+						role: roles_response.data.find(role => role.id === ecommerce_item_role.role_id),
+						ecommerce_item_role: ecommerce_item_role
+					};
+				});
+				this.ecommerce_item_role_info_list = ecommerItemRolesInfo;
 			})
 			.catch(error =>
 			{
@@ -92,5 +112,15 @@ export class ListEcommerceItemComponent implements OnInit {
 				this.closeRoleModal();
 			});
 		}
+	}
+	removeRoleFromItem(_t39: EcommerItemRoleInfo) {
+		this.rest.deleteEcommerceItemRole(_t39.ecommerce_item_role.id).then(() => {
+			// Optionally, refresh the item's roles here
+		})
+		.catch((error:any) =>
+		{
+			this.showError(error);
+		});
+
 	}
 }

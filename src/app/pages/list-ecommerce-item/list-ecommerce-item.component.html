@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container mt-5">
-  <h2>Item List</h2>
+  <h2>Articulos</h2>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -37,9 +37,17 @@
       </div>
       <div class="modal-body">
         <h6>Assigned Roles</h6>
-        <ul>
-          <li *ngFor="let role of selected_item?.roles">{{ role.name }}</li>
-        </ul>
+		<div class="row">
+			@for( ecommerce_item_role of ecommerce_item_role_info_list; track ecommerce_item_role.ecommerce_item_role.id )
+			{
+				<div class="col-md-8">
+					{{ ecommerce_item_role.role.name }}
+				</div>
+				<div class="col-md-4 text-end">
+					<button class="btn btn-danger btn-sm ms-2" (click)="removeRoleFromItem(ecommerce_item_role)">✗</button>
+				</div>
+			}
+		</div>
         <hr>
         <h6>Add Role</h6>
         <div class="input-group">
