@@ -8,6 +8,7 @@ import { HelpComponent } from './pages/help/help.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { ListEcommerceItemComponent } from './pages/list-ecommerce-item/list-ecommerce-item.component';
 import { ListEcommerceUserComponent } from './pages/list-ecommerce-user/list-ecommerce-user.component';
+import { PanelInformativoComponent } from './pages/panel-informativo/panel-informativo.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
     { path: 'add-user', component: AddUserComponent },
     { path: 'list-ecommerce-item', component: ListEcommerceItemComponent },
     { path: 'list-ecommerce-user', component: ListEcommerceUserComponent },
+    { path: 'panel-informativo', component: PanelInformativoComponent },
     { path: '', redirectTo: '/main', pathMatch: 'full' },
 ];
