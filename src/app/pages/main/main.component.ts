@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 
+import { CurrencyPipe } from '@angular/common';
 import { RestService } from '../../services/rest.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { RouterLink } from '@angular/router';
 @Component({
 	selector: 'app-main',
 	standalone: true,
-	imports: [HeaderComponent, RouterLink],
+	imports: [HeaderComponent, RouterLink, CurrencyPipe],
 	templateUrl: './main.component.html',
 	styleUrl: './main.component.css'
 })

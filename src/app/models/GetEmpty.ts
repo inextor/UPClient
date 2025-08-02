@@ -1,4 +1,4 @@
-import { Ecommerce, User, Address } from './RestModels';
+import { Ecommerce, User, Address, Ecommerce_User } from './RestModels';
 
 export class GetEmpty
 {
@@ -61,6 +61,20 @@ export class GetEmpty
 			job_address: '',
 			job_name: '',
 			job_phone: ''
+		};
+	}
+
+	static ecommerce_user(): Ecommerce_User
+	{
+		return {
+			id: 0,
+			user_id: 0,
+			ecommerce_id: 0,
+			last_login: '',
+			type: 'ROLE_USER',
+			status: 'ACTIVE',
+			created: '',
+			updated: ''
 		};
 	}
 

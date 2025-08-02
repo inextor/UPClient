@@ -32,6 +32,7 @@ export interface Product {
   }[];
   image_url?: string;
   images: { id: number; url: string }[];
+  ecommerce_item?: any;
 }
 export interface User {
   type: string;
@@ -91,4 +92,20 @@ export interface Address {
   user_id: number;
   phone: string;
   note: string;
+}
+
+export interface Ecommerce_User {
+    id: number;
+    user_id: number;
+    ecommerce_id: number;
+    last_login: string;
+	type: 'ECOMMERCE_ADMIN'|'ROLE_USER'|'ROLE_ADMIN';
+    status: string;
+    created: string;
+    updated: string;
+}
+
+export interface EcommerceUserInfo {
+    user: User;
+    ecommerce_user: Ecommerce_User;
 }

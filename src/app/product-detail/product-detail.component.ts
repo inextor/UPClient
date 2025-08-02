@@ -57,6 +57,7 @@ export class ProductDetailComponent implements OnInit {
 						}
 
 						this.fetchProductImages();
+						this.fetchEcommerceItem();
 						console.log('Product details:', this.product);
 					} else {
 						console.log('Product not found');
@@ -64,6 +65,21 @@ export class ProductDetailComponent implements OnInit {
 				})
 				.catch(error => {
 					console.error('Error fetching product details:', error);
+				});
+		}
+	}
+
+	fetchEcommerceItem(): void {
+		if (this.item_id) {
+			const params = this.rest.getUrlParams({ 'item_id': this.item_id, 'ecommerce_id': this.rest.ecommerce.id });
+			this.rest.getEcommerceItems(params)
+				.then((response: any) => {
+					if (response.data && response.data.length > 0 && this.product) {
+						this.product.ecommerce_item = response.data[0];
+					}
+				})
+				.catch(error => {
+					console.error('Error fetching ecommerce item:', error);
 				});
 		}
 	}
