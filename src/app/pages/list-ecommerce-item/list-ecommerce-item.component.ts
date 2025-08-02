@@ -28,11 +28,11 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 
 
 	ngOnInit(): void {
-		this.fetchItems();
-		this.fetchRoles();
+		this.obtenerArticulos();
+		this.obtenerRoles();
 	}
 
-	fetchItems(): void {
+	obtenerArticulos(): void {
 		let all_item_info: any[] = [];
 		let all_ecommerce_items: any[] = [];
 
@@ -62,13 +62,13 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 		});
 	}
 
-	fetchRoles(): void {
+	obtenerRoles(): void {
 		this.rest.getRoles({}).then(response => {
 			this.all_roles = response.data;
 		});
 	}
 
-	openRoleModal(item: any): void
+	abrirModalRoles(item: any): void
 	{
 		this.selected_item = item;
 		this.rest.getEcommerceItemRoles({ ecommerce_item_id: item.ecommerce_item.id })
@@ -91,17 +91,17 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 			})
 			.catch(error =>
 			{
-				console.error('Error fetching item roles:', error);
+				console.error('Error al obtener los roles del artículo:', error);
 			});
 	}
 
-	closeRoleModal(): void {
+	cerrarModalRoles(): void {
 		this.selected_item = null;
 		this.selected_role_id = null;
 		this.selected_item_roles = [];
 	}
 
-	addRoleToItem(): void {
+	agregarRolAArticulo(): void {
 		if (this.selected_item && this.selected_role_id) {
 			const data = {
 				ecommerce_item_id: this.selected_item.ecommerce_item.id,
@@ -109,11 +109,11 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 			};
 			this.rest.post('/ecommerce_item_role.php', data).then(() => {
 				// Optionally, refresh the item's roles here
-				this.closeRoleModal();
+				this.cerrarModalRoles();
 			});
 		}
 	}
-	removeRoleFromItem(_t39: EcommerItemRoleInfo) {
+	eliminarRolDeArticulo(_t39: EcommerItemRoleInfo) {
 		this.rest.deleteEcommerceItemRole(_t39.ecommerce_item_role.id).then(() => {
 			// Optionally, refresh the item's roles here
 		})

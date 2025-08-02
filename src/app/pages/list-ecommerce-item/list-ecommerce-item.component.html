@@ -1,14 +1,14 @@
 <app-header></app-header>
 <div class="container mt-5">
-  <h2>Articulos</h2>
+  <h2>Artículos</h2>
   <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Category</th>
-        <th scope="col">Price</th>
-        <th scope="col">Actions</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -16,11 +16,11 @@
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ item_info.item.name }}</td>
         <td>{{ item_info.category?.name }}</td>
-        <td>Price Here</td>
+        <td>{{ item_info.ecommerce_item?.price | currency }}</td>
         <td>
-          <button class="btn btn-info btn-sm">View</button>
-          <button class="btn btn-primary btn-sm ms-2" (click)="openRoleModal(item_info)">Roles</button>
-          <button class="btn btn-danger btn-sm ms-2">Delete</button>
+          <button class="btn btn-info btn-sm">Ver</button>
+          <button class="btn btn-primary btn-sm ms-2" (click)="abrirModalRoles(item_info)">Roles</button>
+          <button class="btn btn-danger btn-sm ms-2">Eliminar</button>
         </td>
       </tr>
     </tbody>
@@ -32,29 +32,30 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Roles for {{ selected_item?.item.name }}</h5>
-        <button type="button" class="btn-close" (click)="closeRoleModal()"></button>
+        <h5 class="modal-title">Roles para {{ selected_item?.item.name }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalRoles()"></button>
       </div>
       <div class="modal-body">
-        <h6>Assigned Roles</h6>
-		<div class="row">
-			@for( ecommerce_item_role of ecommerce_item_role_info_list; track ecommerce_item_role.ecommerce_item_role.id )
-			{
+        <h6>Roles Asignados</h6>
+		@for( ecommerce_item_role of ecommerce_item_role_info_list; track ecommerce_item_role.ecommerce_item_role.id )
+		{
+			<div class="row">
 				<div class="col-md-8">
 					{{ ecommerce_item_role.role.name }}
 				</div>
 				<div class="col-md-4 text-end">
-					<button class="btn btn-danger btn-sm ms-2" (click)="removeRoleFromItem(ecommerce_item_role)">✗</button>
+					<button class="btn btn-danger btn-sm ms-2" (click)="eliminarRolDeArticulo(ecommerce_item_role)">✗</button>
 				</div>
-			}
-		</div>
+			</div>
+			<hr>
+		}
         <hr>
-        <h6>Add Role</h6>
+        <h6>Añadir Rol</h6>
         <div class="input-group">
           <select class="form-select" [(ngModel)]="selected_role_id">
             <option *ngFor="let role of all_roles" [value]="role.id">{{ role.name }}</option>
           </select>
-          <button class="btn btn-outline-secondary" type="button" (click)="addRoleToItem()">Add</button>
+          <button class="btn btn-outline-secondary" type="button" (click)="agregarRolAArticulo()">Añadir</button>
         </div>
       </div>
     </div>

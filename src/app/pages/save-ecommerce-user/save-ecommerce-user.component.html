@@ -1,0 +1,67 @@
+<app-header></app-header>
+<div class="container mt-5">
+  <h2>{{ ecommerce_user_info.ecommerce_user.id ? 'Editar' : 'Agregar' }} Usuario</h2>
+  <div *ngIf="is_loading" class="spinner-border" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+  <form (ngSubmit)="save()" *ngIf="!is_loading" ngNativeValidate>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="ecommerce_user_info.user.name" name="name" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="ecommerce_user_info.user.email" name="email" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="phone" class="form-label">Teléfono</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="ecommerce_user_info.user.phone" name="phone">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="username" class="form-label">Usuario</label>
+          <input type="text" class="form-control" id="username" [(ngModel)]="ecommerce_user_info.user.username" name="username">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="ecommerce_user_info.user.password" name="password">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="status" class="form-label">Estado</label>
+          <select class="form-select" id="status" [(ngModel)]="ecommerce_user_info.ecommerce_user.status" name="status">
+            <option value="ACTIVE">Activo</option>
+            <option value="INACTIVE">Inactivo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="type" class="form-label">Tipo</label>
+          <select class="form-select" id="type" [(ngModel)]="ecommerce_user_info.ecommerce_user.type" name="type">
+            <option value="ECOMMERCE_ADMIN">Administrador</option>
+            <option value="ROLE_USER">Usuario</option>
+            <option value="ROLE_ADMIN">Administrador de area</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="is_loading">Guardar</button>
+  </form>
+</div>

@@ -1,42 +1,47 @@
 <header class="header-container">
-  <div class="header-content">
-    <a class="brand-section" [routerLink]="['/main']">
-      <img class="logo" [src]="rest.logo_url" alt="Logo">
-      <h1 class="store-name">{{ rest.ecommerce.name }}</h1>
-    </a>
+	<div class="header-content">
+		<a class="brand-section" [routerLink]="['/main']">
+			<img class="logo" [src]="rest.logo_url" alt="Logo">
+			<h1 class="store-name">{{ rest.ecommerce.name }}</h1>
+		</a>
 
-    <nav class="nav-section">
-      @if (!rest.bearer) {
-        <a class="nav-link login-button" [routerLink]="['/login']">Iniciar Sesión</a>
-      }
-      @if (rest.bearer) {
-        <a class="cart-indicator" [routerLink]="['/cart']">
-        <svg class="cart-icon" viewBox="0 0 24 24">
-          <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.09 20.45 5.5 22 7.21 22H20v-2H7.21c-.71 0-1.1-.45-1.45-1.01l-.99-1.8-.01-.01L10 14l5.55-.01z"/>
-        </svg>
-        <span class="cart-count">{{ rest.cart_item_count}}</span>
-      </a>
-      }
-      <button class="nav-link" (click)="is_active = !is_active">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-          <path d="M0 0h24v24H0V0z" fill="none"/>
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-        </svg>
-      </button>
-    </nav>
-  </div>
+		<nav class="nav-section">
+			@if (!rest.bearer) {
+				<a class="nav-link login-button" [routerLink]="['/login']">Iniciar Sesión</a>
+			}
+			@if (rest.bearer) {
+				<a class="cart-indicator" [routerLink]="['/cart']">
+					<svg class="cart-icon" viewBox="0 0 24 24">
+						<path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.09 20.45 5.5 22 7.21 22H20v-2H7.21c-.71 0-1.1-.45-1.45-1.01l-.99-1.8-.01-.01L10 14l5.55-.01z"/>
+					</svg>
+					<span class="cart-count">{{ rest.cart_item_count}}</span>
+				</a>
+			}
+			<button class="nav-link" (click)="is_active = !is_active">
+				<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+					<path d="M0 0h24v24H0V0z" fill="none"/>
+					<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+				</svg>
+			</button>
+		</nav>
+	</div>
 </header>
 <div id="overlay" [ngClass]="{'active': is_active}" (click)="is_active = false"></div>
 <div id="side-menu" [ngClass]="{'active': is_active}" (click)="$event.stopPropagation()">
-      <div class="menu-content">
-          <div class="menu-item"><a [routerLink]="['/main']">Inicio</a></div>
-          <div class="menu-item"><a [routerLink]="['/cart']">Carrito</a></div>
-          <div class="menu-item"><a [routerLink]="['/help']">Ayuda</a></div>
-          <div class="menu-item"><a [routerLink]="['/add-user']">Add User</a></div>
-          <div class="menu-item"><a [routerLink]="['/list-ecommerce-item']">List Ecommerce Item</a></div>
-          <div class="menu-item"><a [routerLink]="['/list-ecommerce-user']">List Ecommerce User</a></div>
-    @if (rest.bearer) {
-      <div class="menu-item" (click)="closeSession()" >Cerrar Sesión</div>
-    }
-      </div>
+	<div class="menu-content">
+		<div class="menu-item"><a [routerLink]="['/main']">Inicio</a></div>
+		<div class="menu-item"><a [routerLink]="['/cart']">Carrito</a></div>
+		<div class="menu-item"><a [routerLink]="['/help']">Ayuda</a></div>
+		@if (rest.ecommerce_user.type === 'ECOMMERCE_ADMIN') {
+			<div class="menu-item"><a [routerLink]="['/list-ecommerce-item']">Administrar articulos</a></div>
+			<div class="menu-item"><a [routerLink]="['/list-ecommerce-user']">Administrar Usuarios</a></div>
+		}
+		@if (rest.ecommerce_user.type === 'ROLE_ADMIN') {
+			<div class="menu-item"><a [routerLink]="['/add-user']">Add User</a></div>
+			<div class="menu-item"><a [routerLink]="['/list-ecommerce-user']">Administrar Usuaarios</a></div>
+		}
+		@if (rest.bearer) {
+			<div class="menu-item" (click)="closeSession()" >Cerrar Sesión</div>
+		}
+	</div>
 </div>

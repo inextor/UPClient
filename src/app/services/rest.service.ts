@@ -156,6 +156,25 @@ export class RestService
 		return params;
 	}
 
+	async get(path: string, p?: any): Promise<any> {
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const url = this.base_url + path + '?' + params.toString();
+		const headers = {
+			'Authorization': 'Bearer ' + this.bearer
+		};
+
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: headers
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return response.json();
+	}
+
 	async post(path: string, data: any): Promise<any> {
 		const url = this.base_url + path;
 		const headers = {
@@ -284,5 +303,17 @@ export class RestService
 		this.bearer = '';
 		this.user = {};
 		this.ecommerce_user = {};
+	}
+
+	getEcommerceUserInfo(id:any): Promise<any> {
+		return this.get('/ecommerce_user_info.php',{id:id});
+	}
+
+	saveEcommerceUserInfo(data: any): Promise<any> {
+		return this.post('/ecommerce_user_info.php', data);
+	}
+
+	getEcommerces(): Promise<any> {
+		return this.get('/ecommerce.php');
 	}
 }

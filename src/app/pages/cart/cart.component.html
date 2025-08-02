@@ -15,7 +15,7 @@
         <div class="item-details">
           <h3 class="item-name">{{ item.name }}</h3>
           <p class="item-category">{{ item.category?.name || 'N/A' }}</p>
-          <p class="item-price">{{ item.prices[0].price | currency }}</p>
+          <p class="item-price">{{ item.ecommerce_item?.price | currency }}</p>
         </div>
 
         <div class="item-quantity">
@@ -24,7 +24,7 @@
           <button class="quantity-btn" (click)="incrementQuantity(item)">+</button>
         </div>
 
-        <div class="item-total">{{ item.prices[0].price * item.qty | currency }}</div>
+        <div class="item-total">{{ item.ecommerce_item?.price * item.qty | currency }}</div>
       </div>
         }
     </div>

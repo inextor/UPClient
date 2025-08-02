@@ -42,7 +42,7 @@
 							}
 						</div>
 						<h2 class="product-title text-center">{{item_info.item.name}}</h2>
-						<p class="product-meta text-center">{{item_info?.category?.name}}</p>
+						<p class="product-price text-center">{{item_info.ecommerce_item?.price | currency}}</p>
 						<!--
 						@if (item_info.prices.length)
 						{

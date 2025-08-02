@@ -1,9 +1,9 @@
 <app-header></app-header>
 <div class="container mt-5">
-  <h2>Add User</h2>
+  <h2>Agregar Usuario</h2>
   <form (ngSubmit)="onSubmit()" #addUserForm="ngForm">
     <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
+      <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="name" required [(ngModel)]="user.name" name="name">
     </div>
     <div class="mb-3">
@@ -11,17 +11,25 @@
       <input type="email" class="form-control" id="email" required [(ngModel)]="user.email" name="email">
     </div>
     <div class="mb-3">
-      <label for="phone" class="form-label">Phone</label>
+      <label for="phone" class="form-label">Teléfono</label>
       <input type="text" class="form-control" id="phone" required [(ngModel)]="user.phone" name="phone">
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+      <label for="password" class="form-label">Contraseña</label>
       <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password">
     </div>
     <div class="mb-3">
-      <label for="address" class="form-label">Address</label>
+      <label for="address" class="form-label">Dirección</label>
       <input type="text" class="form-control" id="address" required [(ngModel)]="address.address" name="address">
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!addUserForm.form.valid">Submit</button>
+    <div class="mb-3">
+      <label for="type" class="form-label">Tipo</label>
+      <select class="form-control" id="type" required [(ngModel)]="user.type" name="type">
+        <option value="ECOMMERCE_ADMIN">Ecommerce Admin</option>
+        <option value="ROLE_ADMIN">Role Admin</option>
+        <option value="ROLE_USER">Role User</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!addUserForm.form.valid">Enviar</button>
   </form>
 </div>
