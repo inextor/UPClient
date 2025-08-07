@@ -10,6 +10,7 @@ import { ListEcommerceItemComponent } from './pages/list-ecommerce-item/list-eco
 import { ListEcommerceUserComponent } from './pages/list-ecommerce-user/list-ecommerce-user.component';
 import { SaveEcommerceUserComponent } from './pages/save-ecommerce-user/save-ecommerce-user.component';
 import { PanelInformativoComponent } from './pages/panel-informativo/panel-informativo.component';
+import { SolicitarCotizacionComponent } from './pages/solicitar-cotizacion/solicitar-cotizacion.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'add-ecommerce-user', component: SaveEcommerceUserComponent },
     { path: 'edit-ecommerce-user/:id', component: SaveEcommerceUserComponent },
     { path: 'panel-informativo', component: PanelInformativoComponent },
+    { path: 'solicitar-cotizacion', component: SolicitarCotizacionComponent },
     { path: '', redirectTo: '/main', pathMatch: 'full' },
 ];
