@@ -26,7 +26,6 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 	selected_item_roles: any[] = [];
     ecommerce_item_role_info_list: EcommerItemRoleInfo[] = [];
 
-
 	ngOnInit(): void {
 		this.obtenerArticulos();
 		this.obtenerRoles();
@@ -121,6 +120,5 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 		{
 			this.showError(error);
 		});
-
 	}
 }

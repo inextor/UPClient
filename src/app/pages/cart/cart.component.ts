@@ -126,5 +126,5 @@ export class CartComponent extends BaseComponent implements OnInit
 		this.updateTotal();
 	}
 
-	
+
 }

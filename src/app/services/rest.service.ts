@@ -233,7 +233,11 @@ export class RestService
 
 			response.data.forEach((item_info:any) =>
 			{
-				let price = item_info.prices.find((price:any)=> price.store_id == this.ecommerce.store_id);
+				let price = item_info.prices.find((price:any)=>
+				{
+					return price.price_type_id == this.ecommerce.price_type_id
+						&& price.price_list_id == this.ecommerce.price_list_id;
+				});
 
 				if( price )
 				{
@@ -244,6 +248,7 @@ export class RestService
 			return response;
 		})
 	}
+
 
 	getEcommerceItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{

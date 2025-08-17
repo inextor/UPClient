@@ -114,8 +114,7 @@ export class MainComponent extends BaseComponent
 	{
 		if (this.current_page > 1)
 		{
-
-				this.goToPage(this.current_page - 1);
+			this.goToPage(this.current_page - 1);
 		}
 	}
 
@@ -137,10 +136,6 @@ export class MainComponent extends BaseComponent
 		{
 			this.total_pages = response.total / 100 + (response.total % 100 ? 1 : 0);
 			this.page_numbers = this.getPageNumbers();
-
-			response.data.forEach((item_info:any) => {
-
-			});
 
 			this.item_info_list = response.data
 			.map((item_info:any)=>
