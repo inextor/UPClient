@@ -4,11 +4,13 @@ import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common'; // Im
 import { BaseComponent } from '../base/base.component';
 import { HeaderComponent } from '../../components/header/header.component'; // Import HeaderComponent
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
 	selector: 'app-cart',
 	standalone: true,
-	imports: [ HeaderComponent,FormsModule, CurrencyPipe, DecimalPipe ], // Add CommonModule here if you use directives like *ngFor
+	imports: [ HeaderComponent,FormsModule, CurrencyPipe, DecimalPipe, RouterModule ], // Add CommonModule here if you use directives like *ngFor
 	templateUrl: './cart.component.html',
 	styleUrl: './cart.component.css',
 })
@@ -124,97 +126,5 @@ export class CartComponent extends BaseComponent implements OnInit
 		this.updateTotal();
 	}
 
-	confirmCheckout()
-	{
-		if (this.confirmDialog ) {
-			this.confirmDialog.nativeElement.showModal();
-		}
-	}
-
-	closeConfirmDialog()
-	{
-		if (this.confirmDialog ) {
-			this.confirmDialog.nativeElement.close();
-		}
-	}
-
-	createOrder()
-	{
-
-		let ecommerce = this.rest.ecommerce;
-		console.log('create order', ecommerce);
-
-		let x = 0;
-
-		let order_info = {
-			'order': {
-				ecommerce_user_id: this.rest.ecommerce_user.id,
-				store_id: ecommerce.store_id,
-			},
-			'items': this.cart_items.map(item => ({
-					order_item:{
-						'item_id': item.item_id,
-						'qty': item.qty,
-						'item_group': ++x,
-					}
-				})),
-		};
-
-
-
-		fetch(this.rest.base_url+'/order_info.php',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-				'Authorization': 'Bearer '+this.rest.bearer
-			},
-			credentials: 'include',
-			body: JSON.stringify(order_info)
-		})
-		.then((response) =>
-		{
-			if( response.status == 200 )
-				return response.json()
-			throw 'Ocurrio un error al crear el pedido'
-		})
-		.then((response) =>
-		{
-			this.order_id = response.order_id;
-			this.closeConfirmDialog();
-
-			if (this.confirmDialog )
-			{
-				this.confirmDialog.nativeElement.close();
-			}
-
-			console.log('show modal', this.confirmDialog2);
-			if( this.confirmDialog2 )
-			{
-				console.log('show modal');
-				this.confirmDialog2.nativeElement.showModal();
-			}
-		})
-		.catch((error) =>
-		{
-			this.is_loading = false
-			this.showError(error)
-			this.closeConfirmDialog();
-
-			if (this.confirmDialog )
-			{
-				this.confirmDialog.nativeElement.close();
-			}
-		})
-	}
-
-	closeConfirmDialog2()
-	{
-		if (this.confirmDialog2 ) {
-			this.confirmDialog2.nativeElement.close();
-			this.rest.clearCart();
-			this.router.navigate(['/main']);
-		}
-	}
+	
 }

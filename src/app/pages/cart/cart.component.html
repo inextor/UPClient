@@ -33,7 +33,7 @@
       <p class="subtotal">
         Subtotal ({{ total_qty }} artículos): <strong>{{ total | currency }}</strong>
       </p>
-      <button class="order-button" (click)="confirmCheckout()">Finalizar Compra</button>
+      <button class="order-button" routerLink="/confirm-order">Finalizar Compra</button>
     </div>
   </div>
   }
@@ -45,23 +45,5 @@
   </div>
   }
 </div>
-<dialog #confirmDialog class="confirm-dialog">
-  <h2 class="confirm-dialog-title">Confirmar pedido</h2>
-  <p class="confirm-dialog-message">¿Estás seguro de que deseas finalizar tu pedido?</p>
-  <div class="button-container">
-    <button class="confirm-dialog-button" (click)="createOrder()">Confirmar pedido</button>
-    <button class="confirm-dialog-button" (click)="closeConfirmDialog()">Cancelar</button>
-  </div>
-</dialog>
 
-<dialog #confirmDialog2 class="confirm-dialog">
-  <h2 class="confirm-dialog-title">Confirmar pedido</h2>
-  <p class="confirm-dialog-message">Orden Creada</p>
-  @if (order_id) {
-    <p class="confirm-dialog-message">No. de Orden: {{ order_id }}</p>
-  }
-  <div class="button-container">
-    <button class="confirm-dialog-button" (click)="closeConfirmDialog2()">Ok</button>
-  </div>
-</dialog>
 

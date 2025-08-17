@@ -10,6 +10,7 @@ import { ListEcommerceItemComponent } from './pages/list-ecommerce-item/list-eco
 import { ListEcommerceUserComponent } from './pages/list-ecommerce-user/list-ecommerce-user.component';
 import { SaveEcommerceUserComponent } from './pages/save-ecommerce-user/save-ecommerce-user.component';
 import { PanelInformativoComponent } from './pages/panel-informativo/panel-informativo.component';
+import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'add-ecommerce-user', component: SaveEcommerceUserComponent },
     { path: 'edit-ecommerce-user/:id', component: SaveEcommerceUserComponent },
     { path: 'panel-informativo', component: PanelInformativoComponent },
+    { path: 'confirm-order', component: ConfirmOrderComponent },
     { path: '', redirectTo: '/main', pathMatch: 'full' },
 ];
