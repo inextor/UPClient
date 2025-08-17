@@ -11,7 +11,9 @@ export class GetEmpty
 			color: 'white',
 			font_color: 'black',
 			updated: '',
-			preferences_id: 1
+			preferences_id: 1,
+			price_type_id: 0,
+			price_list_id: 0,
 		};
 	}
 
