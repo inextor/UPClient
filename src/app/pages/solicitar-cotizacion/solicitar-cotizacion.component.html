@@ -1,0 +1,21 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Solicitar Cotización</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="note">Nota</label>
+                        <textarea id="note" class="form-control" rows="5" [(ngModel)]="note"></textarea>
+                    </div>
+                    <button class="btn btn-primary mt-3" (click)="solicitarCotizacion()" [disabled]="is_loading">
+                        <span *ngIf="is_loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {{ is_loading ? 'Enviando...' : 'Enviar Solicitud' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

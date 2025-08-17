@@ -316,4 +316,8 @@ export class RestService
 	getEcommerces(): Promise<any> {
 		return this.get('/ecommerce.php');
 	}
+
+	requestQuote(data: any): Promise<any> {
+		return this.post('/quote_info.php', data);
+	}
 }

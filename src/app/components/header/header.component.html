@@ -32,9 +32,11 @@
 		<div class="menu-item"><a [routerLink]="['/main']">Inicio</a></div>
 		<div class="menu-item"><a [routerLink]="['/cart']">Carrito</a></div>
 		<div class="menu-item"><a [routerLink]="['/help']">Ayuda</a></div>
+		<div class="menu-item"><a [routerLink]="['/solicitar-cotizacion']">Solicitar Cotizacion</a></div>
 		@if (rest.ecommerce_user.type === 'ECOMMERCE_ADMIN') {
 			<div class="menu-item"><a [routerLink]="['/list-ecommerce-item']">Administrar articulos</a></div>
 			<div class="menu-item"><a [routerLink]="['/list-ecommerce-user']">Administrar Usuarios</a></div>
+			<div class="menu-item"><a [routerLink]="['/panel-informativo']">Panel Informativo</a></div>
 		}
 		@if (rest.ecommerce_user.type === 'ROLE_ADMIN') {
 			<div class="menu-item"><a [routerLink]="['/add-user']">Add User</a></div>
