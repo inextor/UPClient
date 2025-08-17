@@ -210,6 +210,7 @@ export class RestService
 	getItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+
 		if (environment.apply_ecommerce_filter) {
 			params.set('ecommerce_id', ''+this.ecommerce.id);
 		}
@@ -229,6 +230,17 @@ export class RestService
 		})
 		.then((response) =>
 		{
+
+			response.data.forEach((item_info:any) =>
+			{
+				let price = item_info.prices.find((price:any)=> price.store_id == this.ecommerce.store_id);
+
+				if( price )
+				{
+					item_info.price = price.price;
+				}
+			});
+
 			return response;
 		})
 	}
