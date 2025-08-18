@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 export class SolicitarCotizacionComponent extends BaseComponent {
   public note: string = '';
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
+
   }
 
   solicitarCotizacion() {
