@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { RestService } from './services/rest.service';
+import { ToastMessageComponent } from './components/toast-message/toast-message.component';
 
 @Component
 ({ 
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet],
+	imports: [RouterOutlet, ToastMessageComponent],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css',
 })

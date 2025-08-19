@@ -22,9 +22,30 @@ export class ConfirmOrderComponent extends BaseComponent implements OnInit {
 	new_shipping_address: any = {};
 
 	order_id: number | null = null;
+	users: any[] = [];
+	selected_user_id: number | null = null;
 
 	ngOnInit() {
 		this.fetchAddresses();
+		if (this.re_admin()) {
+			this.fetchUsers();
+		} else {
+			this.selected_user_id = this.rest.ecommerce_user.id;
+		}
+	}
+
+	re_admin() {
+		return this.rest.ecommerce_user.type == 'ECOMMERCE_ADMIN' || this.rest.ecommerce_user.type == 'ROLE_ADMIN';
+	}
+
+	async fetchUsers() {
+		try {
+			const response = await this.rest.get('/ecommerce_user.php', { limit: 999999 });
+			this.users = response.data;
+			this.selected_user_id = this.rest.ecommerce_user.id;
+		} catch (error) {
+			this.showError(error);
+		}
 	}
 
 	async fetchAddresses() {
@@ -64,7 +85,7 @@ export class ConfirmOrderComponent extends BaseComponent implements OnInit {
 
 			let order_info = {
 				'order': {
-					ecommerce_user_id: this.rest.ecommerce_user.id,
+					ecommerce_user_id: this.selected_user_id,
 					store_id: ecommerce.store_id,
 					shipping_address_id: shipping_address_id
 				},

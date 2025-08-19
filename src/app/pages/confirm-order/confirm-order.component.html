@@ -6,6 +6,14 @@
   <form (ngSubmit)="placeOrder()">
     <div class="address-section">
       <h3>Dirección de Envío</h3>
+      <div *ngIf="re_admin()">
+        <div class="form-group">
+          <label for="user_select">Seleccionar Usuario</label>
+          <select id="user_select" name="user_select" [(ngModel)]="selected_user_id">
+            <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+          </select>
+        </div>
+      </div>
       <div class="form-group">
         <label for="shipping_address_select">Seleccionar Dirección de Envío</label>
         <select id="shipping_address_select" name="shipping_address_select" [(ngModel)]="selected_shipping_address_id">

@@ -26,11 +26,11 @@ export class BaseComponent
 	}
 
 	showError(error: any) {
-		console.log(error);
+		this.rest.showError(error);
 	}
 
 	showSuccess(message: string) {
-		console.log(message);
+		this.rest.showSuccess(message);
 	}
 
 	getErrorMessage(error: any): string {

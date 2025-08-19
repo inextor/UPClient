@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GetEmpty } from '../models/GetEmpty';
 import { Ecommerce } from '../models/RestModels';
 import { CartItemInfo } from '../models/RestModels';
 import { environment } from '../../environments/environment';
+import { ErrorMessage } from '../models/ErrorMessage';
 
 interface RestResponse<T>
 {
@@ -15,7 +16,6 @@ interface RestResponse<T>
 ({ providedIn: 'root' })
 export class RestService
 {
-
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 	public base_url: string = environment.base_path;
@@ -24,11 +24,68 @@ export class RestService
 	ecommerce_user: any = {};
 	user: any = {};
 
+	error_behavior_subject = new BehaviorSubject<ErrorMessage>(new ErrorMessage('', ''));
+	public error_observable = this.error_behavior_subject.asObservable();
+
 	constructor()
 	{
 		console.log('init rest service');
 		this.loadUserData();
 		console.log(this.base_url);
+	}
+
+	showError(error: any, auto_hide: boolean = true)
+	{
+		console.log('Error to display is', error);
+		if (error instanceof ErrorMessage)
+		{
+			this.showErrorMessage(error);
+			return;
+		}
+		let str_error = this.getErrorMessage(error);
+
+		this.showErrorMessage(new ErrorMessage(str_error, 'alert-danger', auto_hide));
+	}
+
+	showSuccess(error: any, auto_hide: boolean = true)
+	{
+		console.log('Error to display is', error);
+		if (error instanceof ErrorMessage)
+		{
+			this.showErrorMessage(error);
+			return;
+		}
+		let str_error = this.getErrorMessage(error);
+
+		this.showErrorMessage(new ErrorMessage(str_error, 'alert-success', auto_hide));
+	}
+
+	showErrorMessage(error: ErrorMessage)
+	{
+		this.error_behavior_subject.next(error);
+	}
+
+	getErrorMessage(error: any): string
+	{
+		if (error == null || error === undefined)
+			return 'Error desconocido';
+
+		if (typeof error === "string")
+			return error;
+
+		if ('error' in error)
+		{
+			if (typeof (error.error) == 'string')
+			{
+				return error.error;
+			}
+
+			if (error.error && 'error' in error.error && error.error.error)
+			{
+				return error.error.error;
+			}
+		}
+		return 'Error desconocido';
 	}
 
 	loadUserData(): void
