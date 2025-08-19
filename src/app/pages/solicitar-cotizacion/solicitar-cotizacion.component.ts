@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 export class SolicitarCotizacionComponent extends BaseComponent {
   public note: string = '';
 
+  ngOnInit(): void {
+
+  }
   solicitarCotizacion() {
     this.is_loading = true;
     this.rest.requestQuote({ note: this.note, items: [] }).then(response => {
