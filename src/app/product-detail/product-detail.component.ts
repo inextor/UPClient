@@ -4,6 +4,7 @@ import { RestService } from '../services/rest.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../components/header/header.component';
 import { Product } from '../models/RestModels';
+import { BaseComponent } from '../pages/base/base.component';
 
 @Component({
 	selector: 'app-product-detail',
@@ -12,23 +13,22 @@ import { Product } from '../models/RestModels';
 	templateUrl: './product-detail.component.html',
 	styleUrl: './product-detail.component.css'
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent extends BaseComponent implements OnInit {
 	item_id: number | null = null;
 	product: Product | null = null;
 	mainImage: string | undefined;
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
 
-	constructor(private route: ActivatedRoute, private rest: RestService) { }
 
 	ngOnInit(): void {
 		this.main_color = this.rest.ecommerce.color || '#ffffff';
 		this.font_color = this.rest.ecommerce.font_color || '#000000';
 
-		this.route.paramMap.subscribe(params => 
+		this.route.paramMap.subscribe(params =>
 		{
 			const id = params.get('item_id');
-			if (id) 
+			if (id)
 			{
 				this.item_id = +id;
 				this.fetchProductDetails();
@@ -37,7 +37,6 @@ export class ProductDetailComponent implements OnInit {
 	}
 
 	fetchProductDetails(): void {
-		console.log('Fetching product details...', this.item_id);
 		if (this.item_id) {
 			const params = this.rest.getUrlParams({ 'id,': this.item_id });
 			this.rest.getItems(params)
@@ -45,7 +44,7 @@ export class ProductDetailComponent implements OnInit {
 					if (response.data && response.data.length > 0) {
 						this.product = response.data[0];
 
-						if (this.product && this.product.item.image_id) 
+						if (this.product && this.product.item.image_id)
 						{
 							this.product.image_url = this.rest.base_url + '/image.php?id=' + this.product.item.image_id;
 							this.mainImage = this.product.image_url;
@@ -58,13 +57,12 @@ export class ProductDetailComponent implements OnInit {
 
 						this.fetchProductImages();
 						this.fetchEcommerceItem();
-						console.log('Product details:', this.product);
 					} else {
-						console.log('Product not found');
+						this.showError('Product not found');
 					}
 				})
 				.catch(error => {
-					console.error('Error fetching product details:', error);
+					this.showError(error);
 				});
 		}
 	}
@@ -79,7 +77,7 @@ export class ProductDetailComponent implements OnInit {
 					}
 				})
 				.catch(error => {
-					console.error('Error fetching ecommerce item:', error);
+					this.showError(error);
 				});
 		}
 	}
@@ -101,7 +99,7 @@ export class ProductDetailComponent implements OnInit {
 						});
 					}
 				})
-				.catch(error => console.error('Error fetching product images:', error));
+				.catch(error => this.showError(error));
 		}
 	}
 
