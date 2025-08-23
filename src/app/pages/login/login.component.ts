@@ -50,7 +50,7 @@ export class LoginComponent extends BaseComponent
 				if(response.user.type === 'USER')
 				{
 					this.is_loading = false;
-					this.showError('El usuario o la contraseña son incorrectos');
+					this.showError('El usuario o la contraseña son incorrectos X');
 					return;
 				}
 				console.log( response );
