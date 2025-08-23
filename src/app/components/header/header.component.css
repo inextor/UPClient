@@ -46,11 +46,14 @@
   font-weight: 700;
 }
 
+.brand-section{
+  text-decoration: none;
+}
+
 .brand-section:visited,
 .brand-section:hover,
 .brand-section:active {
-  color: #1a1a1a; /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: #1a1a1a;
 }
 
 .nav-section {
@@ -59,9 +62,21 @@
   gap: 2rem;
 }
 
+.nav-link,
+.nav-link:visited,
+.nav-link:active,
+.cart-indicator,
+.cart-indicator:visited,
+.cart-indicator:active,
+.menu-item a,
+.menu-item a:visited,
+.menu-item a:hover,
+.menu-item a:active{
+  text-decoration: none;
+}
+
 .nav-link {
   color: var(--font-color);
-  text-decoration: none;
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -70,8 +85,7 @@
 }
 
 .nav-link:visited {
-  color: var(--font-color); /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: var(--font-color);
 }
 
 .nav-link:hover {
@@ -80,8 +94,7 @@
 }
 
 .nav-link:active {
-  color: #4a5568; /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: #4a5568;
 }
 
 .login-button {
@@ -106,8 +119,7 @@
 }
 
 .cart-indicator:visited {
-  color: var(--font-color); /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: var(--font-color);
 }
 
 .cart-indicator:hover {
@@ -115,8 +127,7 @@
 }
 
 .cart-indicator:active {
-  color: var(--font-color); /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: var(--font-color);
 }
 
 .cart-icon {
@@ -188,8 +199,7 @@
 }
 
 .menu-item a {
-  color: var(--font-color); /* Color del texto del menú */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: var(--font-color);
   display: block;
   width: 100%;
   height: 100%;
@@ -198,8 +208,7 @@
 .menu-item a:visited,
 .menu-item a:hover,
 .menu-item a:active {
-  color: var(--font-color); /* Mantener el color original */
-  text-decoration: none; /* Eliminar el subrayado */
+  color: var(--font-color);
 }
 
 .menu-item:hover {
