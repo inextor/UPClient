@@ -6,30 +6,54 @@
       <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="name" required [(ngModel)]="user.name" name="name">
     </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" required [(ngModel)]="user.email" name="email">
+    <div class="row">
+      <div class="col-6">
+        <div class="mb-3">
+          <label for="type" class="form-label">Tipo</label>
+          <select class="form-control" id="type" required [(ngModel)]="user.type" name="type">
+            <option value="ECOMMERCE_ADMIN">Ecommerce Admin</option>
+            <option value="ROLE_ADMIN">Role Admin</option>
+            <option value="ROLE_USER">Role User</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <label for="profile" class="form-label">Perfil</label>
+          <input class="form-control" list="datalistOptions" id="profile" placeholder="Escribe para buscar..." [(ngModel)]="user.profile" name="profile">
+          <datalist id="datalistOptions">
+            <option *ngFor="let profile of profiles" [value]="profile.name">
+          </datalist>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" required [(ngModel)]="user.email" name="email">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password">
+        </div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">Teléfono</label>
       <input type="text" class="form-control" id="phone" required [(ngModel)]="user.phone" name="phone">
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password">
-    </div>
-    <div class="mb-3">
       <label for="address" class="form-label">Dirección</label>
       <input type="text" class="form-control" id="address" required [(ngModel)]="address.address" name="address">
     </div>
-    <div class="mb-3">
-      <label for="type" class="form-label">Tipo</label>
-      <select class="form-control" id="type" required [(ngModel)]="user.type" name="type">
-        <option value="ECOMMERCE_ADMIN">Ecommerce Admin</option>
-        <option value="ROLE_ADMIN">Role Admin</option>
-        <option value="ROLE_USER">Role User</option>
-      </select>
+    <div class="row">
+      <div class="col-6 col-lg-8"></div>
+      <div class="col-lg-4 col-md-6">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="!addUserForm.form.valid">Enviar</button>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!addUserForm.form.valid">Enviar</button>
   </form>
 </div>

@@ -130,3 +130,13 @@ export interface EcommerceUserInfo {
 export interface Preferences {
   // Add properties of Preferences if known, otherwise leave empty for now
 }
+
+export interface Profile {
+  id: number;
+  ecommerce_id: number;
+  name: string;
+  created: Date;
+  updated: Date;
+  created_by_user_id: number;
+  updated_by_user_id: number;
+}

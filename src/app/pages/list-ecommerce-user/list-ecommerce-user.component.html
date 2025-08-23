@@ -4,27 +4,29 @@
     <h2>Lista de Usuarios</h2>
     <a routerLink="/add-user" class="btn btn-primary">Agregar Usuario</a>
   </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Email</th>
-        <th scope="col">Teléfono</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user_info of ecommerce_user_info_list; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ user_info.user.name }}</td>
-        <td>{{ user_info.user.email }}</td>
-        <td>{{ user_info.user.phone }}</td>
-        <td>
-          <a [routerLink]="[ '/edit-ecommerce-user', user_info.ecommerce_user.id ]" class="btn btn-primary btn-sm">Editar</a>
-          <button class="btn btn-danger btn-sm ms-2">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+	<div class="card bg-white p-3">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nombre</th>
+					<th>Email</th>
+					<th>Teléfono</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user_info of ecommerce_user_info_list; let i = index">
+					<th scope="row">{{ i + 1 }}</th>
+					<td>{{ user_info.user.name }}</td>
+					<td>{{ user_info.user.email }}</td>
+					<td>{{ user_info.user.phone }}</td>
+					<td>
+						<a [routerLink]="[ '/edit-ecommerce-user', user_info.ecommerce_user.id ]" class="btn btn-primary btn-sm">Editar</a>
+						<button (click)="deleteUser(user_info.ecommerce_user.id)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

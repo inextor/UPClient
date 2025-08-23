@@ -1,63 +1,71 @@
 <app-header></app-header>
 <div class="container mt-5">
-  <h2>Artículos</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Categoría</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item_info of c_item_info_list; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ item_info.item.name }}</td>
-        <td>{{ item_info.category?.name }}</td>
-        <td>{{ item_info.ecommerce_item?.price | currency }}</td>
-        <td>
-          <button class="btn btn-info btn-sm">Ver</button>
-          <button class="btn btn-primary btn-sm ms-2" (click)="abrirModalRoles(item_info)">Roles</button>
-          <button class="btn btn-danger btn-sm ms-2">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+	<h2>Artículos</h2>
+	<div class="card p-3 bg-white">
+		<table class="table bg-white">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Categoría</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item_info of c_item_info_list; let i = index">
+					<th scope="row">{{ i + 1 }}</th>
+					<td>{{ item_info.item.name }}</td>
+					<td>{{ item_info.category?.name }}</td>
+					<td>{{ item_info.ecommerce_item?.price | currency }}</td>
+					<td>
+						<button class="btn btn-info btn-sm">Ver</button>
+						<button class="btn btn-primary btn-sm ms-2" (click)="abrirModalProfiles(item_info)">Perfiles</button>
+						<button class="btn btn-danger btn-sm ms-2">Eliminar</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <!-- Role Modal -->
 <div class="modal" tabindex="-1" [ngStyle]="{'display': selected_item ? 'block' : 'none'}">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Roles para {{ selected_item?.item.name }}</h5>
-        <button type="button" class="btn-close" (click)="cerrarModalRoles()"></button>
-      </div>
-      <div class="modal-body">
-        <h6>Roles Asignados</h6>
-		@for( ecommerce_item_role of ecommerce_item_role_info_list; track ecommerce_item_role.ecommerce_item_role.id )
-		{
-			<div class="row">
-				<div class="col-md-8">
-					{{ ecommerce_item_role.role.name }}
-				</div>
-				<div class="col-md-4 text-end">
-					<button class="btn btn-danger btn-sm ms-2" (click)="eliminarRolDeArticulo(ecommerce_item_role)">✗</button>
-				</div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Perfiles para {{ selected_item?.item.name }}</h5>
+				<button type="button" class="btn-close" (click)="cerrarModalProfiles()"></button>
 			</div>
-			<hr>
-		}
-        <hr>
-        <h6>Añadir Rol</h6>
-        <div class="input-group">
-          <select class="form-select" [(ngModel)]="selected_role_id">
-            <option *ngFor="let role of all_roles" [value]="role.id">{{ role.name }}</option>
-          </select>
-          <button class="btn btn-outline-secondary" type="button" (click)="agregarRolAArticulo()">Añadir</button>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div class="modal-body">
+				<h6>Perfiles Asignados</h6>
+				@for( ecommerce_item_profile of ecommerce_item_profile_info_list; track ecommerce_item_profile.ecommerce_item_profile.id )
+				{
+					<div class="row">
+						<div class="col-md-8">
+							{{ ecommerce_item_profile.profile.name }}
+						</div>
+						<div class="col-md-4 text-end">
+							<button class="btn btn-danger btn-sm ms-2" (click)="eliminarProfileDeArticulo(ecommerce_item_profile)">✗</button>
+						</div>
+					</div>
+					<hr>
+				}
+				<hr>
+			<h6>Añadir Perfil</h6>
+				<form (submit)="agregarProfileToEcommerceItem()">
+					<div class="input-group">
+						<input type="text" class="form-control" name="new_profile_name" [(ngModel)]="new_profile_name" placeholder="Nombre del Perfil" list="profile-list" required>
+						<datalist id="profile-list">
+							@for( profile of profile_list; track profile.id )
+							{
+								<option value="{{ profile.name }}">{{profile.name}}</option>
+							}
+						</datalist>
+						<button class="btn btn-outline-secondary" type="submit">Añadir</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

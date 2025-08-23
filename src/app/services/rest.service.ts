@@ -266,6 +266,25 @@ export class RestService
 		return response.json();
 	}
 
+	async delete(path: string, p?: any): Promise<any> {
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const url = this.base_url + path + '?' + params.toString();
+		const headers = {
+			'Authorization': 'Bearer ' + this.bearer
+		};
+
+		const response = await fetch(url, {
+			method: 'DELETE',
+			headers: headers
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return response.json();
+	}
+
 	getRoles(p:URLSearchParams | Object): Promise<RestResponse<any>> {
 		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
 		const url = this.base_url + '/role.php?' + params.toString();
@@ -353,6 +372,38 @@ export class RestService
 	deleteEcommerceItemRole(id:any):Promise<any>
 	{
 		const url = this.base_url+'/ecommerce_item_role.php?id='+id;
+		return fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Authorization': 'Bearer ' + this.bearer
+			}
+		})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		});
+	}
+
+	getEcommerceItemProfiles(p:URLSearchParams | Object):Promise<RestResponse<any>>
+	{
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const baseUrl = this.base_url+'/ecommerce_item_profile.php';
+		let url = baseUrl + '?' + params.toString();
+
+		return fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			});
+	}
+
+	deleteEcommerceItemProfile(id:any):Promise<any>
+	{
+		const url = this.base_url+'/ecommerce_item_profile.php?id='+id;
 		return fetch(url, {
 			method: 'DELETE',
 			headers: {

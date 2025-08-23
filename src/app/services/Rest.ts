@@ -15,9 +15,9 @@ export class Rest<T,U>
 
 	}
 
-	get(id:number|string,path:string):Promise<any>
+	get(id:number|string):Promise<any>
 	{
-		const url = `${path}?id=${id}`;
+		const url = `${this.path}?id=${id}`;
 		let options = { method: 'GET', headers: { 'Authorization': `Bearer ${this.bearer}` } };
 		return fetch(url, options )
 			.then(this.getJsonLambda())
@@ -156,5 +156,13 @@ export class Rest<T,U>
 			acc[key] = results[i];
 			return acc;
 		}, {} as Record<string, T>);
+	}
+
+	postOne(data:any):Promise<any>
+	{
+		const url = this.path;
+		let options = { method: 'POST', headers: { 'Authorization': `Bearer ${this.bearer}`, 'Content-Type': 'application/json' }, body: JSON.stringify(data) };
+		return fetch(url, options )
+			.then(this.getJsonLambda())
 	}
 }

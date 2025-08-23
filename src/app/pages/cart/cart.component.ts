@@ -74,7 +74,6 @@ export class CartComponent extends BaseComponent implements OnInit
 			});
 
 			this.updateTotal();
-			console.log(this.cart_items);
 
 			const ecommerce_item_params = this.rest.getUrlParams({ 'item_id,': item_ids, ecommerce_id: this.rest.ecommerce.id });
 			this.rest.getEcommerceItems(ecommerce_item_params).then((ecommerce_items_response) => {
@@ -107,7 +106,6 @@ export class CartComponent extends BaseComponent implements OnInit
 
 	public placeOrder()
 	{
-		console.log('Placing order...');
 	}
 
 	decrementQuantity(x: any)

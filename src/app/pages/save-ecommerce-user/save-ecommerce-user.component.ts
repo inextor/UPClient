@@ -64,4 +64,3 @@ export class SaveEcommerceUserComponent extends BaseComponent implements OnInit 
 			: Promise.resolve(this.getEmptyEcommerceUserInfo());
 	}
 }
-

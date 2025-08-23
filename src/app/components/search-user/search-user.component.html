@@ -1,0 +1,18 @@
+<div class="search-container">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="onSearchTermChange()"
+    placeholder="Search users..."
+    class="form-control"
+  />
+  <ul *ngIf="searchResults.length > 0" class="list-group search-results">
+    <li
+      *ngFor="let user of searchResults"
+      (click)="onSelectUser(user)"
+      class="list-group-item list-group-item-action"
+    >
+      {{ user.name }} ({{ user.email }})
+    </li>
+  </ul>
+</div>

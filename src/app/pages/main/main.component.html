@@ -1,7 +1,6 @@
 <app-header></app-header>
-<div class="product-page-container" style="padding: 0 20px">
-
- <header class="page-header">
+<div class="product-page-container py-3 bg-white">
+	<header class="page-header">
 		<h1>Todos los Productos</h1>
 		<div class="sub-header">
 			<!--span class="results-count">Mostrando {{item_info_list.length}} resultados</span-->
@@ -13,7 +12,7 @@
 			</div-->
 		</div>
 	</header>
-	<main class="row">
+	<main class="row py-3">
 		@for (item_info of item_info_list; track item_info)
 		{
 			<div class="col-12 col-sm-6 col-md-3 p-3">

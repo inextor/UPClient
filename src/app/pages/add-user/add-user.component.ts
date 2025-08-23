@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
 import { GetEmpty } from '../../models/GetEmpty';
+import { Router } from '@angular/router';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-add-user',
@@ -12,18 +14,31 @@ import { GetEmpty } from '../../models/GetEmpty';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent {
+export class AddUserComponent extends BaseComponent implements OnInit {
   user: any = GetEmpty.user();
   address: any = GetEmpty.address();
+  profiles: any[] = [];
 
-  constructor(private rest: RestService) { }
+  ngOnInit(): void {
+    this.fetchProfiles();
+  }
+
+  fetchProfiles() {
+    this.rest.get('/profile.php', {}).then((response: any) => {
+      this.profiles = response.data;
+    }).catch(error => {
+      this.showError(error);
+    });
+  }
 
   onSubmit() {
-    console.log('User:', this.user);
-    console.log('Address:', this.address);
-    // Here you can call your service to save the user data
+    this.is_loading = true;
     this.rest.post('/users', { user: this.user, address: this.address }).then((response: any) => {
-      console.log('response', response);
+      this.is_loading = false;
+      this.router.navigate(['/list-ecommerce-user']);
+    }).catch(error => {
+      this.is_loading = false;
+      this.showError(error);
     });
   }
 }

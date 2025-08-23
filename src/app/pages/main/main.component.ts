@@ -39,6 +39,7 @@ export class MainComponent extends BaseComponent
 			document.body.style.setProperty('--main-color', this.rest.ecommerce.color || '#ffffff');
 			this.main_color = this.rest.ecommerce.color || '#ffffff';
 			document.body.style.setProperty('--font-color', this.rest.ecommerce.font_color || '#000000');
+			document.body.style.setProperty('--bs-body-bg', '#F5F5F5');
 			this.font_color = this.rest.ecommerce.font_color || '#000000';
 		}
 

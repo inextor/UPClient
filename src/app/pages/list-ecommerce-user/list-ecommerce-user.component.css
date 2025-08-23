@@ -1,0 +1,7 @@
+.table > :not(caption) > * > * {
+    background-color: #fff !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-bg-type: white;
+}

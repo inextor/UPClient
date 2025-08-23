@@ -1,0 +1,15 @@
+<div>
+	<label class="py-3">
+		<div>
+
+			<div [ngClass]="containerClasses"> <!-- ngStyle={'width':width,'height':height,'background-image': 'url('+rest.urlBase+'/image.php?id='+image+')'} -->
+				<!-- <span class="alling-center">  -->
+					<!-- <i class="fas fa-camera"></i> -->
+				<!-- </span> -->
+			</div>
+		</div>
+		<input style="display:none" type="file" [name]="file_id" (change)="uploadAttachment($event)" [multiple]="multiple">
+		<span *ngIf="displayUploadedAttachmentName"> {{filename || default_message}} </span>
+	</label>
+</div>
+

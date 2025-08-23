@@ -3,11 +3,12 @@ import { BaseComponent } from '../base/base.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SearchUserComponent } from '../../components/search-user/search-user.component';
 
 @Component({
 	selector: 'app-confirm-order',
 	standalone: true,
-	imports: [HeaderComponent, FormsModule, CommonModule],
+	imports: [HeaderComponent, FormsModule, CommonModule, SearchUserComponent],
 	templateUrl: './confirm-order.component.html',
 	styleUrls: ['./confirm-order.component.css']
 })
@@ -22,30 +23,21 @@ export class ConfirmOrderComponent extends BaseComponent implements OnInit {
 	new_shipping_address: any = {};
 
 	order_id: number | null = null;
-	users: any[] = [];
 	selected_user_id: number | null = null;
 
 	ngOnInit() {
 		this.fetchAddresses();
-		if (this.re_admin()) {
-			this.fetchUsers();
-		} else {
+		if (!this.re_admin()) {
 			this.selected_user_id = this.rest.ecommerce_user.id;
 		}
+	}
+
+	onUserSelected(user: any) {
+		this.selected_user_id = user.id;
 	}
 
 	re_admin() {
 		return this.rest.ecommerce_user.type == 'ECOMMERCE_ADMIN' || this.rest.ecommerce_user.type == 'ROLE_ADMIN';
-	}
-
-	async fetchUsers() {
-		try {
-			const response = await this.rest.get('/ecommerce_user.php', { limit: 999999 });
-			this.users = response.data;
-			this.selected_user_id = this.rest.ecommerce_user.id;
-		} catch (error) {
-			this.showError(error);
-		}
 	}
 
 	async fetchAddresses() {

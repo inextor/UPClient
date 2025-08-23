@@ -4,6 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
 import { BaseComponent } from '../base/base.component';
+import { Rest, RestResponse } from '../../services/Rest';
+import { Profile } from '../../models/RestModels';
+
+interface EcommerItemProfileInfo{
+	profile: any;
+	ecommerce_item_profile: any;
+}
 
 interface EcommerItemRoleInfo{
 	role: any;
@@ -18,17 +25,25 @@ interface EcommerItemRoleInfo{
 	styleUrls: ['./list-ecommerce-item.component.css']
 })
 export class ListEcommerceItemComponent extends BaseComponent implements OnInit {
+	agregarProfileToEcommerceItem() {
+
+	}
 
 	c_item_info_list: any[] = [];
 	selected_item: any = null;
 	all_roles: any[] = [];
 	selected_role_id: number | null = null;
 	selected_item_roles: any[] = [];
-    ecommerce_item_role_info_list: EcommerItemRoleInfo[] = [];
+    ecommerce_item_profile_info_list: EcommerItemProfileInfo[] = [];
+    new_profile_name: string = '';
+	rest_profile: Rest<Profile,Profile> = new Rest(this.rest,this.rest.base_url+'/profile.php');
+    selected_profile_id: any;
+
+	profile_list:Profile[] = [];
 
 	ngOnInit(): void {
 		this.obtenerArticulos();
-		this.obtenerRoles();
+		this.obtenerProfiles();
 	}
 
 	obtenerArticulos(): void {
@@ -56,36 +71,43 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 				return { ...item_info, ecommerce_item: matching_ecommerce_item || null };
 			});
 		})
-		.catch(error => {
+		.catch(error =>
+		{
+			this.showError(error);
 		});
 	}
 
-	obtenerRoles(): void {
-		this.rest.getRoles({}).then(response => {
-			this.all_roles = response.data;
+	obtenerProfiles(): void {
+		this.rest_profile.search({limit:99999})
+		.then((response:RestResponse<Profile>) => {
+			this.profile_list = response.data;
+		})
+		.catch((error:any) =>
+		{
+			this.showError(error);
 		});
 	}
 
-	abrirModalRoles(item: any): void
+	abrirModalProfiles(item: any): void
 	{
 		this.selected_item = item;
-		this.rest.getEcommerceItemRoles({ ecommerce_item_id: item.ecommerce_item.id })
-			.then(response =>
+		this.rest.get('/ecommerce_item_profile.php', { ecommerce_item_id: item.ecommerce_item.id })
+			.then((response:any) =>
 			{
-				let role_ids = response.data.map(ecommerce_item_role => ecommerce_item_role.role_id);
-				return Promise.all([this.rest.getRoles({'ids':role_ids.join(',')}), Promise.resolve(response.data)]);
+				let profile_ids = response.data.map((ecommerce_item_profile:any) => ecommerce_item_profile.profile_id);
+				return Promise.all([this.rest_profile.search({limit:99999}), Promise.resolve(response.data)]);
 			})
-			.then(([roles_response, ecommerce_item_roles]) =>
+			.then(([profiles_response, ecommerce_item_profiles]:[any,any]) =>
 			{
-
-				let ecommerItemRolesInfo: EcommerItemRoleInfo[] = ecommerce_item_roles.map(ecommerce_item_role =>
+				this.profile_list = profiles_response.data;
+				let ecommerItemProfilesInfo: EcommerItemProfileInfo[] = ecommerce_item_profiles.map((ecommerce_item_profile:any) =>
 				{
 					return {
-						role: roles_response.data.find(role => role.id === ecommerce_item_role.role_id),
-						ecommerce_item_role: ecommerce_item_role
+						profile: profiles_response.data.find((profile:any) => profile.id === ecommerce_item_profile.profile_id),
+						ecommerce_item_profile: ecommerce_item_profile
 					};
 				});
-				this.ecommerce_item_role_info_list = ecommerItemRolesInfo;
+				this.ecommerce_item_profile_info_list = ecommerItemProfilesInfo;
 			})
 			.catch(error =>
 			{
@@ -93,27 +115,58 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 			});
 	}
 
-	cerrarModalRoles(): void {
+		cerrarModalProfiles(): void {
 		this.selected_item = null;
-		this.selected_role_id = null;
+		this.selected_profile_id = null;
 		this.selected_item_roles = [];
+        this.new_profile_name = '';
 	}
 
-	agregarRolAArticulo(): void {
-		if (this.selected_item && this.selected_role_id) {
-			const data = {
-				ecommerce_item_id: this.selected_item.ecommerce_item.id,
-				role_id: this.selected_role_id
-			};
-			this.rest.post('/ecommerce_item_role.php', data).then(() => {
-				// Optionally, refresh the item's roles here
-				this.cerrarModalRoles();
-			});
-		}
+	onAddProfile(profile_name: string): void
+	{
 	}
-	eliminarRolDeArticulo(_t39: EcommerItemRoleInfo) {
-		this.rest.deleteEcommerceItemRole(_t39.ecommerce_item_role.id).then(() => {
-			// Optionally, refresh the item's roles here
+
+	async agregarProfileArticulo(): Promise<void> {
+        if (!this.selected_item || !this.new_profile_name) {
+            this.showError('Debe seleccionar un artículo y proporcionar un nombre de perfil.');
+            return;
+        }
+
+        let profile_id_to_use: number;
+        const existing_profile = this.profile_list.find(profile => profile.name === this.new_profile_name);
+
+        if (existing_profile) {
+            profile_id_to_use = existing_profile.id;
+        } else {
+            try {
+                const new_profile_response = await this.rest_profile.postOne({ name: this.new_profile_name, ecommerce_id: this.rest.ecommerce.id });
+                profile_id_to_use = new_profile_response.id;
+                this.profile_list.push(new_profile_response); // Add new profile to the list
+            } catch (error) {
+                this.showError('Error al crear el nuevo perfil: ' + this.getErrorMessage(error));
+                return;
+            }
+        }
+
+        const data = {
+            ecommerce_item_id: this.selected_item.ecommerce_item.id,
+            profile_id: profile_id_to_use
+        };
+
+        try {
+            await this.rest.post('/ecommerce_item_profile.php', data);
+            this.showSuccess('Perfil asignado correctamente.');
+            this.abrirModalProfiles(this.selected_item); // Refresh profiles in modal
+            this.new_profile_name = ''; // Clear the input field
+        } catch (error) {
+            this.showError('Error al asignar el perfil al artículo: ' + this.getErrorMessage(error));
+        }
+    }
+
+	eliminarProfileDeArticulo(profile_info: EcommerItemProfileInfo) {
+		this.rest.delete('/ecommerce_item_profile.php?id=' + profile_info.ecommerce_item_profile.id).then(() => {
+			this.showSuccess('Perfil eliminado correctamente.');
+			this.abrirModalProfiles(this.selected_item);
 		})
 		.catch((error:any) =>
 		{

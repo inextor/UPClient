@@ -31,7 +31,6 @@ export class ToastMessageComponent {
 
 	addError(error: ErrorMessage) {
 		this.errors.push(error);
-		console.log('errors are ', this.errors);
 		if (error.auto_hide)
 			setTimeout(() => this.removeError(error), 5000);
 	}

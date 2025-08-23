@@ -2,20 +2,16 @@
 
 <div class="confirm-order-container">
   <h2>Confirmar Pedido</h2>
-
   <form (ngSubmit)="placeOrder()">
     <div class="address-section">
       <h3>Dirección de Envío</h3>
       <div *ngIf="re_admin()">
         <div class="form-group">
           <label for="user_select">Seleccionar Usuario</label>
-          <select id="user_select" name="user_select" [(ngModel)]="selected_user_id">
-            <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
-          </select>
+          <app-search-user (userSelected)="onUserSelected($event)"></app-search-user>
         </div>
       </div>
       <div class="form-group">
-        <label for="shipping_address_select">Seleccionar Dirección de Envío</label>
         <select id="shipping_address_select" name="shipping_address_select" [(ngModel)]="selected_shipping_address_id">
           <option *ngFor="let address of shipping_addresses" [value]="address.id">{{ address.address }}</option>
           <option value="new">Agregar Nueva Dirección</option>
@@ -41,8 +37,6 @@
           <input type="text" id="new_shipping_address_note" name="new_shipping_address_note" [(ngModel)]="new_shipping_address.note">
         </div>
       </div>
-
-      
     </div>
 
     <button type="submit" class="place-order-button">Realizar Pedido</button>

@@ -27,4 +27,15 @@ export class ListEcommerceUserComponent extends BaseComponent implements OnInit
 			this.ecommerce_user_info_list = response.data;
 		}).catch(error => this.showError(error));
 	}
+
+	deleteUser(userId: number): void {
+		this.is_loading = true;
+		this.rest.delete('/ecommerce_user.php', { id: userId }).then(() => {
+			this.fetchUsers();
+			this.is_loading = false;
+		}).catch(error => {
+			this.showError(error);
+			this.is_loading = false;
+		});
+	}
 }

@@ -19,7 +19,6 @@ export class HeaderComponent extends BaseComponent implements OnInit
 	is_active: boolean = false;
 	ngOnInit(): void
 	{
-		console.log('rest.bearer:', this.rest.bearer);
 	}
 	closeSession() {
 		this.rest.closeSession();

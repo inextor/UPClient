@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { FormsModule } from '@angular/forms';
+import { ContactHelpComponent } from '../../components/contact-help/contact-help.component';
 interface CLogin {
 	username: string;
 	password: string
@@ -8,11 +9,13 @@ interface CLogin {
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	imports: [FormsModule],
+	imports: [FormsModule, ContactHelpComponent],
 	styleUrl: './login.component.css'
 })
 export class LoginComponent extends BaseComponent
 {
+	@ViewChild('helpModal') helpModal!: ElementRef<HTMLDialogElement>;
+
 	username: string = '';
 	password: string = '';
 	error_message: string = '';
@@ -53,8 +56,6 @@ export class LoginComponent extends BaseComponent
 					this.showError('El usuario o la contraseña son incorrectos X');
 					return;
 				}
-				console.log( response );
-
 				this.is_loading = false;
 				this.router.navigate(['/main']);
 
@@ -70,5 +71,18 @@ export class LoginComponent extends BaseComponent
 				this.is_loading = false
 				this.showError(error)
 		})
+	}
+
+	openHelpModal(event: Event) {
+		event.preventDefault(); // Prevent default link behavior
+		if (this.helpModal) {
+			this.helpModal.nativeElement.showModal();
+		}
+	}
+
+	closeHelpModal() {
+		if (this.helpModal) {
+			this.helpModal.nativeElement.close();
+		}
 	}
 }
