@@ -16,7 +16,7 @@
 		@for (item_info of item_info_list; track item_info)
 		{
 			<div class="col-12 col-sm-6 col-md-3 p-3">
-				<a [routerLink]="['/product-detail', item_info.item.id]">
+				<a [routerLink]="['/product-detail', item_info.item.id]" class="product-link">
 					<article class="product-card h-100">
 						<div class="product_image">
 							@if (item_info.image_url)

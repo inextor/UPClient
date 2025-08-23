@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container mt-5">
-  <h2>{{ ecommerce_user_info.ecommerce_user.id ? 'Editar' : 'Agregar' }} Usuario</h2>
+  <h2 class="app-page-title">{{ ecommerce_user_info.ecommerce_user.id ? 'Editar' : 'Agregar' }} Usuario</h2>
   <div *ngIf="is_loading" class="spinner-border" role="status">
     <span class="visually-hidden">Cargando...</span>
   </div>

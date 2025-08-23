@@ -146,10 +146,16 @@
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: #333;
+	text-decoration: none !important;
 }
 
 .product-price {
 	font-size: 1.2em;
 	font-weight: bold;
 	color: #007bff;
+}
+
+a.product-link, a.product-link:hover {
+	text-decoration: none !important;
+	color: inherit;
 }

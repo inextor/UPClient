@@ -94,6 +94,15 @@ export class RestService
 				this.user = JSON.parse( localStorage.getItem('user') as string );
 				this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
 				this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
+
+
+				if( this.ecommerce )
+				{
+					document.body.style.setProperty('--main-color', this.ecommerce.color || '#ffffff');
+					document.body.style.setProperty('--font-color', this.ecommerce.font_color || '#000000');
+					document.body.style.setProperty('--bs-body-bg', '#F5F5F5');
+				}
+
 				this.logo_url = this.ecommerce.logo_image_id ?
 					this.base_url + '/image.php?id=' + this.ecommerce.logo_image_id
 					: 'assets/logo.svg';

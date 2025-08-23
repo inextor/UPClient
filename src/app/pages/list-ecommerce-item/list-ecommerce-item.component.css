@@ -1,4 +1,8 @@
 
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-    --bs-table-bg-type: white;
+
+
+table > *,
+table > * > * > *,
+table > * > * {
+    background-color: #fff !important;
 }
