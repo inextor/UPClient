@@ -57,7 +57,6 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 			});
 		})
 		.catch(error => {
-			console.error('Error fetching data:', error);
 		});
 	}
 
@@ -90,7 +89,7 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 			})
 			.catch(error =>
 			{
-				console.error('Error al obtener los roles del artículo:', error);
+				this.showError(error);
 			});
 	}
 
