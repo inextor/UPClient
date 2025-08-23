@@ -1,5 +1,5 @@
 <div class="toast-container">
-    <div *ngFor="let error of errors" class="toast {{error.type}}" (click)="removeError(error)">
+    <div *ngFor="let error of errors" class="toast {{error.type}} show" (click)="removeError(error)">
         {{error.message}}
     </div>
 </div>

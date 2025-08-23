@@ -47,6 +47,12 @@ export class LoginComponent extends BaseComponent
 		})
 		.then((response:any) =>
 		{
+				if(response.user.type === 'USER')
+				{
+					this.is_loading = false;
+					this.showError('El usuario o la contraseña son incorrectos');
+					return;
+				}
 				console.log( response );
 
 				this.is_loading = false;
