@@ -29,14 +29,11 @@ export class RestService
 
 	constructor()
 	{
-		console.log('init rest service');
 		this.loadUserData();
-		console.log(this.base_url);
 	}
 
 	showError(error: any, auto_hide: boolean = true)
 	{
-		console.log('Error to display is', error);
 		if (error instanceof ErrorMessage)
 		{
 			this.showErrorMessage(error);
@@ -49,7 +46,6 @@ export class RestService
 
 	showSuccess(error: any, auto_hide: boolean = true)
 	{
-		console.log('Error to display is', error);
 		if (error instanceof ErrorMessage)
 		{
 			this.showErrorMessage(error);
@@ -94,9 +90,7 @@ export class RestService
 		{
 			try
 			{
-				console.log('localStorage.getItem(bearer)');
 				this.bearer = localStorage.getItem('bearer') as string;
-				console.log(this.bearer);
 				this.user = JSON.parse( localStorage.getItem('user') as string );
 				this.ecommerce_user = JSON.parse( localStorage.getItem('ecommerce_user') as string );
 				this.ecommerce = JSON.parse( localStorage.getItem('ecommerce') as string );
@@ -174,7 +168,7 @@ export class RestService
 			const cartData = localStorage.getItem('cart');
 			return cartData ? JSON.parse(cartData) : [];
 		} catch (e) {
-			console.error('Error parsing cart data from localStorage:', e);
+			this.showError('Error parsing cart data from localStorage:' + e);
 			return [];
 		}
 	}
@@ -223,6 +217,26 @@ export class RestService
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: headers
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return response.json();
+	}
+
+	async postForm(path: string, data: any): Promise<any> {
+		const url = this.base_url + path;
+		const headers = {
+			'Content-Type': 'multipart/form-data',
+			'Authorization': 'Bearer ' + this.bearer
+		};
+
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: headers,
+			body: data
 		});
 
 		if (!response.ok) {
@@ -305,7 +319,6 @@ export class RestService
 			return response;
 		})
 	}
-
 
 	getEcommerceItems(p:URLSearchParams | Object):Promise<RestResponse<any>>
 	{
