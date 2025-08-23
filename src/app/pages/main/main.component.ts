@@ -146,7 +146,7 @@ export class MainComponent extends BaseComponent
 		})
 		.catch((error) =>
 		{
-			console.log(error);
+			this.showError(error);
 		});
 	}
 }
