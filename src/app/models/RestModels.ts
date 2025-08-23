@@ -1,3 +1,18 @@
+export interface Attachment{
+	content_type:string | null;
+	created:Date;
+	file_type_id:number | null;
+	filename:string;
+	height:number | null;
+	id:number | null;
+	original_filename?:string | null;
+	size:number | null;
+	status:'ACTIVE'|'DELETED';
+	updated:Date;
+	uploader_user_id:number | null;
+	width:number | null;
+}
+
 export interface Ecommerce {
 	id: number;
 	created: string;
@@ -110,4 +125,8 @@ export interface Ecommerce_User {
 export interface EcommerceUserInfo {
 		user: User;
 		ecommerce_user: Ecommerce_User;
+}
+
+export interface Preferences {
+  // Add properties of Preferences if known, otherwise leave empty for now
 }
