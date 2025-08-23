@@ -34,8 +34,7 @@ export class AppComponent implements OnInit {
 				localStorage.setItem('ecommerce', JSON.stringify(data));
 			}).catch((error) =>
 			{
-				console.error('Error fetching ecommerce data:', error);
-				// Handle error appropriately, e.g., show a message to the user
+				this.rest.showError(error);
 			});
 		}
 	}
