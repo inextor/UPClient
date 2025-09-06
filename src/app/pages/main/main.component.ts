@@ -5,6 +5,7 @@ import { CurrencyPipe } from '@angular/common';
 import { RestService } from '../../services/rest.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { RouterLink } from '@angular/router';
+import { Profile } from '../../models/RestModels';
 
 @Component({
 	selector: 'app-main',
@@ -19,6 +20,8 @@ export class MainComponent extends BaseComponent
 	current_page:number = 1;
 	total_pages: number = 1;
 	page_numbers: number[] = [];
+	ecommerce_user: any = {};
+	profiles:Profile[] = [];
 
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
@@ -26,6 +29,7 @@ export class MainComponent extends BaseComponent
 	ngOnInit(): void
 	{
 		document.title = 'uniformesprofesionales.mx';
+		this.ecommerce_user = this.rest.ecommerce_user;
 
 		if (!this.rest.bearer)
 		{
@@ -43,17 +47,32 @@ export class MainComponent extends BaseComponent
 			this.font_color = this.rest.ecommerce.font_color || '#000000';
 		}
 
-		this.route.queryParamMap.subscribe((params) =>
+		if( this.ecommerce_user.type == 'ECOMMERCE_ADMIN')
 		{
-			let page_size = 10;
-			if( params.has('page') )
+			this.rest.getProfiles().then(response=>
 			{
+				this.profiles = response.data;
+			})
+		}
+		else
+		{
+			this.route.queryParamMap.subscribe((params) =>
+			{
+				let page_size = 10;
+				if( params.has('page') )
+				{
 
-				this.current_page =	parseInt(params.get('page') as string);
-			}
-			this.fetchProducts();
-			this.rest.updateCartItemCount();
-		});
+					this.current_page =	parseInt(params.get('page') as string);
+				}
+				this.fetchProducts();
+				this.rest.updateCartItemCount();
+			});
+		}
+	}
+
+	onSelectProfile(profile:Profile)
+	{
+		this.router.navigate(['/list-ecommerce-item-by-profile',profile.id]);
 	}
 
 	public addToCart(item_id: any): void
