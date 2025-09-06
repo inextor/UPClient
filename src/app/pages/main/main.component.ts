@@ -25,6 +25,7 @@ export class MainComponent extends BaseComponent
 
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
+	profile_id: number | null = null;
 
 	ngOnInit(): void
 	{
@@ -47,32 +48,62 @@ export class MainComponent extends BaseComponent
 			this.font_color = this.rest.ecommerce.font_color || '#000000';
 		}
 
-		if( this.ecommerce_user.type == 'ECOMMERCE_ADMIN')
+		this.route.queryParamMap.subscribe((params) =>
 		{
-			this.rest.getProfiles().then(response=>
-			{
-				this.profiles = response.data;
-			})
-		}
-		else
-		{
-			this.route.queryParamMap.subscribe((params) =>
-			{
-				let page_size = 10;
-				if( params.has('page') )
-				{
+			const profile_id = params.get('profile_id');;
 
-					this.current_page =	parseInt(params.get('page') as string);
-				}
+			if (profile_id || this.ecommerce_user.type != 'ECOMMERCE_ADMIN')
+			{
+				this.profile_id = parseInt(profile_id as string);
 				this.fetchProducts();
-				this.rest.updateCartItemCount();
-			});
-		}
+			}
+			else
+			{
+				this.rest.getProfiles().then(response=>
+				{
+					this.profiles = response.data;
+				});
+				this.item_info_list = [];
+			}
+		});
 	}
 
 	onSelectProfile(profile:Profile)
 	{
-		this.router.navigate(['/list-ecommerce-item-by-profile',profile.id]);
+		this.router.navigate(['/main'], { queryParams: { profile_id: profile.id } });
+	}
+
+	fetchProductsByProfile(profile_id: number)
+	{
+		// This part is similar to what is in list-ecommerce-item.component.ts
+		this.rest.getEcommerceItemProfiles({ profile_id: profile_id, limit: 99999 })
+			.then((response:any) => {
+				const ecommerce_item_ids = response.data.map((item: any) => item.ecommerce_item_id);
+				if (ecommerce_item_ids.length === 0) {
+                    this.item_info_list = [];
+					return Promise.reject('No items for this profile'); // Stop the chain
+				}
+				return this.rest.getEcommerceItems({ 'id,': ecommerce_item_ids.join(','), limit: 99999 });
+			})
+			.then((response:any) => {
+				const item_ids = response.data.map((item: any) => item.item_id);
+				if (item_ids.length === 0) {
+					this.item_info_list = [];
+					return Promise.reject('No items for this profile'); // Stop the chain
+				}
+				return this.rest.getItems({ 'id,': item_ids.join(','), limit: 99999 });
+			})
+			.then((response:any) => {
+				this.item_info_list = response.data.map((item_info: any) => {
+					let image_url = item_info.item.image_id ? this.rest.base_url + '/image.php?id=' + item_info.item.image_id : null;
+					return {...item_info, image_url};
+				});
+			})
+			.catch(error => {
+                if (error !== 'No items for this profile') {
+				    this.showError(error);
+                }
+			});
 	}
 
 	public addToCart(item_id: any): void
@@ -146,10 +177,17 @@ export class MainComponent extends BaseComponent
 		}
 	}
 
-	fetchProducts()
+	fetchProducts():void
 	{
 		let page_size = 10;
-		let params = this.rest.getUrlParams({ limit: page_size, page: this.current_page-1 });
+
+		let params = this.rest.getUrlParams
+		({
+			limit: page_size,
+			page: this.current_page-1,
+			profile_id: this.profile_id,
+			ecommerce_id: this.rest.ecommerce.id
+		});
 
 		this.rest.getItems(params)
 		.then((response: any) =>
