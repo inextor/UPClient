@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GetEmpty } from '../models/GetEmpty';
-import { Ecommerce } from '../models/RestModels';
+import { Ecommerce, Profile } from '../models/RestModels';
 import { CartItemInfo } from '../models/RestModels';
 import { environment } from '../../environments/environment';
 import { ErrorMessage } from '../models/ErrorMessage';
@@ -466,5 +466,9 @@ export class RestService
 
 	requestQuote(data: any): Promise<any> {
 		return this.post('/quote_info.php', data);
+	}
+
+	getProfiles(): Promise<RestResponse<Profile>> {
+		return this.get('/profile.php',{ecommerce_id:this.ecommerce.id});
 	}
 }
