@@ -465,7 +465,27 @@ export class RestService
 	}
 
 	requestQuote(data: any): Promise<any> {
-		return this.post('/quote_info.php', data);
+		return Promise.resolve({});
+	}
+
+	sendQuoteForm(data: any): Promise<any> {
+		const url = this.base_url + '/request_quote.php';
+		const headers = {
+			'Authorization': 'Bearer ' + this.bearer
+		};
+
+		const response = fetch(url, {
+			method: 'POST',
+			headers: headers,
+			body: data
+		});
+
+		return response.then(response => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			return response.json();
+		});
 	}
 
 	getProfiles(): Promise<RestResponse<Profile>> {

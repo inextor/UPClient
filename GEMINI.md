@@ -1,6 +1,7 @@
 # GEMINI
 
 Never commit without being explicitly requested.
+Never run linter
 
 ## Git
 
@@ -19,3 +20,5 @@ It is possible to put notes here for Gemini, when instructed. gemini must put te
 on Css
 
 Using tht boostrap styles when possible.
+
+

@@ -13,7 +13,12 @@ import { HeaderComponent } from '../../components/header/header.component';
   styleUrls: ['./solicitar-cotizacion.component.css']
 })
 export class SolicitarCotizacionComponent extends BaseComponent {
-  public note: string = '';
+  public nombre: string = '';
+  public correo: string = '';
+  public telefono: string = '';
+  public descripcion: string = '';
+  public cantidad: number | null = null;
+  public fecha_entrega: string = '';
   public attachment_id: number | null = null;
 
   ngOnInit(): void {
@@ -24,7 +29,18 @@ export class SolicitarCotizacionComponent extends BaseComponent {
   }
   solicitarCotizacion() {
     this.is_loading = true;
-    this.rest.requestQuote({ note: this.note, items: [], attachment_id: this.attachment_id }).then(response => {
+
+    const formData = new FormData();
+    formData.append('name', this.nombre);
+    formData.append('email', this.correo);
+    formData.append('phone', this.telefono);
+
+    let comments = `Descripción: ${this.descripcion}\nCantidad: ${this.cantidad}\nFecha de Entrega: ${this.fecha_entrega}`;
+    formData.append('comments', comments);
+
+    // Not sending the file as per user request
+
+    this.rest.sendQuoteForm(formData).then(response => {
       this.is_loading = false;
       this.showSuccess('Cotización solicitada con éxito');
       this.router.navigate(['/main']);
