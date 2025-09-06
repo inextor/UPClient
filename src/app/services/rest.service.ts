@@ -406,7 +406,7 @@ export class RestService
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				return response.json();
+				return response.json() as Promise<RestResponse<any>>;
 			});
 	}
 
