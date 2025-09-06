@@ -15,3 +15,7 @@ Each commit made by gemini-cli must include "by gemini-cli" at the end of the me
 This is excluded for git.
 It is possible to put notes here for Gemini, when instructed. gemini must put text or code the name can be anything.
 
+
+on Css
+
+Using tht boostrap styles when possible.
