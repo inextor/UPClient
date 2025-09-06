@@ -22,7 +22,9 @@
           <label for="profile" class="form-label">Perfil</label>
           <input class="form-control" list="datalistOptions" id="profile" placeholder="Escribe para buscar..." [(ngModel)]="user.profile" name="profile">
           <datalist id="datalistOptions">
-            <option *ngFor="let profile of profiles" [value]="profile.name">
+            @for(profile of profiles; track profile){
+            <option [value]="profile.name">
+            }
           </datalist>
         </div>
       </div>

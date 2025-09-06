@@ -16,7 +16,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let user_info of ecommerce_user_info_list; let i = index">
+				@for(user_info of ecommerce_user_info_list; track user_info; let i = $index){
+				<tr>
 					<th scope="row">{{ i + 1 }}</th>
 					<td>{{ user_info.user.name }}</td>
 					<td>{{ user_info.user.email }}</td>
@@ -26,6 +27,7 @@
 						<button (click)="deleteUser(user_info.ecommerce_user.id)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
 					</td>
 				</tr>
+				}
 			</tbody>
 		</table>
 	</div>

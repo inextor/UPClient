@@ -9,7 +9,9 @@
 			</div>
 		</div>
 		<input style="display:none" type="file" [name]="file_id" (change)="uploadAttachment($event)" [multiple]="multiple">
-		<span *ngIf="displayUploadedAttachmentName"> {{filename || default_message}} </span>
+		@if(displayUploadedAttachmentName){
+		<span> {{filename || default_message}} </span>
+		}
 	</label>
 </div>
 
