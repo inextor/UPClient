@@ -1,19 +1,63 @@
 <app-header></app-header>
 <div class="container mt-5">
-    <h2 class="app-page-title">Solicitar Cotización</h2>
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card bg-white p-3">
-				<div class="form-group">
-					<label for="note">Nota</label>
-					<textarea id="note" class="form-control" rows="5" [(ngModel)]="note"></textarea>
-				</div>
-				<app-attachment-uploader (attachment_idChange)="onAttachmentIdChange($event)"></app-attachment-uploader>
-				<button class="btn btn-primary mt-3" (click)="solicitarCotizacion()" [disabled]="is_loading">
-					<span *ngIf="is_loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-					{{ is_loading ? 'Enviando...' : 'Enviar Solicitud' }}
-				</button>
-            </div>
+  <h2 class="app-page-title">Solicitar Cotización</h2>
+  <div class="card p-3 bg-white">
+    <form (ngSubmit)="solicitarCotizacion()" #quoteForm="ngForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="nombre" required>
+          </div>
         </div>
-    </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo</label>
+            <input type="email" id="correo" name="correo" class="form-control" [(ngModel)]="correo" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" class="form-control" [(ngModel)]="telefono" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad requerida</label>
+            <input type="number" id="cantidad" name="cantidad" class="form-control" [(ngModel)]="cantidad" required>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción de la cotización</label>
+        <textarea id="descripcion" name="descripcion" class="form-control" rows="5" [(ngModel)]="descripcion" required></textarea>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="mb-3">
+                  <label for="fecha_entrega" class="form-label">Fecha de entrega solicitada</label>
+                  <input type="date" id="fecha_entrega" name="fecha_entrega" class="form-control" [(ngModel)]="fecha_entrega" required>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="mb-3">
+                  <label class="form-label">Adjuntar archivos</label>
+                  <app-attachment-uploader (attachment_idChange)="onAttachmentIdChange($event)"></app-attachment-uploader>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-8 col-md-6"></div>
+          <div class="col-lg-4 col-md-6">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!quoteForm.form.valid || is_loading">
+                  <span *ngIf="is_loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  {{ is_loading ? 'Enviando...' : 'Enviar Solicitud' }}
+              </button>
+          </div>
+      </div>
+    </form>
+  </div>
 </div>
