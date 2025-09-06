@@ -6,6 +6,7 @@ import { RestService } from '../../services/rest.service';
 import { BaseComponent } from '../base/base.component';
 import { Rest, RestResponse } from '../../services/Rest';
 import { Profile } from '../../models/RestModels';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 interface EcommerItemProfileInfo{
 	profile: any;
@@ -20,7 +21,7 @@ interface EcommerItemRoleInfo{
 @Component({
 	selector: 'app-list-ecommerce-item',
 	standalone: true,
-	imports: [CommonModule, HeaderComponent, FormsModule],
+	imports: [CommonModule, HeaderComponent, FormsModule, RouterLink],
 	templateUrl: './list-ecommerce-item.component.html',
 	styleUrls: ['./list-ecommerce-item.component.css']
 })
@@ -38,43 +39,71 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
     new_profile_name: string = '';
 	rest_profile: Rest<Profile,Profile> = new Rest(this.rest,this.rest.base_url+'/profile.php');
     selected_profile_id: any;
+	profile_id: number = 0;
 
 	profile_list:Profile[] = [];
 
 	ngOnInit(): void {
-		this.obtenerArticulos();
-		this.obtenerProfiles();
+		this.route.paramMap.subscribe(params => {
+			this.profile_id = Number(params.get('profile_id'));
+			this.obtenerArticulos();
+			this.obtenerProfiles();
+		});
 	}
 
 	obtenerArticulos(): void {
-		let all_item_info: any[] = [];
-		let all_ecommerce_items: any[] = [];
+		if (this.profile_id) {
+			this.rest.getEcommerceItemProfiles({ profile_id: this.profile_id, limit: 99999 })
+				.then((response:RestResponse<any>) => {
+					const ecommerce_item_ids = response.data.map((item: any) => item.ecommerce_item_id);
+					if (ecommerce_item_ids.length === 0) {
+						const emptyResponse: RestResponse<any> = { total: 0, data: [] };
+						return Promise.resolve(emptyResponse);
+					}
+					return this.rest.getEcommerceItems({ 'id,': ecommerce_item_ids.join(','), limit: 99999 });
+				})
+				.then((response:RestResponse<any>) => {
+					const item_ids = response.data.map((item: any) => item.item_id);
+					if (item_ids.length === 0) {
+						this.c_item_info_list = [];
+						const emptyResponse: RestResponse<any> = { total: 0, data: [] };
+						return Promise.resolve(emptyResponse);
+					}
+					return this.rest.getItems({ 'id,': item_ids.join(','), limit: 99999 });
+				})
+				.then((response:RestResponse<any>) => {
+					this.c_item_info_list = response.data.map((item_info: any) => {
+						return { ...item_info, ecommerce_item: item_info };
+					});
+				})
+				.catch(error => {
+					this.showError(error);
+				});
+		} else {
+			let all_item_info: any[] = [];
+			let all_ecommerce_items: any[] = [];
 
-		this.rest.getItems({}) // Get all item_info
-		.then(item_info_response =>
-		{
-			all_item_info = item_info_response.data;
+			this.rest.getItems({}) // Get all item_info
+				.then(item_info_response => {
+					all_item_info = item_info_response.data;
 
-			//GEMINI ONLY HERE PUT TH F CODE
-			const item_info_ids = all_item_info.map(item_info => item_info.item.id);
-			const id_string = item_info_ids.join(',');
+					const item_info_ids = all_item_info.map(item_info => item_info.item.id);
+					const id_string = item_info_ids.join(',');
 
-			return Promise.all([this.rest.getEcommerceItems({'item_id,':id_string,limit:99999}), Promise.resolve(all_item_info)]); // Then get all ecommerce_items
-		})
-		.then(([ecommerce_items_response, all_item_info]) =>
-		{
-			all_ecommerce_items = ecommerce_items_response.data;
+					return Promise.all([this.rest.getEcommerceItems({ 'item_id,': id_string, limit: 99999 }), Promise.resolve(all_item_info)]); // Then get all ecommerce_items
+				})
+				.then(([ecommerce_items_response, all_item_info]) => {
+					all_ecommerce_items = ecommerce_items_response.data;
 
-			this.c_item_info_list = all_item_info.map(item_info =>
-			{
-				const matching_ecommerce_item = all_ecommerce_items.find(ec_item => ec_item.item_id === item_info.item.id);
-				return { ...item_info, ecommerce_item: matching_ecommerce_item || null };
-			});
-		})
-		.catch(error =>
-		{
-			this.showError(error);
-		});
+					this.c_item_info_list = all_item_info.map(item_info => {
+						const matching_ecommerce_item = all_ecommerce_items.find(ec_item => ec_item.item_id === item_info.item.id);
+						return { ...item_info, ecommerce_item: matching_ecommerce_item || null };
+					});
+				})
+				.catch(error => {
+					this.showError(error);
+				});
+		}
 	}
 
 	obtenerProfiles(): void {
