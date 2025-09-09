@@ -55,7 +55,7 @@
 				}
 				<hr>
 			<h6>Añadir Perfil</h6>
-				<form (submit)="agregarProfileToEcommerceItem()">
+				<form (submit)="agregarProfileToEcommerceItem($event)">
 					<div class="input-group">
 						<input type="text" class="form-control" name="new_profile_name" [(ngModel)]="new_profile_name" placeholder="Nombre del Perfil" list="profile-list" required>
 						<datalist id="profile-list">

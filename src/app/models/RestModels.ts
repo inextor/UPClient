@@ -27,6 +27,13 @@ export interface Ecommerce {
 	preferences_id: number;
 }
 
+export interface Ecommerce_Item_Profile {
+	id: number;
+	profile_id: number;
+	ecommerce_item_id: number;
+	created: string;
+	updated: string;
+}
 
 export interface CartItemInfo
 {

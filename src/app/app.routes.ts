@@ -22,6 +22,7 @@ export const routes: Routes = [
     { path: 'help', component: HelpComponent },
     { path: 'add-user', component: AddUserComponent },
     { path: 'list-ecommerce-item', component: ListEcommerceItemComponent },
+    { path: 'list-ecommerce-item-by-profile/:profile_id', component: ListEcommerceItemComponent },
     { path: 'list-ecommerce-user', component: ListEcommerceUserComponent },
     { path: 'add-ecommerce-user', component: SaveEcommerceUserComponent },
     { path: 'edit-ecommerce-user/:id', component: SaveEcommerceUserComponent },

@@ -1,35 +1,6 @@
 <app-header></app-header>
 <div class="product-page-container py-3 bg-white">
-	@if(ecommerce_user.type === 'ECOMMERCE_ADMIN'){
-    <header class="page-header">
-        <h1>Perfiles</h1>
-    </header>
-    <main class="row py-3">
-        @for (profile of profiles; track profile)
-        {
-            <div class="col-12 col-sm-6 col-md-3 p-3">
-                <a (click)="onSelectProfile(profile)" class="product-link">
-                    <article class="product-card h-100">
-                        <div class="product_image">
-                            <svg class="product_svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Background -->
-                                <rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
-                                <!-- Icon (User) -->
-                                <g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
-                                    <path d="M50 45C56.6274 45 62 39.6274 62 33C62 26.3726 56.6274 21 50 21C43.3726 21 38 26.3726 38 33C38 39.6274 43.3726 45 50 45Z" />
-                                    <path d="M30 79C30 68.402 38.9543 60 50 60C61.0457 60 70 68.402 70 79" />
-                                </g>
-                            </svg>
-                        </div>
-                        <h2 class="product-title text-center">{{profile.name}}</h2>
-                    </article>
-                </a>
-            </div>
-        }
-    </main>
-}
-
-	@if(ecommerce_user.type !== 'ECOMMERCE_ADMIN'){
+	@if(item_info_list.length > 0){
 		<header class="page-header">
 			<h1>Todos los Productos</h1>
 			<div class="sub-header">
@@ -71,18 +42,8 @@
 								}
 							</div>
 							<h2 class="product-title text-center">{{item_info.item.name}}</h2>
+
 							<p class="product-price text-center">{{(item_info?.price?.price || '' )| currency}}</p>
-							<!--
-							@if (item_info.prices.length)
-							{
-								<p class="product-price">${{item_info.prices[0].price}}</p>
-							}
-							<button class="add-to-cart-button"
-								type="button" (click)="addToCart(item_info.item.id)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"/></svg>
-								Añadir al carrito
-							</button>
-							-->
 						</article>
 					</a>
 				</div>
@@ -106,5 +67,32 @@
 			}
 			<button [disabled]="current_page === total_pages" (click)="nextPage()">Siguiente</button>
 		</div>
+	} @else if(ecommerce_user.type === 'ECOMMERCE_ADMIN') {
+		<header class="page-header">
+			<h1>Perfiles</h1>
+		</header>
+		<main class="row py-3">
+			@for (profile of profiles; track profile)
+			{
+				<div class="col-12 col-sm-6 col-md-3 p-3">
+					<a (click)="onSelectProfile(profile)" class="product-link">
+						<article class="product-card h-100">
+							<div class="product_image">
+								<svg class="product_svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+									<!-- Background -->
+									<rect class="svg-background" width="100" height="100" [attr.fill]="main_color"/>
+									<!-- Icon (User) -->
+									<g class="svg-icon" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" [attr.stroke]="font_color">
+										<path d="M50 45C56.6274 45 62 39.6274 62 33C62 26.3726 56.6274 21 50 21C43.3726 21 38 26.3726 38 33C38 39.6274 43.3726 45 50 45Z" />
+										<path d="M30 79C30 68.402 38.9543 60 50 60C61.0457 60 70 68.402 70 79" />
+									</g>
+								</svg>
+							</div>
+							<h2 class="product-title text-center">{{profile.name}}</h2>
+						</article>
+					</a>
+				</div>
+			}
+		</main>
 	}
 </div>

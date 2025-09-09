@@ -10,9 +10,11 @@ export interface RestResponse<T>
 
 export class Rest<T,U>
 {
-	constructor(private rest_service: RestService,private path:string,private bearer:string|null = null)
-	{
+	bearer:string = '';
 
+	constructor(private rest_service: RestService,private path:string)
+	{
+		this.bearer = this.rest_service.bearer;
 	}
 
 	get(id:number|string):Promise<any>
@@ -156,6 +158,22 @@ export class Rest<T,U>
 			acc[key] = results[i];
 			return acc;
 		}, {} as Record<string, T>);
+	}
+
+	public create(z:Partial<U>):Promise<U>
+	{
+		const url = this.path;
+
+		let headers = {
+			'Authorization': `Bearer ${this.bearer}`,
+			'Content-Type': 'application/json'
+		};
+
+		let method = 'POST';
+		let body = JSON.stringify(z);
+		let options = { method, headers , body };
+
+		return fetch(url, options ).then(this.getJsonLambda())
 	}
 
 	postOne(data:any):Promise<any>

@@ -5,7 +5,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
 import { BaseComponent } from '../base/base.component';
 import { Rest, RestResponse } from '../../services/Rest';
-import { Profile } from '../../models/RestModels';
+import { Ecommerce_Item_Profile, Profile } from '../../models/RestModels';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 interface EcommerItemProfileInfo{
@@ -21,15 +21,12 @@ interface EcommerItemRoleInfo{
 @Component({
 	selector: 'app-list-ecommerce-item',
 	standalone: true,
-	imports: [CommonModule, HeaderComponent, FormsModule, RouterLink],
+	imports: [CommonModule, HeaderComponent, FormsModule ],
 	templateUrl: './list-ecommerce-item.component.html',
 	styleUrls: ['./list-ecommerce-item.component.css']
 })
 export class ListEcommerceItemComponent extends BaseComponent implements OnInit {
-	agregarProfileToEcommerceItem() {
-
-	}
-
+    rest_ecommerce_item_profile: Rest<Ecommerce_Item_Profile,Ecommerce_Item_Profile> = new Rest(this.rest,this.rest.base_url+'/ecommerce_item_profile.php');
 	c_item_info_list: any[] = [];
 	selected_item: any = null;
 	all_roles: any[] = [];
@@ -120,28 +117,29 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 	abrirModalProfiles(item: any): void
 	{
 		this.selected_item = item;
-		this.rest.get('/ecommerce_item_profile.php', { ecommerce_item_id: item.ecommerce_item.id })
-			.then((response:any) =>
+		this.rest_ecommerce_item_profile.search({ ecommerce_item_id: item.ecommerce_item.id, limit: 99999 })
+		.then((response:RestResponse<Ecommerce_Item_Profile>) =>
+		{
+			let profile_ids = response.data.map((ecommerce_item_profile:any) => ecommerce_item_profile.profile_id);
+			let profile_search = { limit: 99999, 'id,': profile_ids };
+			return Promise.all([this.rest_profile.search(profile_search), Promise.resolve(response.data)]);
+		})
+		.then(([profiles_response, ecommerce_item_profiles]:[RestResponse<Profile>,Ecommerce_Item_Profile[]]) =>
+		{
+			this.profile_list = profiles_response.data;
+			let ecommerItemProfilesInfo: EcommerItemProfileInfo[] = ecommerce_item_profiles.map((ecommerce_item_profile:any) =>
 			{
-				let profile_ids = response.data.map((ecommerce_item_profile:any) => ecommerce_item_profile.profile_id);
-				return Promise.all([this.rest_profile.search({limit:99999}), Promise.resolve(response.data)]);
-			})
-			.then(([profiles_response, ecommerce_item_profiles]:[any,any]) =>
-			{
-				this.profile_list = profiles_response.data;
-				let ecommerItemProfilesInfo: EcommerItemProfileInfo[] = ecommerce_item_profiles.map((ecommerce_item_profile:any) =>
-				{
-					return {
-						profile: profiles_response.data.find((profile:any) => profile.id === ecommerce_item_profile.profile_id),
-						ecommerce_item_profile: ecommerce_item_profile
-					};
-				});
-				this.ecommerce_item_profile_info_list = ecommerItemProfilesInfo;
-			})
-			.catch(error =>
-			{
-				this.showError(error);
+				return {
+					profile: profiles_response.data.find((profile:any) => profile.id === ecommerce_item_profile.profile_id),
+					ecommerce_item_profile: ecommerce_item_profile
+				};
 			});
+			this.ecommerce_item_profile_info_list = ecommerItemProfilesInfo;
+		})
+		.catch(error =>
+		{
+			this.showError(error);
+		});
 	}
 
 		cerrarModalProfiles(): void {
@@ -153,6 +151,13 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 
 	onAddProfile(profile_name: string): void
 	{
+		let profile = this.profile_list.find(profile => profile.name === profile_name);
+
+		if (profile) {
+			this.selected_profile_id = profile.id;
+		}
+
+
 	}
 
 	async agregarProfileArticulo(): Promise<void> {
@@ -201,5 +206,50 @@ export class ListEcommerceItemComponent extends BaseComponent implements OnInit 
 		{
 			this.showError(error);
 		});
+	}
+
+	agregarProfileToEcommerceItem(evt: Event)
+	{
+		this.is_loading = true;
+
+		this.createProfile(this.new_profile_name)
+		.then((profile:Profile) =>
+		{
+			this.new_profile_name = ''; // Clear the input field
+			this.abrirModalProfiles(this.selected_item); // Refresh profiles in modal
+
+			let ecommerce_item_profile ={
+				profile_id: profile.id,
+				ecommerce_item_id: this.selected_item.ecommerce_item.id
+			};
+
+			return this.rest_ecommerce_item_profile.create( ecommerce_item_profile )
+		})
+		.then((response:Ecommerce_Item_Profile) =>
+		{
+			this.showSuccess('Perfil asignado correctamente.');
+		})
+		.catch((error:any) =>
+		{
+			this.showError('Error al asignar el perfil al artículo: ' + this.getErrorMessage(error));
+		})
+		.finally(() =>
+		{
+			this.is_loading = false;
+		});
+	}
+
+	createProfile(profile_name: string): Promise<Profile>
+	{
+		let trimed_profile_name = profile_name.trim().replace(/\s+/g, ' ');
+
+		let profile = this.profile_list.find(profile => profile.name.trim().localeCompare(profile_name.trim()) === 0);
+
+		if( profile )
+		{
+			return Promise.resolve(profile);
+		}
+
+		return this.rest_profile.create({name: profile_name, ecommerce_id: this.rest.ecommerce.id});
 	}
 }
