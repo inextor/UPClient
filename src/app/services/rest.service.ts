@@ -16,6 +16,7 @@ interface RestResponse<T>
 ({ providedIn: 'root' })
 export class RestService
 {
+
 	public bearer: string = '';
 	public ecommerce: Ecommerce = GetEmpty.ecommerce();
 	public base_url: string = environment.base_path;
@@ -490,5 +491,11 @@ export class RestService
 
 	getProfiles(): Promise<RestResponse<Profile>> {
 		return this.get('/profile.php',{ecommerce_id:this.ecommerce.id});
+	}
+	getSyncId():string {
+		return 'x'+Date.now();
+	}
+	getVersion():string {
+		return 'VXXX1.0';
 	}
 }
