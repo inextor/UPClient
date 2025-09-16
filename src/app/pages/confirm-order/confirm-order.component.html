@@ -1,48 +1,75 @@
 <app-header></app-header>
 
-<div class="confirm-order-container">
+<div class="cart-container">
   <h2 class="app-page-title">Confirmar Pedido</h2>
-  <form (ngSubmit)="placeOrder()">
-    <div class="address-section">
-      <h3>Dirección de Envío</h3>
-      @if(re_admin()){
-        <div class="form-group">
-          <label for="user_select">Seleccionar Usuario</label>
-          <app-search-user (userSelected)="onUserSelected($event)"></app-search-user>
+  <div class="cart-items">
+    @for (item of cart_items; track item) {
+      <div class="cart-item">
+        <div class="item-image">
+          <img [src]="item.image_url || 'assets/placeholder-product.svg'" alt="Product Image">
         </div>
-      }
-      <div class="form-group">
-        <select id="shipping_address_select" name="shipping_address_select" [(ngModel)]="selected_shipping_address_id">
-          @for(address of shipping_addresses; track address){
-          <option [value]="address.id">{{ address.address }}</option>
-          }
-          <option value="new">Agregar Nueva Dirección</option>
-        </select>
+
+        <div class="item-details">
+          <h3 class="item-name">{{ item.name }}</h3>
+          <p class="item-category">{{ item.category?.name || 'N/A' }}</p>
+          <p class="item-price">{{ item.ecommerce_item?.price | currency }}</p>
+        </div>
+
+        <div class="item-quantity">
+          <span class="quantity-value">{{ item.qty | number }}</span>
+        </div>
+
+        <div class="item-total">{{ item.ecommerce_item?.price * item.qty | currency }}</div>
+      </div>
+    }
+
+    <form (ngSubmit)="placeOrder()">
+      <div class="address-section">
+        <h3>Dirección de Envío</h3>
+        @if(re_admin()){
+          <div class="form-group">
+            <label for="user_select">Seleccionar Usuario</label>
+            <app-search-user (userSelected)="onUserSelected($event)"></app-search-user>
+          </div>
+        }
+        <div class="form-group">
+          <select id="shipping_address_select" name="shipping_address_select" [(ngModel)]="selected_shipping_address_id">
+            @for(address of shipping_addresses; track address){
+            <option [value]="address.id">{{ address.address }}</option>
+            }
+            <option value="new">Agregar Nueva Dirección</option>
+          </select>
+        </div>
+
+        @if(selected_shipping_address_id === 'new'){
+          <h4>Nueva Dirección de Envío</h4>
+          <div class="form-group">
+            <label for="new_shipping_address_name">Nombre</label>
+            <input type="text" id="new_shipping_address_name" name="new_shipping_address_name" [(ngModel)]="new_shipping_address.name" required>
+          </div>
+          <div class="form-group">
+            <label for="new_shipping_address_address">Dirección</label>
+            <input type="text" id="new_shipping_address_address" name="new_shipping_address_address" [(ngModel)]="new_shipping_address.address" required>
+          </div>
+          <div class="form-group">
+            <label for="new_shipping_address_phone">Teléfono</label>
+            <input type="text" id="new_shipping_address_phone" name="new_shipping_address_phone" [(ngModel)]="new_shipping_address.phone" required>
+          </div>
+          <div class="form-group">
+            <label for="new_shipping_address_note">Nota</label>
+            <input type="text" id="new_shipping_address_note" name="new_shipping_address_note" [(ngModel)]="new_shipping_address.note">
+          </div>
+        }
       </div>
 
-      @if(selected_shipping_address_id === 'new'){
-        <h4>Nueva Dirección de Envío</h4>
-        <div class="form-group">
-          <label for="new_shipping_address_name">Nombre</label>
-          <input type="text" id="new_shipping_address_name" name="new_shipping_address_name" [(ngModel)]="new_shipping_address.name" required>
-        </div>
-        <div class="form-group">
-          <label for="new_shipping_address_address">Dirección</label>
-          <input type="text" id="new_shipping_address_address" name="new_shipping_address_address" [(ngModel)]="new_shipping_address.address" required>
-        </div>
-        <div class="form-group">
-          <label for="new_shipping_address_phone">Teléfono</label>
-          <input type="text" id="new_shipping_address_phone" name="new_shipping_address_phone" [(ngModel)]="new_shipping_address.phone" required>
-        </div>
-        <div class="form-group">
-          <label for="new_shipping_address_note">Nota</label>
-          <input type="text" id="new_shipping_address_note" name="new_shipping_address_note" [(ngModel)]="new_shipping_address.note">
-        </div>
-      }
-    </div>
-
-    <button type="submit" class="place-order-button">Realizar Pedido</button>
-  </form>
+      <div class="cart-summary">
+        <p class="subtotal">
+          Subtotal ({{ total_qty }} artículos): <strong>{{ total | currency }}</strong>
+        </p>
+        <button type="submit" class="order-button">Realizar Pedido</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <dialog #confirmDialog class="confirm-dialog">
@@ -64,3 +91,4 @@
     <button class="confirm-dialog-button" (click)="closeConfirmDialog2()">Ok</button>
   </div>
 </dialog>
+
