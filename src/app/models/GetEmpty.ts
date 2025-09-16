@@ -7,16 +7,17 @@ export class GetEmpty
 {
 	static ecommerce_user(): Ecommerce_User {
 		return {
-			id: 0,
+			created: '',
 			created_by_user_id: null,
 			ecommerce_id: 0,
+			id: 0,
 			last_login: '',
 			status: '',
 			type: 'ECOMMERCE_ADMIN',
 			updated: '',
+			updated_by_user_id: null,
 			user_id: 0,
-			updated_by_user_id: null
-		}
+		};
 	}
 
 	static address(): Address{
