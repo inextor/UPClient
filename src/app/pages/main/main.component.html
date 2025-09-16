@@ -1,4 +1,7 @@
 <app-header></app-header>
+@if (banner_url) {
+	<img [src]="banner_url" alt="Banner" class="img-fluid">
+}
 <div class="product-page-container py-3 bg-white">
 	@if(item_info_list.length > 0){
 		<header class="page-header">

@@ -15,6 +15,7 @@ export interface Attachment{
 
 export interface Ecommerce {
 	id: number;
+	banner_image_id: number | null;
 	created: string;
 	name: string;
 	color: string;
@@ -551,6 +552,17 @@ export interface Item_Attribute{
 	item_id:number
 	name:string;
 	value:string;
+}
+export interface Item_Attachment{
+	id:number;
+	item_id:number;
+	attachment_id:number;
+	title:string;
+	description:string;
+	created:Date;
+	updated:Date;
+	created_by_user_id:number|null;
+	updated_by_user_id:number|null;
 }
 export interface Item_Exception{
 	created:string;

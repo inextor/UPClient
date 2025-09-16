@@ -8,7 +8,6 @@ export interface AttachmentInfo {
 	// Add other properties of AttachmentInfo if known
 }
 
-
 interface CSerial extends Serial
 {
 	store_name?:string;

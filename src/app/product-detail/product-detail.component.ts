@@ -19,6 +19,7 @@ export class ProductDetailComponent extends BaseComponent implements OnInit {
 	mainImage: string | undefined;
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
+	attachments: any[] = [];
 
 
 	ngOnInit(): void {
@@ -57,9 +58,27 @@ export class ProductDetailComponent extends BaseComponent implements OnInit {
 
 						this.fetchProductImages();
 						this.fetchEcommerceItem();
+						this.fetchAttachments();
 					} else {
 						this.showError('Product not found');
 					}
+				})
+				.catch(error => {
+					this.showError(error);
+				});
+		}
+	}
+
+	fetchAttachments(): void {
+		if (this.item_id) {
+			this.rest.getItemAttachments({ item_id: this.item_id })
+				.then((response: any) => {
+					this.attachments = response.data.map((attachment: any) => {
+						return {
+							...attachment,
+							url: this.rest.base_url + '/attachment.php?id=' + attachment.attachment_id
+						};
+					});
 				})
 				.catch(error => {
 					this.showError(error);

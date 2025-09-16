@@ -498,4 +498,19 @@ export class RestService
 	getVersion():string {
 		return 'VXXX1.0';
 	}
+
+	getItemAttachments(p:URLSearchParams | Object):Promise<RestResponse<any>>
+	{
+		let params = p instanceof URLSearchParams ? p : this.getUrlParams(p);
+		const baseUrl = this.base_url+'/item_attachment.php';
+		let url = baseUrl + '?' + params.toString();
+
+		return fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			});
+	}
 }

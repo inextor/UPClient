@@ -68,7 +68,7 @@
     border-radius: 5px;
   cursor: pointer;
     font-size: 1.1em;
-    transition: background-color 0.3s ease;
+    transition: background-color: 0.3s ease;
 }
 
 .add-to-cart-button:hover {
@@ -87,4 +87,28 @@
     .product-image {
         max-width: 100%;
     }
+}
+
+.attachments-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.attachments-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.attachments-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.attachments-section li {
+    margin-bottom: 10px;
+}
+
+.attachments-section a {
+    font-weight: bold;
 }

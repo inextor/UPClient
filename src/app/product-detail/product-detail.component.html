@@ -25,4 +25,18 @@
 	} @else {
 		<p>Cargando detalles del producto...</p>
 	}
+
+	@if (attachments && attachments.length > 0) {
+		<div class="attachments-section">
+			<h2>Archivos Adjuntos</h2>
+			<ul>
+				@for (attachment of attachments; track attachment) {
+					<li>
+						<a [href]="attachment.url" target="_blank">{{ attachment.title }}</a>
+						<p>{{ attachment.description }}</p>
+					</li>
+				}
+			</ul>
+		</div>
+	}
 </div>

@@ -22,6 +22,7 @@ export class MainComponent extends BaseComponent
 	page_numbers: number[] = [];
 	ecommerce_user: any = {};
 	profiles:Profile[] = [];
+	banner_url:string | null = null;
 
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';
@@ -40,6 +41,9 @@ export class MainComponent extends BaseComponent
 		else
 		{
 			document.title = this.rest.ecommerce.name;
+
+			if( this.rest.ecommerce.banner_image_id )
+				this.banner_url = this.rest.base_url+'/image.php?id='+this.rest.ecommerce.banner_image_id;
 
 			document.body.style.setProperty('--main-color', this.rest.ecommerce.color || '#ffffff');
 			this.main_color = this.rest.ecommerce.color || '#ffffff';
