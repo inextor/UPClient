@@ -5,36 +5,35 @@ import { Utils } from './Utils';
 
 export class GetEmpty
 {
-    static ecommerce_user(): Ecommerce_User {
+	static ecommerce_user(): Ecommerce_User {
 		return {
 			id: 0,
-			user_id: 0,
+			created_by_user_id: null,
 			ecommerce_id: 0,
 			last_login: '',
-			type: 'ECOMMERCE_ADMIN',
 			status: '',
-			created: '',
+			type: 'ECOMMERCE_ADMIN',
 			updated: '',
-			created_by_user_id: null,
+			user_id: 0,
 			updated_by_user_id: null
 		}
-    }
+	}
 
-    static address(): Address{
+	static address(): Address{
 		return {
+			address: '',
+			email: '',
 			name: '',
+			note: '',
+			phone: '',
+			rfc: '',
 			sat_regimen_capital: '',
 			sat_regimen_fiscal: '',
 			type: '',
-			address: '',
-			zipcode: '',
-			email: '',
-			rfc: '',
 			user_id: 0,
-			phone: '',
-			note: ''
+			zipcode: '',
 		};
-    }
+	}
 
 	static item_info(): ItemInfo
 	{
@@ -67,16 +66,17 @@ export class GetEmpty
 	{
 		return {
 			id: 0,
-			name: '',
-			created: Utils.getMysqlDate(),
-			updated: Utils.getMysqlDate(),
-			font_color: 'black',
+			banner_image_id: null,
 			color: "black",
-			store_id: 0,
+			created: Utils.getMysqlDate(),
+			font_color: 'black',
+			logo_image_id: null,
+			name: '',
+			preferences_id: 0,
 			price_list_id: 1,
 			price_type_id: 1,
-			logo_image_id: null,
-			preferences_id: 0
+			store_id: 0,
+			updated: Utils.getMysqlDate(),
 		};
 	}
 
@@ -169,7 +169,7 @@ export class GetEmpty
 			type: "NORMAL",
 			unitary_price: 0,
 			unitary_price_meta: 0,
-			updated:  Utils.getMysqlDate(),
+			updated: Utils.getMysqlDate(),
 			updated_by_user_id: null
 		};
 
@@ -268,7 +268,7 @@ export class GetEmpty
 			commission: 0,
 			commission_currency_id: 'MXN',
 			commission_type: 'NONE',
-			created:  Utils.getMysqlDate(),
+			created: Utils.getMysqlDate(),
 			created_by_user_id: null,
 			currency_id: null,
 			description: '',
@@ -296,7 +296,7 @@ export class GetEmpty
 			text_color: '#FFFFFF',
 			text_style: 'CENTER',
 			unidad_medida_sat_id: 'H87',
-			updated:  Utils.getMysqlDate(),
+			updated: Utils.getMysqlDate(),
 			updated_by_user_id:null,
 		};
 	}
@@ -775,7 +775,7 @@ export class GetEmpty
 			qty_reported: 0,
 			store_id: 0,
 			status: 'ACTIVE',
-			updated:  Utils.getMysqlDate(),
+			updated: Utils.getMysqlDate(),
 			verified_by_user_id: null,
 		}
 	}
