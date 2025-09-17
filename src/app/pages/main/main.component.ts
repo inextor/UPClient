@@ -5,7 +5,7 @@ import { CurrencyPipe } from '@angular/common';
 import { RestService } from '../../services/rest.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { RouterLink } from '@angular/router';
-import { Profile } from '../../models/RestModels';
+import { Profile } from '../../models/rest/Profile';
 
 @Component({
 	selector: 'app-main',

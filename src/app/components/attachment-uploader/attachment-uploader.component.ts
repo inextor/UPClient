@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output,EventEmitter,OnChanges,SimpleChanges} from '@angular/core';
 import { RestService } from '../../services/rest.service';
-import { Preferences } from '../../models/RestModels';
 import { AttachmentInfo } from '../../models/models';
 import { from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';

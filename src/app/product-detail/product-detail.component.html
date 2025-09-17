@@ -9,7 +9,7 @@
 				<h1 class="product-name">{{ product.item.name }}</h1>
 				<p class="product-category">{{ product.category?.name || 'N/A' }}</p>
 				<p class="product-description">{{ product.item.description || 'No description available.' }}</p>
-				<p class="product-price">{{ product.ecommerce_item?.price | currency }}</p>
+				<p class="product-price">{{ product.price?.price | currency }}</p>
 				<button class="add-to-cart-button" (click)="addToCart(product.item.id)">
 					Añadir al carrito
 				</button>

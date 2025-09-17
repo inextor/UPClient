@@ -1,6 +1,54 @@
-import { Attachment, File_Type } from "./RestModels";
+import { Address } from "./rest/Address";
+import { Attachment } from "./rest/Attachment";
+import { Bank_Movement } from "./rest/Bank_Movement";
+import { Bank_Movement_Order } from "./rest/Bank_Movement_Order";
+import { Category } from "./rest/Category";
+import { Delivery_Assignment } from "./rest/Delivery_Assignment";
+import { Ecommerce_Item } from "./rest/Ecommerce_Item";
+import { Ecommerce_User } from "./rest/Ecommerce_User";
+import { File_Type } from "./rest/File_Type";
+import { Item } from "./rest/Item";
+import { Item_Exception } from "./rest/Item_Exception";
+import { Item_Option } from "./rest/Item_Option";
+import { Item_Option_Value } from "./rest/Item_Option_Value";
+import { Offer } from "./rest/Offer";
+import { Order } from "./rest/Order";
+import { Order_Item } from "./rest/Order_Item";
+import { Order_Item_Exception } from "./rest/Order_Item_Exception";
+import { Order_Item_Serial } from "./rest/Order_Item_Serial";
+import { Payment } from "./rest/Payment";
+import { Period } from "./rest/Period";
+import { Price } from "./rest/Price";
+import { Price_Type } from "./rest/Price_Type";
+import { Process } from "./rest/Process";
+import { Production } from "./rest/Production";
+import { Production_Area } from "./rest/Production_Area";
+import { Purchase } from "./rest/Purchase";
+import { Requisition } from "./rest/Requisition";
+import { Requisition_Item } from "./rest/Requisition_Item";
+import { Reservation } from "./rest/Reservation";
+import { Reservation_Item } from "./rest/Reservation_Item";
+import { Reservation_Item_Serial } from "./rest/Reservation_Item_Serial";
+import { Return_Assignment } from "./rest/Return_Assignment";
+import { Serial } from "./rest/Serial";
+import { Serial_Image } from "./rest/Serial_Image";
+import { Shipping } from "./rest/Shipping";
+import { Shipping_Item } from "./rest/Shipping_Item";
+import { Stock_Record } from "./rest/Stock_Record";
+import { Store } from "./rest/Store";
+import { Task } from "./rest/Task";
+import { User } from "./rest/User";
 
-import { Address, Bank_Movement, Bank_Movement_Order, Category, Delivery_Assignment, Item, Item_Exception, Item_Option, Item_Option_Value, Offer, Order, Order_Item, Order_Item_Exception, Order_Item_Serial, Payment, Period, Price, Price_Type, Process, Production, Production_Area, Purchase, Requisition, Requisition_Item, Reservation, Reservation_Item, Reservation_Item_Serial, Return_Assignment, Serial, Serial_Image, Shipping, Shipping_Item, Stock_Record, Store, Task, User } from "./RestModels";
+
+export interface UserBalance extends User{
+	balance: number;
+	agent_name: string;
+	installment_expired_qty:number;
+	installment_expired_amount:number;
+	installment_expired_since:string;
+	installment_last_payment:string;
+	last_payment_timestamp:string;
+}
 
 export interface AttachmentInfo {
 	attachment: Attachment;
@@ -168,6 +216,8 @@ export interface ItemOptionInfo
 
 export interface ItemInfo
 {
+    ecommerce_item: Ecommerce_Item | null;
+    image_url: string | null;
 	item:Item;
 	category:Category | null;
 	//product?:Product; //Category
@@ -181,6 +231,7 @@ export interface ItemInfo
 	exceptions:Item_Exception[];
 	display_category?:boolean;
 	serials:SerialInfo[];
+	images:any[];
 }
 
 //export interface ItemInfo
@@ -261,4 +312,37 @@ export interface PaymentInfo
 {
 	payment:Payment;
 	movements:MovementInfo[];
+}
+
+export interface CartItemInfo
+{
+	item_id: number;
+	qty: number;
+	item_info: any;
+}
+
+
+export interface EcommerceUserInfo {
+		user: User;
+		ecommerce_user: Ecommerce_User;
+		address: Address;
+}
+
+
+export interface Product {
+	item: {
+		id: number;
+		name: string;
+		description: string;
+		image_id?: number;
+	};
+	category?: {
+		name: string;
+	};
+	prices: {
+		price: number;
+	}[];
+	image_url?: string;
+	images: { id: number; url: string }[];
+	ecommerce_item?: any;
 }

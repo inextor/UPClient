@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
-import { User } from '../../models/RestModels';
 import { RouterModule } from '@angular/router';
 import { BaseComponent } from '../base/base.component';
-import { EcommerceUserInfo } from '../../models/RestModels';
+import { EcommerceUserInfo } from '../../models/models';
 
 @Component({
 	selector: 'app-list-ecommerce-user',

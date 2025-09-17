@@ -1,6 +1,15 @@
 import { GetEmpty } from '../models/GetEmpty';
 import { ItemInfo, OrderInfo, OrderItemInfo } from '../models/models';
-import { Currency_Rate, Order, Order_Item, Period, Price, Price_Type, Quote_Item, Stock_Record, Store, User } from '../models/RestModels';
+import { Currency_Rate } from '../models/rest/Currency_Rate';
+import { Order } from '../models/rest/Order';
+import { Order_Item } from '../models/rest/Order_Item';
+import { Period } from '../models/rest/Period';
+import { Price } from '../models/rest/Price';
+import { Price_Type } from '../models/rest/Price_Type';
+import { Quote_Item } from '../models/rest/Quote_Item';
+import { Stock_Record } from '../models/rest/Stock_Record';
+import { Store } from '../models/rest/Store';
+import { User } from '../models/rest/User';
 import { Utils } from '../models/Utils';
 import { RestService } from '../services/rest.service';
 
@@ -101,77 +110,88 @@ export class OrderBuilder
 		let version_created = this.rest.getVersion();
 		let items:OrderItemInfo[] = [];
 		let order:Order = {
-			amount_paid: 0,
-			ares: 0,
-			cancellation_timestamp: null,
-			billing_data_id: this.store.default_billing_data_id,
-			cashier_user_id: this.cashier_user.id,
-			created:  Utils.getMysqlDate(),
-			currency_id: this.store.default_currency_id,
-			cancellation_reason: '',
-			cancelled_by_user_id: null,
-			closed_timestamp: null,
-			discount: 0,
-			initial_payment: 0,
-			sat_isr: 0,
-			sat_ieps: 0,
-			discount_calculated: 0,
-			price_type_id: this.price_type.id,
-			sat_forma_pago: '99',
-			sat_serie: this.store?.default_sat_serie || 'A',
-			sat_exchange_rate: 0,
-			sat_domicilio_fiscal_receptor: '',
-			sat_regimen_fiscal_receptor: '',
-			sat_regimen_capital_receptor: '',
-			service_type: 'QUICK_SALE',
-			status: 'PENDING',
-			paid_status: 'PENDING',
-			store_id: this.store.id,
-			subtotal: 0,
-			sync_id: this.rest.getSyncId(),
-			system_activated: null,
-			sat_factura_id: null,
-			table_id: null,
-			tag: '',
-			tax: 0,
-			tax_percent,
-			total: 0,
-			updated: Utils.getMysqlDate(),
-			version_created,
-			version_updated: version_created,
-			address: null,
-			authorized_by: null,
-			billing_address_id: null,
-			city: null,
-			client_name: null,
-			client_user_id: null,
-			delivery_status: 'PENDING',
-			delivery_user_id: null,
-			facturacion_code: '',
-			facturado: 'YES',
-			guests: null,
-			id: 0,
-			lat: null,
-			lng: null,
-			marked_for_billing: 'YES',
-			note: null,
-			paid_timetamp: null,
-			period_id: null,
-			quote_id: null,
-			sat_codigo_postal: null,
-			sat_pdf_attachment_id: null,
-			sat_razon_social: null,
-			sat_receptor_email: null,
-			sat_receptor_rfc: null,
-			sat_serie_consecutive: null,
-			sat_uso_cfdi: null,
-			sat_xml_attachment_id: null,
-			shipping_address_id: null,
-			shipping_cost: 0,
-			state: null,
-			store_consecutive: null,
-			suburb: null
-		};
+            amount_paid: 0,
+            ares: 0,
+            cancellation_timestamp: null,
+            billing_data_id: this.store.default_billing_data_id,
+            cashier_user_id: this.cashier_user.id,
+            created: Utils.getMysqlDate(),
+            currency_id: this.store.default_currency_id,
+            cancellation_reason: '',
+            cancelled_by_user_id: null,
+            closed_timestamp: null,
+            discount: 0,
+            initial_payment: 0,
+            sat_isr: 0,
+            sat_ieps: 0,
+            discount_calculated: 0,
+            price_type_id: this.price_type.id,
+            sat_forma_pago: '99',
+            sat_serie: this.store?.default_sat_serie || 'A',
+            sat_exchange_rate: 0,
+            sat_domicilio_fiscal_receptor: '',
+            sat_regimen_fiscal_receptor: '',
+            sat_regimen_capital_receptor: '',
+            service_type: 'QUICK_SALE',
+            status: 'PENDING',
+            paid_status: 'PENDING',
+            store_id: this.store.id,
+            subtotal: 0,
+            sync_id: this.rest.getSyncId(),
+            system_activated: null,
+            sat_factura_id: null,
+            table_id: null,
+            tag: '',
+            tax: 0,
+            tax_percent,
+            total: 0,
+            updated: Utils.getMysqlDate(),
+            version_created,
+            version_updated: version_created,
+            address: null,
+            authorized_by: null,
+            billing_address_id: null,
+            city: null,
+            client_name: null,
+            client_user_id: null,
+            delivery_status: 'PENDING',
+            delivery_user_id: null,
+            facturacion_code: '',
+            facturado: 'YES',
+            guests: 1,
+            id: 0,
+            lat: null,
+            lng: null,
+            marked_for_billing: 'YES',
+            note: null,
+            paid_timetamp: null,
+            period_id: null,
+            quote_id: null,
+            sat_codigo_postal: null,
+            sat_pdf_attachment_id: null,
+            sat_razon_social: null,
+            sat_receptor_email: null,
+            sat_receptor_rfc: null,
+            sat_serie_consecutive: null,
+            sat_uso_cfdi: null,
+            sat_xml_attachment_id: null,
+            shipping_address_id: null,
+            shipping_cost: 0,
+            state: null,
+            store_consecutive: 0,
+            suburb: null,
+            frequency: 'NONE',
+            closed_by_user_id: null,
+            delivery_schedule: null,
+            ecommerce_user_id: null,
+            external_id: null,
+            facturacion_timestamp: null,
+            first_payment_date: null,
+            installment_amount: null,
+            installment_months: null,
+            installment_round_amount: 0,
+            installments: null
+        };
 
 
 		this._order_info = {
@@ -204,7 +224,7 @@ export class OrderBuilder
 		price.price_type_id = this.order_info.price_type.id
 		price.currency_id = currency_id;
 		price.tax_included = tax_included;
-		price.price_list_id = this.store.price_list_id;
+		price.price_list_id = this.store.price_list_id || 1;
 
 		return this.addItemInfo(item_info, qty, price, note);
 	}
@@ -254,23 +274,26 @@ export class OrderBuilder
 		this.setOrderItemPrice(order_item, price ,this.order_info.store.default_currency_id, this.order_info.order.currency_id,this.currency_rate_list);
 
 		let order_item_info:OrderItemInfo = {
-			order_item,
-			item: item_info.item,
-			category: item_info.category,
-			category_zero: 0,
-			records: item_info.records,
-			stock_record: stock_record,
-			price: price,
-			prices: item_info.prices,
-			exceptions: item_info.exceptions,
-			order_item_exceptions: [],
-			options: [],
-			serials: [],
-			serials_string: '',
-			created: date,
-			commanda_type_id: item_info.item.commanda_type_id,
-			item_options: []
-		};
+            order_item,
+            item: item_info.item,
+            category: item_info.category,
+            category_zero: 0,
+            records: item_info.records,
+            stock_record: stock_record,
+            price: price,
+            prices: item_info.prices,
+            exceptions: item_info.exceptions,
+            order_item_exceptions: [],
+            options: [],
+            serials: [],
+            serials_string: '',
+            created: date,
+            commanda_type_id: item_info.item.commanda_type_id,
+            item_options: [],
+            ecommerce_item: null,
+            image_url: null,
+            images: []
+        };
 
 		this.addOrderItem([ order_item_info ]);
 		return order_item_info;

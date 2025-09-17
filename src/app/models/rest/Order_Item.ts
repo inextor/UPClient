@@ -1,0 +1,48 @@
+export interface Order_Item{
+
+	commanda_status:'NOT_DISPLAYED'|'PENDING'|'DISMISSED';
+	delivery_status:'PENDING'|'DELIVERED';
+	has_separator:'NO'|'YES';
+	ieps_type:'RATE'|'AMOUNT';
+	is_free_of_charge:'NO'|'YES';
+	is_item_extra:'NO'|'YES';
+	preparation_status:'PENDING'|'IN_PREPARATION'|'READY'|'DELIVERED';
+	return_required:'NO'|'YES';
+	status:'ACTIVE'|'DELETED';
+	stock_status:'IN_STOCK'|'STOCK_REMOVED';
+	tax_included:'NO'|'YES';
+	type:'NORMAL'|'REFUND';
+	commanda_id:number | null;
+	created:string;
+	created_by_user_id:number | null;
+	delivered_qty:number;
+	discount:number;
+	discount_percent:number;
+	exceptions:string | null;
+	id:number;
+	id_payment:number | null;
+	ieps_calculated:number;
+	ieps_value:number;
+	item_extra_id:number | null;
+	item_group:number | null;
+	item_id:number;
+	item_option_id:number | null;
+	item_option_qty:number;
+	note:string | null;
+	offer_id:number | null;
+	order_id:number;
+	original_unitary_price:number;
+	paid_qty:number;
+	price_id:number | null;
+	qty:number;
+	reservation_item_id:number | null;
+	subtotal:number;
+	system_preparation_ended:string | null;
+	system_preparation_started:string | null;
+	tax:number;
+	total:number;
+	unitary_price:number;
+	unitary_price_meta:number;
+	updated:string;
+	updated_by_user_id:number | null;
+}

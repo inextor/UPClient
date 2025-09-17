@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GetEmpty } from '../models/GetEmpty';
-import { Ecommerce, Profile } from '../models/RestModels';
-import { CartItemInfo } from '../models/RestModels';
 import { environment } from '../../environments/environment';
 import { ErrorMessage } from '../models/ErrorMessage';
+import { Ecommerce } from '../models/rest/Ecommerce';
+import { CartItemInfo } from '../models/models';
+import { Profile } from '../models/rest/Profile';
 
 interface RestResponse<T>
 {
@@ -455,10 +456,6 @@ export class RestService
 
 	getEcommerceUserInfo(id:any): Promise<any> {
 		return this.get('/ecommerce_user_info.php',{id:id});
-	}
-
-	saveEcommerceUserInfo(data: any): Promise<any> {
-		return this.post('/ecommerce_user_info.php', data);
 	}
 
 	getEcommerces(): Promise<any> {

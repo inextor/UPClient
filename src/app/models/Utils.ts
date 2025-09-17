@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Keyboard_Shortcut} from './RestModels';
+import { Keyboard_Shortcut } from './rest/Keyboard_Shortcut';
 
 
 export interface Coordinates

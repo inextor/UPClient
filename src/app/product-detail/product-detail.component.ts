@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { RestService } from '../services/rest.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../components/header/header.component';
-import { Product } from '../models/RestModels';
 import { BaseComponent } from '../pages/base/base.component';
+import { Product } from '../models/RestModels';
+import { ItemInfo } from '../models/models';
 
 @Component({
 	selector: 'app-product-detail',
@@ -15,7 +16,7 @@ import { BaseComponent } from '../pages/base/base.component';
 })
 export class ProductDetailComponent extends BaseComponent implements OnInit {
 	item_id: number | null = null;
-	product: Product | null = null;
+	product: ItemInfo | null = null;
 	mainImage: string | undefined;
 	main_color: string = '#ffffff';
 	font_color: string = '#000000';

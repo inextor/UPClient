@@ -1,6 +1,33 @@
 import { RestService } from '../services/rest.service';
-import { ExtendedReservation, ItemInfo, OrderInfo, OrderItemInfo, ReservationInfo, ReservationItemInfo, ShippingInfo } from './models';
-import { Ecommerce, User, Address, Ecommerce_User, Role, Profile, Store, Work_log_rules, Payroll, Payroll_Concept_Value, Item, Order_Item, Role_Item_Price, Price, Production_Area_Item, Production, User_Permission, User_extra_fields, Preferences, Production_Area, Category, Period, Price_Type, Reservation_Item, Process, Shipping, Order, Item_Exception } from './RestModels';
+import { ExtendedReservation, ItemInfo, OrderInfo, OrderItemInfo, ReservationInfo, ReservationItemInfo, ShippingInfo, UserBalance } from './models';
+import { Address } from './rest/Address';
+import { Category } from './rest/Category';
+import { Ecommerce } from './rest/Ecommerce';
+import { Ecommerce_User } from './rest/Ecommerce_User';
+import { Item } from './rest/Item';
+import { Item_Exception } from './rest/Item_Exception';
+import { Order } from './rest/Order';
+import { Order_Item } from './rest/Order_Item';
+import { Payroll } from './rest/Payroll';
+import { Payroll_Concept_Value } from './rest/Payroll_Concept_Value';
+import { Period } from './rest/Period';
+import { Preferences } from './rest/Preferences';
+import { Price } from './rest/Price';
+import { Price_Type } from './rest/Price_Type';
+import { Process } from './rest/Process';
+import { Production } from './rest/Production';
+import { Production_Area } from './rest/Production_Area';
+import { Production_Area_Item } from './rest/Production_Area_Item';
+import { Profile } from './rest/Profile';
+import { Reservation_Item } from './rest/Reservation_Item';
+import { Role } from './rest/Role';
+import { Role_Item_Price } from './rest/Role_Item_Price';
+import { Shipping } from './rest/Shipping';
+import { Store } from './rest/Store';
+import { User } from './rest/User';
+import { User_Extra_Fields } from './rest/User_Extra_Fields';
+import { User_Permission } from './rest/User_Permission';
+import { Work_Log_Rules } from './rest/Work_Log_Rules';
 import { Utils } from './Utils';
 
 export class GetEmpty
@@ -11,8 +38,6 @@ export class GetEmpty
 			created_by_user_id: null,
 			ecommerce_id: 0,
 			id: 0,
-			last_login: '',
-			status: '',
 			type: 'ECOMMERCE_ADMIN',
 			updated: '',
 			updated_by_user_id: null,
@@ -30,9 +55,20 @@ export class GetEmpty
 			rfc: '',
 			sat_regimen_capital: '',
 			sat_regimen_fiscal: '',
-			type: '',
+			type: 'SHIPPING',
 			user_id: 0,
 			zipcode: '',
+			status: 'ACTIVE',
+			city: '',
+			country: '',
+			id: 0,
+			lat: null,
+			lng: null,
+			sat_uso_cfdi: 'G03',
+			state: '',
+			suburb: '',
+			updated: '',
+			created: ''
 		};
 	}
 
@@ -48,8 +84,11 @@ export class GetEmpty
 			records: [],
 			stock_record: undefined,
 			serials: [],
-			item_options: []
-		};
+			item_options: [],
+			ecommerce_item: null,
+			image_url: null,
+			images: []
+};
 	}
 	static role(): Role
 	{
@@ -149,11 +188,14 @@ export class GetEmpty
 			item_id: item.id,
 			item_option_id: null,
 			item_option_qty: 1,
+			ieps_calculated: 0,
+			ieps_value: 0,
+			ieps_type: 'RATE',
 			note: null,
 			offer_id: null,
 			order_id: 0,
 			original_unitary_price: 0,
-			paid_qty: null,
+			paid_qty: 0,
 			preparation_status: "PENDING",
 			price_id: null,
 			qty: 0,
@@ -183,24 +225,27 @@ export class GetEmpty
 
 		let order_item_info:OrderItemInfo =
 		{
-			order_item,
-			created: new Date(),
-			order_item_exceptions: [],
-			serials_string: "",
-			commanda_type_id: item.commanda_type_id,
-			item: item,
-			category: null,
-			//category_zero: 0,
-			price: undefined,
-			prices,
-			options: [],
-			exceptions: [],
-			records: [],
-			stock_record: undefined,
-			serials: [],
-			category_zero: null,
-			item_options: []
-		};
+            order_item,
+            created: new Date(),
+            order_item_exceptions: [],
+            serials_string: "",
+            commanda_type_id: item.commanda_type_id,
+            item: item,
+            category: null,
+            //category_zero: 0,
+            price: undefined,
+            prices,
+            options: [],
+            exceptions: [],
+            records: [],
+            stock_record: undefined,
+            serials: [],
+            category_zero: null,
+            item_options: [],
+            ecommerce_item: null,
+            image_url: null,
+            images: []
+        };
 
 		return order_item_info;
 	}
@@ -241,23 +286,24 @@ export class GetEmpty
 			created_by_user_id: null,
 			default_clave_prod_serv: '',
 			display_status: 'NORMAL',
-			id:0,
+			id: 0,
 			image_id: null,
 			image_style: 'CONTAIN',
 			name: '',
 			shadow_color: '#000000',
 			sort_weight: 10,
 			text_color: '#FFFFFF',
-			text_style:'CENTER',
+			text_style: 'CENTER',
 			type: '',
 			updated: Utils.getMysqlDate(),
 			updated_by_user_id: null,
+			available_online: 'YES'
 		};
 	}
 	static item():Item
 	{
 		return {
-			id:0,
+			id: 0,
 			applicable_tax: 'DEFAULT',
 			availability_type: 'ALWAYS',
 			background: 'transparent',
@@ -271,19 +317,19 @@ export class GetEmpty
 			commission_type: 'NONE',
 			created: Utils.getMysqlDate(),
 			created_by_user_id: null,
-			currency_id: null,
+			currency_id: 'MXN',
 			description: '',
 			extra_name: '',
 			form_id: null,
-			for_reservation:'NO',
+			for_reservation: 'NO',
 			has_serial_number: 'NO',
 			image_id: null,
-			image_style:'COVER',
-			json_tags:[],
+			image_style: 'COVER',
+			json_tags: [],
 			measurement_unit: null,
 			name: '',
 			note_required: 'NO',
-			on_sale:'YES',
+			on_sale: 'YES',
 			partial_sale: 'NO',
 			period_type: 'MONTHLY',
 			product_id: null,
@@ -293,12 +339,17 @@ export class GetEmpty
 			return_action: 'RETURN_TO_STOCK',
 			shadow_color: '#000000',
 			sort_weight: 1,
-			status:'ACTIVE',
+			status: 'ACTIVE',
 			text_color: '#FFFFFF',
 			text_style: 'CENTER',
 			unidad_medida_sat_id: 'H87',
 			updated: Utils.getMysqlDate(),
-			updated_by_user_id:null,
+			updated_by_user_id: null,
+			ieps_type: 'AMOUNT',
+			response_requirement_qty: 'ONCE_PER_CLIENT',
+			stock_type: 'NORMAL',
+			ieps_value: 0,
+			tax_percent: 0
 		};
 	}
 
@@ -316,77 +367,88 @@ export class GetEmpty
 		let version_created = rest.getVersion();
 		let items:OrderItemInfo[] = [];
 		let order:Order = {
-			id: 0,
-			address: "",
-			amount_paid: 0,
-			ares: 0,
-			client_name: "",
-			marked_for_billing: 'NO',
-			delivery_user_id: null,
-			note: "",
-			sat_codigo_postal: null,
-			sat_pdf_attachment_id: null,
-			sat_razon_social: null,
-			authorized_by: null,
-			cancellation_timestamp: null,
-			billing_data_id: null,
-			billing_address_id: null,
-			city: "",
-			delivery_status: 'PENDING',
-			client_user_id: null,
-			facturacion_code: "",
-			paid_timetamp: null,
-			sat_serie_consecutive: null,
-			sat_receptor_rfc: '',
-			sat_uso_cfdi: '',
-			facturado: 'NO',
-			guests: 1,
-			lat: null,
-			lng: null,
-			cashier_user_id: user.id,
-			created: Utils.getMysqlDate(),
-			currency_id: 'MXN',
-			cancellation_reason: '',
-			cancelled_by_user_id: null,
-			closed_timestamp: null,
-			discount: 0,
-			initial_payment: 0,
-			sat_isr: 0,
-			sat_ieps: 0,
-			discount_calculated: 0,
-			price_type_id: price_type.id,
-			sat_forma_pago: '99',
-			sat_serie: 'A',
-			sat_factura_id: null,
-			sat_exchange_rate: 1,
-			sat_domicilio_fiscal_receptor: '',
-			sat_regimen_fiscal_receptor: '',
-			sat_regimen_capital_receptor: '',
-			service_type: 'QUICK_SALE',
-			status: 'PENDING',
-			paid_status: 'PENDING',
-			period_id: null,
-			store_id: user.store_id as number,
-			subtotal: 0,
-			sync_id: rest.getSyncId(),
-			system_activated: null,
-			table_id: null,
-			tag: '',
-			tax: 0,
-			tax_percent: 16,
-			total: 0,
-			updated: Utils.getMysqlDate(),
-			version_created,
-			version_updated: version_created,
-			quote_id: null,
-			sat_receptor_email: null,
-			sat_xml_attachment_id: null,
-			shipping_address_id: null,
-			shipping_cost: 0,
-			state: null,
-			store_consecutive: null,
-			suburb: null
-		};
+            id: 0,
+            address: "",
+            amount_paid: 0,
+            ares: 0,
+            client_name: "",
+            marked_for_billing: 'NO',
+            delivery_user_id: null,
+            note: "",
+            sat_codigo_postal: null,
+            sat_pdf_attachment_id: null,
+            sat_razon_social: null,
+            authorized_by: null,
+            cancellation_timestamp: null,
+            billing_data_id: null,
+            billing_address_id: null,
+            city: "",
+            delivery_status: 'PENDING',
+            client_user_id: null,
+            facturacion_code: "",
+            paid_timetamp: null,
+            sat_serie_consecutive: null,
+            sat_receptor_rfc: '',
+            sat_uso_cfdi: '',
+            facturado: 'NO',
+            guests: 1,
+            lat: null,
+            lng: null,
+            cashier_user_id: user.id,
+            created: Utils.getMysqlDate(),
+            currency_id: 'MXN',
+            cancellation_reason: '',
+            cancelled_by_user_id: null,
+            closed_timestamp: null,
+            discount: 0,
+            initial_payment: 0,
+            sat_isr: 0,
+            sat_ieps: 0,
+            discount_calculated: 0,
+            price_type_id: price_type.id,
+            sat_forma_pago: '99',
+            sat_serie: 'A',
+            sat_factura_id: null,
+            sat_exchange_rate: 1,
+            sat_domicilio_fiscal_receptor: '',
+            sat_regimen_fiscal_receptor: '',
+            sat_regimen_capital_receptor: '',
+            service_type: 'QUICK_SALE',
+            status: 'PENDING',
+            paid_status: 'PENDING',
+            period_id: null,
+            store_id: user.store_id as number,
+            subtotal: 0,
+            sync_id: rest.getSyncId(),
+            system_activated: null,
+            table_id: null,
+            tag: '',
+            tax: 0,
+            tax_percent: 16,
+            total: 0,
+            updated: Utils.getMysqlDate(),
+            version_created,
+            version_updated: version_created,
+            quote_id: null,
+            sat_receptor_email: null,
+            sat_xml_attachment_id: null,
+            shipping_address_id: null,
+            shipping_cost: 0,
+            state: null,
+            store_consecutive: 0,
+            suburb: null,
+            frequency: 'NONE',
+            closed_by_user_id: null,
+            delivery_schedule: null,
+            ecommerce_user_id: null,
+            external_id: null,
+            facturacion_timestamp: null,
+            first_payment_date: null,
+            installment_amount: null,
+            installment_months: null,
+            installment_round_amount: 0,
+            installments: null
+        };
 
 		let empty:OrderInfo = {
 			items,
@@ -417,17 +479,18 @@ export class GetEmpty
 			date: '',
 			delivery_timestamp: null,
 			from_store_id: null,
-			id:0,
+			id: 0,
 			note: '',
 			purchase_id: null,
-			received_by_user_id : null,
-			requisition_id : null,
+			received_by_user_id: null,
+			requisition_id: null,
 			shipping_company: '',
 			shipping_guide: '',
-			status:'PENDING',
+			status: 'PENDING',
 			to_store_id: 0,
 			updated: Utils.getMysqlDate(),
 			updated_by_user_id: 0,
+			production_area_id: null
 		}
 	}
 
@@ -435,15 +498,16 @@ export class GetEmpty
 	{
 		return {
 			created: Utils.getMysqlDate(),
-			id:0,
-			name:'',
+			id: 0,
+			name: '',
 			category_id: null,
-			production_area_id:0,
-			type: 'SALE_ITEM',
+			production_area_id: 0,
 			item_id: null,
-			status:'ACTIVE',
+			status: 'ACTIVE',
 			updated: Utils.getMysqlDate(),
-		};
+			generator_type: 'ON_DEMAN',
+			json_tags: []
+		}
 	}
 
 	static reservation():ExtendedReservation
@@ -484,7 +548,7 @@ export class GetEmpty
 	static reservation_item():Reservation_Item
 	{
 		return {
-			id:0,
+			id: 0,
 			created: Utils.getMysqlDate(),
 			delivered_qty: 0,
 			end: null,
@@ -498,11 +562,11 @@ export class GetEmpty
 			returned_qty: 0,
 			scheduled_delivery: null,
 			scheduled_return: null,
-			serial_item_id: 0,
 			start: '',
-			status:'ACTIVE',
+			status: 'ACTIVE',
 			tax_included: 'YES',
 			updated: Utils.getMysqlDate(),
+			stock_item_id: 0
 		};
 	}
 
@@ -530,7 +594,7 @@ export class GetEmpty
 		};
 	}
 
-	static user():User
+	static user():UserBalance
 	{
 		return {
 			created: Utils.getMysqlDate(),
@@ -561,9 +625,9 @@ export class GetEmpty
 			code: '',
 			creation_store_id: 0,
 			birthday: null,
-			role_id: '',
+			role_id: null,
 			created_by_store_id: null,
-			payment_option: '',
+			payment_option: 'STORE',
 			payment_address_id: null,
 			preferred_store_id: null,
 			balance: 0,
@@ -581,77 +645,90 @@ export class GetEmpty
 	static user_permission():User_Permission
 	{
 		return {
-			add_asistance:0,
-			add_bills:0,
-			add_commandas:0,
-			add_credit_sales:0,
-			add_items:0,
-			add_form:0,
-			add_marbetes:0,
-			add_payments:0,
-			add_payroll:0,
-			add_providers:0,
-			add_purchases:0,
-			add_requisition:0,
+			add_asistance: 0,
+			add_bills: 0,
+			add_commandas: 0,
+			add_credit_sales: 0,
+			add_items: 0,
+			add_form: 0,
+			add_marbetes: 0,
+			add_payments: 0,
+			add_payroll: 0,
+			add_providers: 0,
+			add_purchases: 0,
+			add_requisition: 0,
 			add_roles: 0,
-			add_stock:0,
-			add_user:0,
-			advanced_order_search:0,
-			approve_bill_payments:0,
-			asign_marbetes:0,
-			caldos:0,
-			cancel_closed_orders:0,
-			cancel_ordered_item:0,
-			change_client_prices:0,
+			add_stock: 0,
+			add_user: 0,
+			advanced_order_search: 0,
+			approve_bill_payments: 0,
+			approve_requisition: 0,
+			asign_marbetes: 0,
+			caldos: 0,
+			cancel_closed_orders: 0,
+			cancel_ordered_item: 0,
+			change_client_prices: 0,
 			created: Utils.getMysqlDate(),
 			created_by_user_id: null,
-			currency_rates:0,
-			discounts:0,
-			edit_billing_data:0,
-			fullfill_orders:0,
-			global_add_stock:0,
-			global_bills:0,
-			global_order_delivery:0,
-			global_pos:0,
-			global_prices:0,
-			global_purchases:0,
-			global_receive_shipping:0,
-			global_requisition:0,
-			global_send_shipping:0,
-			global_stats:0,
-			hades:0,
-			is_provider:0,
-			open_cashier_box_anytime:0,
-			order_delivery:0,
-			pay_bills:0,
-			pos:0,
-			preferences:0,
-			price_types:0,
-			print_pre_receipt:0,
-			production:0,
-			purchases:0,
-			pv_returns:0,
-			quotes:0,
-			receive_shipping:0,
-			reports:0,
+			currency_rates: 0,
+			discounts: 0,
+			edit_billing_data: 0,
+			fullfill_orders: 0,
+			global_add_stock: 0,
+			global_bills: 0,
+			global_order_delivery: 0,
+			global_pos: 0,
+			global_prices: 0,
+			global_purchases: 0,
+			global_receive_shipping: 0,
+			global_requisition: 0,
+			global_send_shipping: 0,
+			global_stats: 0,
+			hades: 0,
+			is_provider: 0,
+			open_cashier_box_anytime: 0,
+			order_delivery: 0,
+			pay_bills: 0,
+			pos: 0,
+			preferences: 0,
+			price_types: 0,
+			print_pre_receipt: 0,
+			production: 0,
+			purchases: 0,
+			pv_returns: 0,
+			quotes: 0,
+			receive_shipping: 0,
+			reports: 0,
 			shipping_receive_type: 'CAPTURE_QTY',
-			show_tables:0,
-			send_shipping:0,
-			stocktake:0,
-			store_prices:0,
+			show_tables: 0,
+			send_shipping: 0,
+			stocktake: 0,
+			store_prices: 0,
 			updated: Utils.getMysqlDate(),
 			updated_by_user_id: null,
-			user_id:0,
-			view_asistance:0,
-			view_commandas:0,
-			view_payroll:0,
-			view_responses:0,
-			view_stock:0,
-			view_stock_alerts:0
+			user_id: 0,
+			view_asistance: 0,
+			view_commandas: 0,
+			view_payroll: 0,
+			view_responses: 0,
+			view_stock: 0,
+			view_stock_alerts: 0,
+			add_credit_limit: 0,
+			add_item_points: 0,
+			add_merma: 0,
+			add_offers: 0,
+			cancel_payments: 0,
+			cancelar_factura: 0,
+			delete_draft_items: 0,
+			factura_global: 0,
+			facturar_orden: 0,
+			reiniciar_facturacion: 0,
+			return_money: 0,
+			view_reservations: 0,
 		};
 	}
 
-	static user_extra_fields(user_id:number):User_extra_fields
+	static user_extra_fields(user_id:number):User_Extra_Fields
 	{
 		return {
 			id:0,
@@ -668,86 +745,93 @@ export class GetEmpty
 			background_image_id: null,
 			background_image_size: 'cover',
 			btn_primary_bg_color: '#000000',
-			btn_primary_bg_color_hover:null,
-			btn_primary_border_color:null,
-			btn_primary_border_color_hover:'#000000',
-			btn_primary_border_width:1,
-			btn_primary_text_color:null,
-			btn_primary_text_color_hover:null,
-			btn_secondary_bg_color:null,
-			btn_secondary_bg_color_hover:null,
-			btn_secondary_border_color:null,
-			btn_secondary_border_color_hover:null,
-			btn_secondary_border_width:1,
-			btn_secondary_text_color:null,
-			btn_secondary_text_color_hover:null,
-			button_border_radius:'0.5em',
-			button_style:null,
-			card_background_color:null,
-			card_background_image_id:null,
-			card_background_opacity:60,
-			card_border_color:null,
-			card_border_radius:'0.5em',
+			btn_primary_bg_color_hover: null,
+			btn_primary_border_color: null,
+			btn_primary_border_color_hover: '#000000',
+			btn_primary_border_width: 1,
+			btn_primary_text_color: null,
+			btn_primary_text_color_hover: null,
+			btn_secondary_bg_color: null,
+			btn_secondary_bg_color_hover: null,
+			btn_secondary_border_color: null,
+			btn_secondary_border_color_hover: null,
+			btn_secondary_border_width: 1,
+			btn_secondary_text_color: null,
+			btn_secondary_text_color_hover: null,
+			button_border_radius: '0.5em',
+			button_style: null,
+			card_background_color: null,
+			card_background_image_id: null,
+			card_background_opacity: 60,
+			card_border_color: null,
+			card_border_radius: '0.5em',
 			charts_colors: '#000000',
-			chat_upload_attachment_image_id:null,
-			chat_upload_image_id:null,
+			chat_upload_attachment_image_id: null,
+			chat_upload_image_id: null,
 			created: Utils.getMysqlDate(),
-			currency_price_preference:'ONLY_DEFAULT_CURRENCY',
+			currency_price_preference: 'ONLY_DEFAULT_CURRENCY',
 			default_cash_close_receipt: 1,
 			default_ticket_format: 1,
-			default_file_logo_image_id:null,
-			default_input_type:'TACTILE',
-			default_price_type_id:null,
-			default_product_image_id:null,
+			default_file_logo_image_id: null,
+			default_input_type: 'TACTILE',
+			default_price_type_id: null,
+			default_product_image_id: null,
 			default_print_receipt: 1,
-			default_ticket_image_id:null,
-			default_user_logo_image_id:null,
-			display_categories_on_items:'YES',
-			header_background_color:null,
-			header_text_color:null,
-			id:1,
-			item_selected_background_color:'#000000',
-			item_selected_text_color:'#FFFFFF',
-			link_color:'#000000',
-			login_background_image_id:null,
-			login_background_image_size:'cover',
-			login_image_id:null,
-			logo_image_id:null,
-			menu_background_color:'#FFFFFF',
-			menu_background_image_id:null,
-			menu_background_image_size:'cover',
-			menu_background_type:'IMAGE',
-			menu_color_opacity:60,
-			menu_icon_color:'#000000',
-			menu_text_color:'#000000',
-			menu_title_color:'#000000',
-			name:'',
-			pv_bar_background_color:'#000000',
-			pv_bar_text_color:'#FFFFFF',
-			pv_bar_total_color:'#FFFFFF',
+			default_ticket_image_id: null,
+			default_user_logo_image_id: null,
+			display_categories_on_items: 'YES',
+			header_background_color: null,
+			header_text_color: null,
+			id: 1,
+			item_selected_background_color: '#000000',
+			item_selected_text_color: '#FFFFFF',
+			link_color: '#000000',
+			login_background_image_id: null,
+			login_background_image_size: 'cover',
+			login_image_id: null,
+			logo_image_id: null,
+			menu_background_color: '#FFFFFF',
+			menu_background_image_id: null,
+			menu_background_image_size: 'cover',
+			menu_background_type: 'IMAGE',
+			menu_color_opacity: 60,
+			menu_icon_color: '#000000',
+			menu_text_color: '#000000',
+			menu_title_color: '#000000',
+			name: '',
+			pv_bar_background_color: '#000000',
+			pv_bar_text_color: '#FFFFFF',
+			pv_bar_total_color: '#FFFFFF',
 			pv_show_all_categories: 'NO',
 			pv_show_orders: 'OPEN_SAME_DAY',
-			radius_style:null,
-			submenu_background_color:'#FFFFFF',
-			submenu_color_opacity:80,
-			submenu_icon_color:'#000000',
-			submenu_text_color:'#000000',
+			radius_style: null,
+			submenu_background_color: '#FFFFFF',
+			submenu_color_opacity: 80,
+			submenu_icon_color: '#000000',
+			submenu_text_color: '#000000',
 			text_color: '#000000',
-			titles_color:null,
+			titles_color: null,
 			touch_size_button: '100px',
 			update_prices_on_purchases: 0,
 			touch_text_color: '#FFFFFF',
 			touch_text_shadow_color: '#000000',
 			default_return_action: 'RETURN_TO_STOCK',
-			link_hover:'#000000',
+			link_hover: '#000000',
 			stock_negative_values_allowed: 0,
 			ecommerce_enabled: 0,
-			updated: Utils.getMysqlDate()
+			updated: Utils.getMysqlDate(),
+			default_cash_close_type: 'SIMPLE',
+			user_attachments: 'DISABLED',
+			comex_enabled: 0,
+			offers_enabled: 0,
+			production_enabled: 0,
+			reservations_enabled: 0,
+			restaurant_enabled: 0
 		};
 	}
 
 	static production_area():Production_Area
-	{
+{
 		return {
 			created: Utils.getMysqlDate(),
 			id:0,
@@ -759,7 +843,7 @@ export class GetEmpty
 	}
 
 	static production():Production
-	{
+{
 		return {
 			control: '',
 			alternate_qty: 0,
@@ -778,11 +862,12 @@ export class GetEmpty
 			status: 'ACTIVE',
 			updated: Utils.getMysqlDate(),
 			verified_by_user_id: null,
+			batch: null
 		}
 	}
 
 	static production_area_item():Production_Area_Item
-	{
+{
 		return {
 			created: Utils.getMysqlDate(),
 			id:0,
@@ -794,7 +879,7 @@ export class GetEmpty
 	}
 
 	static payroll():Payroll
-	{
+{
 		return{
 			id:0,
 			user_id:0,
@@ -813,7 +898,7 @@ export class GetEmpty
 	}
 
 	static payroll_concept_value():Payroll_Concept_Value
-	{
+{
 		return {
 			id:0,
 			payroll_id:0,
@@ -824,7 +909,7 @@ export class GetEmpty
 	}
 
 	static payroll_info()
-	{
+{
 		return {
 			payroll: GetEmpty.payroll(),
 			work_logs: [],
@@ -833,59 +918,68 @@ export class GetEmpty
 	}
 
 	static store():Store
-	{
+{
 		return {
-			address:"",
+			address: "",
 			accept_cash: 1,
 			accept_transfer: 1,
 			accept_credit_card: 1,
 			accept_check: 1,
-			business_name:'',
-			city:'',
+			business_name: '',
+			city: '',
 			lat: null,
 			lng: null,
-			client_user_id:null,
+			client_user_id: null,
 			created: Utils.getMysqlDate(),
 			qr_size: 'PERCENT_100',
 			created_by_user_id: null,
 			default_billing_data_id: null,
-			default_currency_id:'MXN',
+			default_currency_id: 'MXN',
 			default_claveprodserv: '',
 			default_sat_item_name: '',
 			default_sat_serie: 'A',
 			electronic_transfer_percent_fee: 0,
 			autofacturacion_settings: 'DISABLED',
 			autofacturacion_day_limit: 7,
-			main_pc_ip:null,
+			main_pc_ip: null,
 			modo_facturacion: 'DESGLOSADA',
 			id: 0,
 			image_id: null,
-			name:'',
+			name: '',
 			offline_search_enabled: 0,
-			max_cash_amount:0,
+			max_cash_amount: 0,
 			paypal_email: '',
-			phone:'',
-			pos_category_preferences:'DEFAULT_BY_PRODUCT',
+			phone: '',
+			pos_category_preferences: 'DEFAULT_BY_PRODUCT',
 			price_list_id: 0,
-			printer_ticket_config:'',
+			printer_ticket_config: '',
 			print_receipt_copies: 1,
 			production_enabled: 0,
-			rfc:'',
+			rfc: '',
 			sales_enabled: 1,
 			show_facturacion_qr: 'NO',
-			state:'',
-			status:'DISABLED',
+			state: '',
+			status: 'DISABLED',
 			suggested_tip: 0,
 			tax_percent: 16,
-			ticket_footer_text:'',
-			ticket_image_id:null,
+			ticket_footer_text: '',
+			ticket_image_id: null,
 			updated: Utils.getMysqlDate(),
-			updated_by_user_id : null,
-			zipcode: ''
+			updated_by_user_id: null,
+			zipcode: '',
+			accept_delivery_orders: 'ALWAYS',
+			accept_pickup_orders: 'ALWAYS',
+			autofacturacion_enabled: 'YES',
+			print_mode: 'REDIRECT',
+			ticket_address_display: 'SUCURSAL',
+			code: null,
+			exchange_rate: 0,
+			print_delay: 0,
+			print_receipt: null
 		}
 	}
 
-	static work_log_rules():Work_log_rules
+	static work_log_rules():Work_Log_Rules
 	{
 		return {
 			id:0,

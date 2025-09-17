@@ -5,8 +5,9 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { RestService } from '../../services/rest.service';
 import { BaseComponent } from '../base/base.component';
 import { Rest, RestResponse } from '../../services/Rest';
-import { Ecommerce_Item_Profile, Profile } from '../../models/RestModels';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Ecommerce_Item_Profile } from '../../models/rest/Ecommerce_Item_Profile';
+import { Profile } from '../../models/rest/Profile';
 
 interface EcommerItemProfileInfo{
 	profile: any;
